@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<RunConfiguration>  
+		<TargetPlatform>x64</TargetPlatform>
+		<ResultsDirectory>.\TestResults</ResultsDirectory> 
+	</RunConfiguration>  
+  <MSTest> 
+    <ForcedLegacyMode>True</ForcedLegacyMode>
+	<MapInconclusiveToFailed>True</MapInconclusiveToFailed>  
+    <CaptureTraceOutput>True</CaptureTraceOutput>   
+	<DeleteDeploymentDirectoryAfterTestRunIsComplete>True</DeleteDeploymentDirectoryAfterTestRunIsComplete>
+    <DeploymentEnabled>True</DeploymentEnabled> 
+  </MSTest>  
+</RunSettings>
