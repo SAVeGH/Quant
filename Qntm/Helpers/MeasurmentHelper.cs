@@ -62,14 +62,15 @@ namespace Qntm.Helpers
 
             // scale задает размер и направление поворота в терминах вероятности '+' - против часовой, '-' - по часовой
             // поворачиваем оставшуюся цепь на угол поворота вероятности кванта деленный на передаточное число связи            
-            double scale = quantum.Scale * (result ? 1.0 : -1.0);
+            double scale = quantum.QuantumPointers.Count * (result ? 1.0 : -1.0);
 
-            double probabilityChainShift = probabilityChange / (scale == 0.0 ? 1.0 : scale);
+            double probabilityChainShift = probabilityChange / (scale == 0.0 ? 1.0 : scale);            
             
-            // отсоединяем квант из цепи
-            Quantum chainHead = EntangleHelper.Collapse(quantum);
             // сдвигаем оставшуюся часть на угол смещения вероятности кванта
-            EntangleHelper.Roll(chainHead, probabilityChainShift);
+            EntangleHelper.Roll(quantum, probabilityChainShift);
+
+            // отсоединяем квант из цепи
+            EntangleHelper.Collapse(quantum);
 
             return result;
         }

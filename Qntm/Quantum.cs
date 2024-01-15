@@ -1,5 +1,6 @@
 ﻿using Qntm.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace Qntm
 {
@@ -19,13 +20,13 @@ namespace Qntm
 
 		double _angle = double.NaN;
 
-		double _scale = 1.0;
-		public Quantum Next { get; set; }
+		//double _scale = 1.0;
+		public List<QuantumPointer> QuantumPointers { get; private set; } = new List<QuantumPointer>();
 
         public Quantum(double angle)
         {
 			// Изначально квант запутан сам с собой
-			Next = this;           
+			//Next = this;           
 
             // амплитуда верояности получить 1 - это проекция вектора на ось Y. Т.е. это sin угла. 
             // вероятность получить 1  - это квадрат синуса угла.
@@ -52,11 +53,10 @@ namespace Qntm
             }
 		}
 
-        public double Scale
+		public double QuantumPointersCount
         {
-            get { return _scale; }
-            set { _scale = value; }
-        }
+			get { return QuantumPointers.Count; }
+		}
 
-    }
+	}
 }

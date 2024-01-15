@@ -9,61 +9,59 @@ namespace Qntm.Helpers
 {
     public static class EntangleHelper
     {
-        public static void Entangle(Quantum quantum, Quantum nextQuantum)
+        public static void Entangle(Quantum quantum1, Quantum quantum2)
         {
-            Quantum chainTail = GetTail(quantum);
+            QuantumPointer quantumPointer1 = new QuantumPointer(quantum1);
+            QuantumPointer quantumPointer2 = new QuantumPointer(quantum2);
 
-            chainTail = chainTail == null ? quantum : chainTail;
+            quantum1.QuantumPointers.Add(quantumPointer2);
+            quantum2.QuantumPointers.Add(quantumPointer1);
 
-            nextQuantum.Next = quantum;
-            chainTail.Next = nextQuantum;
         }
 
-        public static Quantum Collapse(Quantum quantum)  
+        public static void Collapse(Quantum quantum)  
         {
-            if (quantum.Next == quantum)
-                return quantum;
-
-            Quantum chainHead = quantum.Next;
-            Quantum chainTail = GetTail(quantum);
-
-            chainTail.Next = chainHead;
-
-            quantum.Next = quantum;
-
-            return chainHead; // оставшаяся цепь
+            Collapse(quantum, quantum);
         }
 
+        private static void Collapse(Quantum quantum, Quantum listQuantum)
+        {
+            var quantumsList = listQuantum.QuantumPointers.Where(qPointer => qPointer.Quantum == quantum).ToList();
+
+            listQuantum.QuantumPointers.ForEach(q => Collapse(quantum, q.Quantum));
+
+            listQuantum.QuantumPointers.RemoveAll(qPointer => quantumsList.Contains(qPointer));
+        }
         public static void Roll(Quantum quantum, double probabilityChainShift)
         {
             if (quantum == null)
                 return;
 
-            int chainLength = EntangledChainLength(quantum);
+            //int chainLength = EntangledChainLength(quantum);
 
             // поворачиваем все кванты на полученный угол
-            RollChain(quantum, quantum.Next, probabilityChainShift, chainLength);
+            //RollChain(quantum, quantum.Next, probabilityChainShift, chainLength);
         }
 
         
-        private static void RollChain(Quantum quantum, Quantum nextQuantum, double probabilityChainShift /*изменение вероятности*/, int chainLength) 
-        {
-            // уменьшаем передаточное число на длину оставшейся цепи. Новый Scale сработает при следующем измерении в цепи
-            nextQuantum.Scale = nextQuantum.Scale / (double)(chainLength + 1);
+        //private static void RollChain(Quantum quantum, Quantum nextQuantum, double probabilityChainShift /*изменение вероятности*/, int chainLength) 
+        //{
+        //    // уменьшаем передаточное число на длину оставшейся цепи. Новый Scale сработает при следующем измерении в цепи
+        //    nextQuantum.Scale = nextQuantum.Scale / (double)(chainLength + 1);
 
-            double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
-            double shiftProbAngle = probabilityChainShift * Angles._90degree; // угол вероятности изменения
-            double resultProbAngle = currentProbAngle + shiftProbAngle; // получился угол вероятности в радианах
+        //    double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
+        //    double shiftProbAngle = probabilityChainShift * Angles._90degree; // угол вероятности изменения
+        //    double resultProbAngle = currentProbAngle + shiftProbAngle; // получился угол вероятности в радианах
 
-            nextQuantum.Angle = QuantumAngle(resultProbAngle);
+        //    nextQuantum.Angle = QuantumAngle(resultProbAngle);
 
-            //var t = AngleHelper.RadiansToDegree(nextQuantum.Angle);
+        //    //var t = AngleHelper.RadiansToDegree(nextQuantum.Angle);
 
-            if (quantum == nextQuantum)
-                return;
+        //    if (quantum == nextQuantum)
+        //        return;
 
-            RollChain(quantum, nextQuantum.Next, probabilityChainShift, chainLength);
-        }
+        //    RollChain(quantum, nextQuantum.Next, probabilityChainShift, chainLength);
+        //}
 
         private static double QuantumAngle(double quntumProbabilityAngle)
         {
@@ -158,40 +156,40 @@ namespace Qntm.Helpers
             return ((180.0 / Math.PI) * rad).ToString("0.000000");
         }
 
-        private static int EntangledChainLength(Quantum quantum)
-        {
-            if (quantum.Next == null)
-                return 1;
+        //private static int EntangledChainLength(Quantum quantum)
+        //{
+        //    if (quantum.Next == null)
+        //        return 1;
 
-            int length = EntangledChainLength(quantum, quantum.Next, 1);
+        //    int length = EntangledChainLength(quantum, quantum.Next, 1);
 
-            return length;
-        }
+        //    return length;
+        //}
 
-        private static int EntangledChainLength(Quantum sourceQuantum, Quantum nextQuantum, int count)
-        {
-            if (sourceQuantum == nextQuantum.Next)
-                return count;
+        //private static int EntangledChainLength(Quantum sourceQuantum, Quantum nextQuantum, int count)
+        //{
+        //    if (sourceQuantum == nextQuantum.Next)
+        //        return count;
 
-            return EntangledChainLength(sourceQuantum, nextQuantum.Next, count + 1);
-        }
+        //    return EntangledChainLength(sourceQuantum, nextQuantum.Next, count + 1);
+        //}
 
-        private static Quantum GetTail(Quantum quantum)
-        {
-            if (quantum.Next == quantum)
-                return quantum;
+        //private static Quantum GetTail(Quantum quantum)
+        //{
+        //    if (quantum.Next == quantum)
+        //        return quantum;
 
-            Quantum chainTail = GetTail(quantum, quantum.Next);
+        //    Quantum chainTail = GetTail(quantum, quantum.Next);
 
-            return chainTail;
-        }
+        //    return chainTail;
+        //}
 
-        private static Quantum GetTail(Quantum quantum, Quantum nextQuantum)
-        {
-            if (quantum == nextQuantum.Next)
-                return nextQuantum;
+        //private static Quantum GetTail(Quantum quantum, Quantum nextQuantum)
+        //{
+        //    if (quantum == nextQuantum.Next)
+        //        return nextQuantum;
 
-            return GetTail(quantum, nextQuantum.Next);
-        }
+        //    return GetTail(quantum, nextQuantum.Next);
+        //}
     }
 }

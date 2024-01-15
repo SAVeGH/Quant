@@ -20,13 +20,13 @@ namespace Quant
 
                 //Quantum q = new Quantum(Angles._0degree/*Math.PI / 4.0)*/);
                 Quantum qA = new Quantum(35.2644 * Angles._rad);
-                qA.Scale = -2.0;
+                //qA.Scale = -2.0;
 
                 Quantum qB = new Quantum(35.2644 * Angles._rad);
-                qB.Scale = -2.0;
+                //qB.Scale = -2.0;
 
                 Quantum qC = new Quantum(35.2644 * Angles._rad);
-                qC.Scale = -2.0;
+                //qC.Scale = -2.0;
 
                 EntangleHelper.Entangle(qA,qB);
                 EntangleHelper.Entangle(qB, qC);

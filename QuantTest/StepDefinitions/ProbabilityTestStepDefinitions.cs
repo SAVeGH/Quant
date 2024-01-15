@@ -24,7 +24,7 @@ namespace QuantTest.StepDefinitions
             foreach (var row in qTable) 
             {
                 Quantum q = new Quantum(AngleHelper.DegreeToRadians(row.Angle));
-                q.Scale = row.Scale;
+                //q.Scale = row.Scale;
                 string qName = "Quantum_" + row.Name;
                 _scenarioContext[qName] = q;
             }            
