@@ -6,7 +6,7 @@ Scenario: Measurment must give correct propability
 	Given System has quantums
 	| Name | Angle       |
 	| A    | <qangle>    |
-	When Quantum 'A' is measured 1000 times in <mangle> basis
+	When Quantum 'A' is measured 10000 times in <mangle> basis
 	Then Probability corresponds to <uprobalility> with deviation of <deviation>
 
 Examples: 

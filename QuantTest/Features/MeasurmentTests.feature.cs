@@ -130,7 +130,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("System has quantums", ((string)(null)), table4, "Given ");
 #line hidden
 #line 9
- testRunner.When(string.Format("Quantum \'A\' is measured 1000 times in {0} basis", mangle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("Quantum \'A\' is measured 10000 times in {0} basis", mangle), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
  testRunner.Then(string.Format("Probability corresponds to {0} with deviation of {1}", uprobalility, deviation), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

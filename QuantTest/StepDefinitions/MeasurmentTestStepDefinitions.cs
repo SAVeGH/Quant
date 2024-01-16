@@ -38,7 +38,7 @@ namespace QuantTest.StepDefinitions
             double measurmentResult = (double)_scenarioContext["MeasurmentResult"];
 
             double deviationPercent = Math.Abs(measurmentResult - p0) * 100.0;
-            Console.WriteLine($"deviationPercent: {deviationPercent}");
+            Console.WriteLine($"deviationPercent: {deviationPercent}, Measurement result: {measurmentResult}");
             Assert.IsTrue(deviationPercent <= p1);
         }
 
@@ -67,7 +67,7 @@ namespace QuantTest.StepDefinitions
             double a = 12346789.0 * random.NextDouble();
             double b = 12346789.0 * random.NextDouble() + 1.0;
 
-            int count = random.Next(100, 1000);
+            int count = random.Next(1000, 10000);
 
             for (int i = 0; i < count; i++)
                 result = a / b;

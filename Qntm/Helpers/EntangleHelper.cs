@@ -21,17 +21,19 @@ namespace Qntm.Helpers
 
         public static void Collapse(Quantum quantum)  
         {
-            Collapse(quantum, quantum);
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+            {
+                Quantum referencedQuantum = quantumPointer.Quantum;
+
+                QuantumPointer refQuantumPointer = referencedQuantum.QuantumPointers.FirstOrDefault(pointer => pointer.Quantum == quantum);
+
+                referencedQuantum.QuantumPointers.Remove(refQuantumPointer);
+            }
+
+            quantum.QuantumPointers.Clear();
         }
 
-        private static void Collapse(Quantum quantum, Quantum listQuantum)
-        {
-            var quantumsList = listQuantum.QuantumPointers.Where(qPointer => qPointer.Quantum == quantum).ToList();
-
-            listQuantum.QuantumPointers.ForEach(q => Collapse(quantum, q.Quantum));
-
-            listQuantum.QuantumPointers.RemoveAll(qPointer => quantumsList.Contains(qPointer));
-        }
+        
         public static void Roll(Quantum quantum, double probabilityChainShift)
         {
             if (quantum == null)
