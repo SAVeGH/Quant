@@ -23,7 +23,7 @@ namespace Qntm.Helpers
 
             //Debug.WriteLine($"Measure: quantum.Angle: {Grad(quantum.Angle)}");
 
-            // Угловое смещение осей координат в 90 градусном секторе. Смещение направление оси измерения нуля
+            // Угловое смещение осей координат в 90 градусном секторе. Смещение направления оси измерения нуля
             // Состояния измерения повторяются через 180 градусов поворота установки (т.е. единица будет при вертикальном измерении через каждые 180)
             // Так как 0 это 0 а 90 это 1 - нужно получить смещение угла в секторе от 0 до 90 т.е. смещение оси измерения в секторе 90
             double zeroShiftAngle = MeasurmentAngleToZeroAxisInSector(actualMeasureAngle /* 0 - 360 */);  // один угол поворота установки от 0 до 180 в системе 0 - 90 равен полвине градуса 
@@ -57,17 +57,11 @@ namespace Qntm.Helpers
             quantum.Angle = result ? resultUnityAngle : resultZeroAngle;
             //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
 
-            // абсолютное изменение вероятности
-            double probabilityChange = result ? zeroProbability : unityProbability;
-
-            // scale задает размер и направление поворота в терминах вероятности '+' - против часовой, '-' - по часовой
-            // поворачиваем оставшуюся цепь на угол поворота вероятности кванта деленный на передаточное число связи            
-            double scale = quantum.QuantumPointers.Count * (result ? 1.0 : -1.0);
-
-            double probabilityChainShift = probabilityChange / (scale == 0.0 ? 1.0 : scale);            
+            // абсолютное изменение вероятности в терминах вероятности '+' - против часовой, '-' - по часовой
+            double probabilityChange = result ? zeroProbability : -unityProbability;    
             
-            // сдвигаем оставшуюся часть на угол смещения вероятности кванта
-            EntangleHelper.Roll(quantum, probabilityChainShift);
+            // сдвигаем связи на угол смещения вероятности кванта
+            EntangleHelper.Roll(quantum, probabilityChange);
 
             // отсоединяем квант из цепи
             EntangleHelper.Collapse(quantum);

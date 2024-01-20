@@ -34,36 +34,30 @@ namespace Qntm.Helpers
         }
 
         
-        public static void Roll(Quantum quantum, double probabilityChainShift)
+        public static void Roll(Quantum quantum, double probabilityChange)
         {
             if (quantum == null)
                 return;
 
-            //int chainLength = EntangledChainLength(quantum);
+            if (quantum.QuantumPointers.Count == 0)
+                return;
 
-            // поворачиваем все кванты на полученный угол
-            //RollChain(quantum, quantum.Next, probabilityChainShift, chainLength);
+            // сколько пришлось на каждую связь
+            double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
+            double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
+
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+            {
+                Quantum nextQuantum = quantumPointer.Quantum;
+
+                double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
+                
+                double resultProbAngle = currentProbAngle + shiftProbabilityAngle; // получился угол вероятности в радианах
+
+                nextQuantum.Angle = QuantumAngle(resultProbAngle);
+
+            }
         }
-
-        
-        //private static void RollChain(Quantum quantum, Quantum nextQuantum, double probabilityChainShift /*изменение вероятности*/, int chainLength) 
-        //{
-        //    // уменьшаем передаточное число на длину оставшейся цепи. Новый Scale сработает при следующем измерении в цепи
-        //    nextQuantum.Scale = nextQuantum.Scale / (double)(chainLength + 1);
-
-        //    double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
-        //    double shiftProbAngle = probabilityChainShift * Angles._90degree; // угол вероятности изменения
-        //    double resultProbAngle = currentProbAngle + shiftProbAngle; // получился угол вероятности в радианах
-
-        //    nextQuantum.Angle = QuantumAngle(resultProbAngle);
-
-        //    //var t = AngleHelper.RadiansToDegree(nextQuantum.Angle);
-
-        //    if (quantum == nextQuantum)
-        //        return;
-
-        //    RollChain(quantum, nextQuantum.Next, probabilityChainShift, chainLength);
-        //}
 
         private static double QuantumAngle(double quntumProbabilityAngle)
         {
@@ -157,41 +151,5 @@ namespace Qntm.Helpers
         {
             return ((180.0 / Math.PI) * rad).ToString("0.000000");
         }
-
-        //private static int EntangledChainLength(Quantum quantum)
-        //{
-        //    if (quantum.Next == null)
-        //        return 1;
-
-        //    int length = EntangledChainLength(quantum, quantum.Next, 1);
-
-        //    return length;
-        //}
-
-        //private static int EntangledChainLength(Quantum sourceQuantum, Quantum nextQuantum, int count)
-        //{
-        //    if (sourceQuantum == nextQuantum.Next)
-        //        return count;
-
-        //    return EntangledChainLength(sourceQuantum, nextQuantum.Next, count + 1);
-        //}
-
-        //private static Quantum GetTail(Quantum quantum)
-        //{
-        //    if (quantum.Next == quantum)
-        //        return quantum;
-
-        //    Quantum chainTail = GetTail(quantum, quantum.Next);
-
-        //    return chainTail;
-        //}
-
-        //private static Quantum GetTail(Quantum quantum, Quantum nextQuantum)
-        //{
-        //    if (quantum == nextQuantum.Next)
-        //        return nextQuantum;
-
-        //    return GetTail(quantum, nextQuantum.Next);
-        //}
     }
 }

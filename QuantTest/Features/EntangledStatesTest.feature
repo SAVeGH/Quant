@@ -60,6 +60,7 @@ Given System has quantums
 	| B    | <B_Angle> | -2    |
 	| C    | <C_Angle> | -2    |
 	And Quantums 'A' and 'B' are entangled
+	And Quantums 'A' and 'С' are entangled
 	And Quantums 'B' and 'C' are entangled
 	When Measure quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
