@@ -22,7 +22,7 @@ namespace Qntm.Helpers
 
         }
 
-        public static void Detach(Quantum quantum)
+        private static void Detach(Quantum quantum)
         {
             foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
             {
