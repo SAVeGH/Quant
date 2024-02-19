@@ -8,10 +8,10 @@ Scenario: Ringify three quants
 		| A    | 0     |		
 		| B    | 0     |
 		| C    | 0     |
-	And Quantum 'A' entangled with quantum 'B' with level 'None'
-	And Quantum 'B' entangled with quantum 'C' with level 'None'
-	And Quantum 'C' entangled with quantum 'A' with level 'None'
-	When Ringify 'A' with level 'Recursive'
+	And Quantums 'A' and 'B' are entangled
+	And Quantums 'B' and 'C' are entangled
+	And Quantums 'C' and 'A' are entangled
+	When Ringify 'A'
 	Then Quantum 'A' has one way reference to quantum 'B'
 	And Quantum 'B' has one way reference to quantum 'C'
 	And Quantum 'C' has one way reference to quantum 'A'

@@ -354,18 +354,21 @@ testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
  testRunner.And("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 63
- testRunner.And("Quantums \'B\' and \'C\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Quantums \'A\' and \'С\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 64
- testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("Quantums \'B\' and \'C\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 65
- testRunner.And("Measure quantum \'B\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 66
- testRunner.And("Measure quantum \'C\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Measure quantum \'B\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 67
+ testRunner.And("Measure quantum \'C\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 68
  testRunner.Then("Measurment result corresponds to W state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

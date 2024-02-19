@@ -60,50 +60,5 @@ namespace QuantTest.StepDefinitions
                 Assert.IsFalse(qAResult == qBResult);
         }
 
-        [When(@"State is measured (.*) times in basis (.*) in order: '([^']*)','([^']*)','([^']*)'")]
-        public void WhenStateIsMeasuredTimesInBasisInOrder(int p0, double p1, string a, string b, string c)
-        {
-            string qAName = "Quantum_" + a;
-            Quantum qA = (Quantum)_scenarioContext[qAName];
-
-            string qBName = "Quantum_" + b;
-            Quantum qB = (Quantum)_scenarioContext[qBName];
-
-            string qCName = "Quantum_" + c;
-            Quantum qC = (Quantum)_scenarioContext[qCName];
-
-            double AAngle = qA.Angle;
-            double BAngle = qB.Angle;
-            double CAngle = qC.Angle;
-
-            int uzzCount = 0;
-            int zuzCount = 0;
-            int zzuCount = 0;
-
-            for (int i = 0; i < p0; i++) 
-            {
-                bool aResult = MeasurmentHelper.Measure(qA, p1);
-                bool bResult = MeasurmentHelper.Measure(qB, p1);
-                bool cResult = MeasurmentHelper.Measure(qC, p1);
-
-                if (aResult)
-                {
-                    if (bResult) 
-                    {
-                        
-                    } 
-                    else 
-                    { 
-                    }
-                }
-                else 
-                {
-
-                }
-
-
-            }
-        }
-
     }
 }

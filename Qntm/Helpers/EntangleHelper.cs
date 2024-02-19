@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Qntm.Helpers
 {
-    public enum RingifyLevel { None, OneStep, Recursive };
     public static class EntangleHelper
     {
-        public static void Entangle(Quantum quantum1, Quantum quantum2, RingifyLevel ringifyLevel = RingifyLevel.None)
+        public static void Entangle(Quantum quantum1, Quantum quantum2, bool doRingify = false)
         {
             QuantumPointer quantumPointer1 = new QuantumPointer(quantum1);
             QuantumPointer quantumPointer2 = new QuantumPointer(quantum2);
@@ -18,7 +17,10 @@ namespace Qntm.Helpers
             quantum1.QuantumPointers.Add(quantumPointer2);
             quantum2.QuantumPointers.Add(quantumPointer1);
 
-            Ringify(quantum1, ringifyLevel);
+            if (!doRingify)
+                return;
+
+            Ringify(quantum1);
 
         }
 
@@ -31,20 +33,14 @@ namespace Qntm.Helpers
             }
         }
 
-        public static void Ringify(Quantum quantum, RingifyLevel ringifyLevel = RingifyLevel.None)
+        public static void Ringify(Quantum quantum)
         {
-            if (ringifyLevel == RingifyLevel.None)
-                return;
-
             if (IsReachable(quantum))
             {
                 Detach(quantum);
 
-                if (ringifyLevel == RingifyLevel.OneStep)
-                    return;
-
                 foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
-                    Ringify(quantumPointer.Quantum, ringifyLevel);
+                    Ringify(quantumPointer.Quantum);
             }
         }
 
