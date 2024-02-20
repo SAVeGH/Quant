@@ -24,9 +24,9 @@ namespace Qntm.Helpers
 
         }
 
-        private static void Detach(Quantum quantum)
+        private static void Detach(Quantum quantum, Quantum reachableFrom)
         {
-            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers.Where(qp => qp.Quantum != reachableFrom))
             {
                 QuantumPointer deletePointer = quantumPointer.Quantum.QuantumPointers.FirstOrDefault(qp => qp.Quantum == quantum);
                 quantumPointer.Quantum.QuantumPointers.Remove(deletePointer);
@@ -35,40 +35,87 @@ namespace Qntm.Helpers
 
         public static void Ringify(Quantum quantum)
         {
-            if (IsReachable(quantum))
+            Quantum reachableFrom = GetReachablePoint(quantum);
+
+            if (reachableFrom != null)
             {
-                Detach(quantum);
+                Detach(quantum, reachableFrom);
 
                 foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
                     Ringify(quantumPointer.Quantum);
             }
         }
 
-        private static bool IsReachable(Quantum quantum)
+        private static Quantum GetReachablePoint(Quantum quantum)
         {
-            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)            
-                if (IsReachable(quantum, quantum, quantumPointer.Quantum))
-                    return true;            
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
+            {
+                Quantum reachableFrom = GetReachablePoint(quantum, quantum, quantumPointer.Quantum);
 
-            return false;
+                if (reachableFrom != null)
+                    return reachableFrom;
+            }
+
+            return null;
         }
 
-        private static bool IsReachable(Quantum srcQuantum, Quantum parentQuantum, Quantum childQuantum)
+        private static Quantum GetReachablePoint(Quantum srcQuantum, Quantum parentQuantum, Quantum childQuantum)
         {
             List<QuantumPointer> quantumPointersList = childQuantum.QuantumPointers.Where(qp => qp.Quantum != parentQuantum).ToList();
 
             foreach (QuantumPointer quantumPointer in quantumPointersList)
             {
                 if (quantumPointer.Quantum == srcQuantum)
-                    return true;
+                    return parentQuantum;
 
-                foreach (QuantumPointer innerQuantumPointer in quantumPointer.Quantum.QuantumPointers)                
-                    if (IsReachable(srcQuantum, quantumPointer.Quantum, innerQuantumPointer.Quantum))
-                        return true;
+                foreach (QuantumPointer innerQuantumPointer in quantumPointer.Quantum.QuantumPointers)
+                {
+                    Quantum reachableFrom = GetReachablePoint(srcQuantum, quantumPointer.Quantum, innerQuantumPointer.Quantum);
+
+                    if (reachableFrom != null)
+                        return reachableFrom;
+                }
             }
 
-            return false;
+            return null;
         }
+
+        //public static void Ringify(Quantum quantum)
+        //{
+        //    if (IsReachable(quantum))
+        //    {
+        //        Detach(quantum);
+
+        //        foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
+        //            Ringify(quantumPointer.Quantum);
+        //    }
+        //}
+
+        //private static bool IsReachable(Quantum quantum)
+        //{
+        //    foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)            
+        //        if (IsReachable(quantum, quantum, quantumPointer.Quantum))
+        //            return true;            
+
+        //    return false;
+        //}
+
+        //private static bool IsReachable(Quantum srcQuantum, Quantum parentQuantum, Quantum childQuantum)
+        //{
+        //    List<QuantumPointer> quantumPointersList = childQuantum.QuantumPointers.Where(qp => qp.Quantum != parentQuantum).ToList();
+
+        //    foreach (QuantumPointer quantumPointer in quantumPointersList)
+        //    {
+        //        if (quantumPointer.Quantum == srcQuantum)
+        //            return true;
+
+        //        foreach (QuantumPointer innerQuantumPointer in quantumPointer.Quantum.QuantumPointers)                
+        //            if (IsReachable(srcQuantum, quantumPointer.Quantum, innerQuantumPointer.Quantum))
+        //                return true;
+        //    }
+
+        //    return false;
+        //}
 
         public static void Collapse(Quantum quantum)  
         {

@@ -58,5 +58,7 @@ namespace Qntm
 			get { return QuantumPointers.Count; }
 		}
 
+		public string Name { get; set; }
+
 	}
 }
