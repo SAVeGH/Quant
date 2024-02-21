@@ -31,7 +31,7 @@ namespace QuantTest.StepDefinitions
         public void ThenQuantumHasOneWayReferenceToQuantum(string a, string b)
         {
             string qAName = "Quantum_" + a;
-            string qBName = "Quantum_" + a;
+            string qBName = "Quantum_" + b;
             Quantum qA = (Quantum)_scenarioContext[qAName];
             Quantum qB = (Quantum)_scenarioContext[qBName];
 

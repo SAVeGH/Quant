@@ -21,7 +21,7 @@ namespace Qntm
 		double _angle = double.NaN;
 
 		//double _scale = 1.0;
-		public List<QuantumPointer> QuantumPointers { get; private set; } = new List<QuantumPointer>();
+		public HashSet<QuantumPointer> QuantumPointers { get; private set; } = new HashSet<QuantumPointer>();
 
         public Quantum(double angle)
         {
