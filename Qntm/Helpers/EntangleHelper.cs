@@ -63,21 +63,62 @@ namespace Qntm.Helpers
             return false;
         }
 
-        public static void Collapse(Quantum quantum)  
+        public static void Collapse(Quantum quantum)
         {
-            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+            // кванты на которые ссылается квант
+            List<Quantum> outLinks = quantum.QuantumPointers.Select(qp => qp.Quantum).ToList();
+            // кванты которые ссылаются на квант
+            List<Quantum> inLinks = GetReferencesList(quantum);
+
+            foreach (Quantum outQuantum in outLinks)
             {
-                Quantum referencedQuantum = quantumPointer.Quantum;
 
-                QuantumPointer refQuantumPointer = referencedQuantum.QuantumPointers.FirstOrDefault(pointer => pointer.Quantum == quantum);
-
-                referencedQuantum.QuantumPointers.Remove(refQuantumPointer);
             }
 
             quantum.QuantumPointers.Clear();
         }
 
-        
+        private static List<Quantum> GetReferencesList(Quantum quantum)
+        {
+            List<Quantum> referencesList = new List<Quantum>();
+
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)            
+                GetReferencesList(quantum, quantumPointer.Quantum, referencesList);
+
+            return referencesList.Distinct().ToList();
+        }
+
+        private static List<Quantum> GetReferencesList(Quantum quantumSearch, Quantum quantum, List<Quantum> referencesList)
+        {
+            if(quantum == quantumSearch)
+                return referencesList;
+
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+            {
+                if (quantumPointer.Quantum == quantumSearch)
+                    referencesList.Add(quantum);
+
+                GetReferencesList(quantumSearch, quantumPointer.Quantum, referencesList);
+            }
+
+            return referencesList;
+        }
+
+        //public static void Collapse(Quantum quantum)  
+        //{
+        //    foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+        //    {
+        //        Quantum referencedQuantum = quantumPointer.Quantum;
+
+        //        QuantumPointer refQuantumPointer = referencedQuantum.QuantumPointers.FirstOrDefault(pointer => pointer.Quantum == quantum);
+
+        //        referencedQuantum.QuantumPointers.Remove(refQuantumPointer);
+        //    }
+
+        //    quantum.QuantumPointers.Clear();
+        //}
+
+
         public static void Roll(Quantum quantum, double probabilityChange)
         {
             if (quantum == null)
