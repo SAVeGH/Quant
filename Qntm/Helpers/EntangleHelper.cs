@@ -140,8 +140,51 @@ namespace Qntm.Helpers
             return referencesList;
         }
 
+        //public static void Roll(Quantum quantum, double probabilityChange)
+        //{
+        //    if (quantum == null)
+        //        return;
+
+        //    if (quantum.QuantumPointers.Count == 0)
+        //        return;
+
+        //    // сколько пришлось на каждую связь
+        //    double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
+        //    double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
+
+
+        //    foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+        //    {
+        //        Quantum nextQuantum = quantumPointer.Quantum;
+
+        //        double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
+
+        //        double resultProbAngle = currentProbAngle + shiftProbabilityAngle; // получился угол вероятности в радианах
+
+        //        nextQuantum.Angle = QuantumAngle(resultProbAngle);
+
+        //    }
+        //}
+
         public static void Roll(Quantum quantum, double probabilityChange)
         {
+            if (quantum == null)
+                return;
+
+            if (quantum.QuantumPointers.Count == 0)
+                return;
+
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
+            {
+                Roll(quantum, quantumPointer.Quantum, probabilityChange);
+            }
+        }
+
+        public static void Roll(Quantum quantumInitiator, Quantum quantum, double probabilityChange)
+        {
+            if (quantumInitiator == quantum)
+                return;
+
             if (quantum == null)
                 return;
 
@@ -152,16 +195,18 @@ namespace Qntm.Helpers
             double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
             double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
 
-            
-            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
+
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
             {
                 Quantum nextQuantum = quantumPointer.Quantum;
 
                 double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
-                
+
                 double resultProbAngle = currentProbAngle + shiftProbabilityAngle; // получился угол вероятности в радианах
 
                 nextQuantum.Angle = QuantumAngle(resultProbAngle);
+
+                Roll(quantumInitiator, nextQuantum, probabilityChangePart);
 
             }
         }
