@@ -18,6 +18,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext = scenarioContext;
         }
 
+        [Given(@"Ringify '([^']*)'")]
         [When(@"Ringify '([^']*)'")]
         public void WhenRingify(string a)
         {

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace Qntm
 {
     public class QuantumPointer
-    {
+    {        
         private Quantum _quantum;
 
         public QuantumPointer(Quantum quantum) 
-        {
+        {            
             _quantum = quantum;
         }
 

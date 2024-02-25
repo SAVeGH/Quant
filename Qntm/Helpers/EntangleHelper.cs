@@ -12,8 +12,11 @@ namespace Qntm.Helpers
             QuantumPointer quantumPointer1 = new QuantumPointer(quantum1);
             QuantumPointer quantumPointer2 = new QuantumPointer(quantum2);
 
-            quantum1.QuantumPointers.Add(quantumPointer2);
-            quantum2.QuantumPointers.Add(quantumPointer1);
+            if(!quantum1.QuantumPointers.Any(qp => qp.Quantum == quantum2))
+                quantum1.QuantumPointers.Add(quantumPointer2);
+
+            if(!quantum2.QuantumPointers.Any(qp => qp.Quantum == quantum1))
+                quantum2.QuantumPointers.Add(quantumPointer1);
 
             if (!doRingify)
                 return;
@@ -65,16 +68,49 @@ namespace Qntm.Helpers
 
         public static void Collapse(Quantum quantum)
         {
-            // кванты на которые ссылается квант
+            // кванты на которые ссылается квант - тут как минимум 1 ссылка будет т.к. запутанный квант обязательно на кого то ссылается
             List<Quantum> outLinks = quantum.QuantumPointers.Select(qp => qp.Quantum).ToList();
             // кванты которые ссылаются на квант
             List<Quantum> inLinks = GetReferencesList(quantum);
-
+            
             foreach (Quantum outQuantum in outLinks)
             {
+                if (inLinks.Contains(outQuantum))
+                {
+                    // квант имел и прямуюи обратную ссылку
+                    // взять все которые ссылаются на квант кроме себя
+                    // добавить ссылки на все inLinks
+                    foreach (Quantum inQuantum in inLinks.Where(q => q != outQuantum)) 
+                    {
+                        if (outQuantum.QuantumPointers.Any(qp => qp.Quantum == inQuantum))
+                            continue;
 
+                        QuantumPointer pointer = new QuantumPointer(inQuantum);
+
+                        outQuantum.QuantumPointers.Add(pointer);
+                    }
+                }
+               
+                // все inLinks должны получить ссылку на outQuantum    
+                foreach (Quantum inQuantum in inLinks.Where(q => q != outQuantum))
+                {
+                    if (inQuantum.QuantumPointers.Any(qp => qp.Quantum == outQuantum))
+                        continue;
+                
+                    QuantumPointer pointer = new QuantumPointer(outQuantum);
+                
+                    inQuantum.QuantumPointers.Add(pointer);
+                }                
             }
 
+            // удалить все ссылки на квант в других квантах
+            foreach (Quantum inQuantum in inLinks) 
+            {
+                QuantumPointer pointer = inQuantum.QuantumPointers.First(qp => qp.Quantum == quantum);
+
+                inQuantum.QuantumPointers.Remove(pointer);
+            }
+            // удалить все ссылки кванта на другие кванты
             quantum.QuantumPointers.Clear();
         }
 
@@ -104,21 +140,6 @@ namespace Qntm.Helpers
             return referencesList;
         }
 
-        //public static void Collapse(Quantum quantum)  
-        //{
-        //    foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
-        //    {
-        //        Quantum referencedQuantum = quantumPointer.Quantum;
-
-        //        QuantumPointer refQuantumPointer = referencedQuantum.QuantumPointers.FirstOrDefault(pointer => pointer.Quantum == quantum);
-
-        //        referencedQuantum.QuantumPointers.Remove(refQuantumPointer);
-        //    }
-
-        //    quantum.QuantumPointers.Clear();
-        //}
-
-
         public static void Roll(Quantum quantum, double probabilityChange)
         {
             if (quantum == null)
@@ -131,6 +152,7 @@ namespace Qntm.Helpers
             double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
             double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
 
+            
             foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
             {
                 Quantum nextQuantum = quantumPointer.Quantum;

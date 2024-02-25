@@ -57,8 +57,14 @@ namespace Qntm.Helpers
             quantum.Angle = result ? resultUnityAngle : resultZeroAngle;
             //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
 
+            double shiftToZeroSign = shiftToZero >= 0 ? 1 : -1;
+            double shiftToUnitySign = shiftToUnity >= 0 ? 1 : -1;
+
+            double toZeroProbabilityChange = unityProbability * shiftToZeroSign;
+            double toUnityProbabilityChange = zeroProbability * shiftToUnitySign;
+
             // абсолютное изменение вероятности в терминах вероятности '+' - против часовой, '-' - по часовой
-            double probabilityChange = result ? zeroProbability : -unityProbability;    
+            double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;    
             
             // сдвигаем связи на угол смещения вероятности кванта
             EntangleHelper.Roll(quantum, probabilityChange);
