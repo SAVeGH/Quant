@@ -57,18 +57,17 @@ Examples:
 # Таким образом в 1/3 случаев получим 'A' = 1 и 'B','C' = 0, а в оставшихся случаях 'A' = 0 и 'B','C' поделят пополам состояния 01 и 10.
 Scenario: W state
 Given System has quantums
-	| Name | Angle     | Scale |
-	| A    | <A_Angle> | -2    |
-	| B    | <B_Angle> | -2    |
-	| C    | <C_Angle> | -2    |
+	| Name |  Angle		   |
+	| A    |  <A_Angle>    |
+	| B    |  <B_Angle>    |
+	| C    |  <C_Angle>    |
 	And Quantums 'A' and 'B' are entangled
 	And Quantums 'B' and 'C' are entangled
 	And Quantums 'A' and 'C' are entangled
 	When Measure quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
 	And Measure quantum 'C' in basis 0
-	Then Measurment result corresponds to W state 
-	
+	Then Measurment result corresponds to W state
 Examples:
 | A_Angle      | B_Angle      | C_Angle      |
 | 35.2644      | 35.2644      | 35.2644      |

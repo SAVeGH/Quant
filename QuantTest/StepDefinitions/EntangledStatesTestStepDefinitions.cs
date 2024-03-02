@@ -60,5 +60,28 @@ namespace QuantTest.StepDefinitions
                 Assert.IsFalse(qAResult == qBResult);
         }
 
+
+        [Then(@"Measurment result corresponds to W state")]
+        public void ThenMeasurmentResultCorrespondsToWState()
+        {
+            string qAResultName = "Quantum_A_Result";
+            bool qAResult = (bool)_scenarioContext[qAResultName];
+
+            string qBResultName = "Quantum_B_Result";
+            bool qBResult = (bool)_scenarioContext[qBResultName];
+
+            string qCResultName = "Quantum_C_Result";
+            bool qCResult = (bool)_scenarioContext[qCResultName];
+
+            int a = qAResult ? 1 : 0;
+            int b = qBResult ? 1 : 0;
+            int c = qCResult ? 1 : 0;
+
+            int result = a + b + c;
+
+            Assert.IsTrue(result == 1);
+        }
+
+
     }
 }

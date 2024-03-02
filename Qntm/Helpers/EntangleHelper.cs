@@ -77,7 +77,7 @@ namespace Qntm.Helpers
             {
                 if (inLinks.Contains(outQuantum))
                 {
-                    // квант имел и прямуюи обратную ссылку
+                    // квант имел и прямую и обратную ссылку
                     // взять все которые ссылаются на квант кроме себя
                     // добавить ссылки на все inLinks
                     foreach (Quantum inQuantum in inLinks.Where(q => q != outQuantum)) 
@@ -129,6 +129,9 @@ namespace Qntm.Helpers
             if(quantum == quantumSearch)
                 return referencesList;
 
+            if(referencesList.Contains(quantum))
+                return referencesList;
+
             foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
             {
                 if (quantumPointer.Quantum == quantumSearch)
@@ -140,32 +143,6 @@ namespace Qntm.Helpers
             return referencesList;
         }
 
-        //public static void Roll(Quantum quantum, double probabilityChange)
-        //{
-        //    if (quantum == null)
-        //        return;
-
-        //    if (quantum.QuantumPointers.Count == 0)
-        //        return;
-
-        //    // сколько пришлось на каждую связь
-        //    double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
-        //    double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
-
-
-        //    foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
-        //    {
-        //        Quantum nextQuantum = quantumPointer.Quantum;
-
-        //        double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
-
-        //        double resultProbAngle = currentProbAngle + shiftProbabilityAngle; // получился угол вероятности в радианах
-
-        //        nextQuantum.Angle = QuantumAngle(resultProbAngle);
-
-        //    }
-        //}
-
         public static void Roll(Quantum quantum, double probabilityChange)
         {
             if (quantum == null)
@@ -174,27 +151,13 @@ namespace Qntm.Helpers
             if (quantum.QuantumPointers.Count == 0)
                 return;
 
-            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
-            {
-                Roll(quantum, quantumPointer.Quantum, probabilityChange);
-            }
-        }
+            List<Quantum> passedList = new List<Quantum>();
 
-        public static void Roll(Quantum quantumInitiator, Quantum quantum, double probabilityChange)
-        {
-            if (quantumInitiator == quantum)
-                return;
-
-            if (quantum == null)
-                return;
-
-            if (quantum.QuantumPointers.Count == 0)
-                return;
+            passedList.Add(quantum);
 
             // сколько пришлось на каждую связь
             double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
             double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
-
 
             foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
             {
@@ -205,9 +168,48 @@ namespace Qntm.Helpers
                 double resultProbAngle = currentProbAngle + shiftProbabilityAngle; // получился угол вероятности в радианах
 
                 nextQuantum.Angle = QuantumAngle(resultProbAngle);
+            }
 
-                Roll(quantumInitiator, nextQuantum, probabilityChangePart);
+            passedList.AddRange(quantum.QuantumPointers.Select(qp => qp.Quantum));
 
+            foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
+            {
+                Roll(quantumPointer.Quantum, probabilityChangePart, passedList);
+            }
+        }
+
+        public static void Roll(Quantum quantum, double probabilityChange, List<Quantum> passedList)
+        {
+            if (quantum == null)
+                return;
+
+            if (quantum.QuantumPointers.Count == 0)
+                return;
+
+            passedList.Add(quantum);
+
+            List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
+
+            // сколько пришлось на каждую связь
+            double probabilityChangePart = probabilityChange / linksList.Count;
+            double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
+
+            foreach (QuantumPointer quantumPointer in linksList)
+            {
+                Quantum nextQuantum = quantumPointer.Quantum;
+
+                double currentProbAngle = ProbabilityAngle(nextQuantum); // текущий угол кванта в углах вероятности
+
+                double resultProbAngle = currentProbAngle + shiftProbabilityAngle; // получился угол вероятности в радианах
+
+                nextQuantum.Angle = QuantumAngle(resultProbAngle);
+            }
+
+            passedList.AddRange(linksList.Select(qp => qp.Quantum));
+
+            foreach (QuantumPointer quantumPointer in linksList)
+            {
+                Roll(quantumPointer.Quantum, probabilityChangePart, passedList);
             }
         }
 

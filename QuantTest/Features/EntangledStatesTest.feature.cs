@@ -339,20 +339,16 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name",
-                            "Angle",
-                            "Scale"});
+                            "Angle"});
                 table3.AddRow(new string[] {
                             "A",
-                            string.Format("{0}", a_Angle),
-                            "-2"});
+                            string.Format("{0}", a_Angle)});
                 table3.AddRow(new string[] {
                             "B",
-                            string.Format("{0}", b_Angle),
-                            "-2"});
+                            string.Format("{0}", b_Angle)});
                 table3.AddRow(new string[] {
                             "C",
-                            string.Format("{0}", c_Angle),
-                            "-2"});
+                            string.Format("{0}", c_Angle)});
 #line 59
 testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
 #line hidden
