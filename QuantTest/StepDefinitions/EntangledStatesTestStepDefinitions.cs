@@ -26,6 +26,19 @@ namespace QuantTest.StepDefinitions
             EntangleHelper.Entangle(qA, qB);
         }
 
+        [Given(@"Quantums '([^']*)' and '([^']*)' are entangled inverse")]
+        public void GivenQuantumsAndAreEntangledInverse(string a, string b)
+        {
+            string qAName = "Quantum_" + a;
+            Quantum qA = (Quantum)_scenarioContext[qAName];
+
+            string qBName = "Quantum_" + b;
+            Quantum qB = (Quantum)_scenarioContext[qBName];
+
+            EntangleHelper.Entangle(qA, qB, isInverse: true);
+        }
+
+
         [When(@"Measure quantum '([^']*)'")]
         public void WhenMeasureQuantum(string a)
         {

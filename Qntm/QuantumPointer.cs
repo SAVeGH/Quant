@@ -16,5 +16,7 @@ namespace Qntm
         }
 
         public Quantum Quantum { get { return _quantum; } }
+
+        public bool IsInverse { get; set; }
     }
 }

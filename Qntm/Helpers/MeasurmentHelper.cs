@@ -63,11 +63,11 @@ namespace Qntm.Helpers
             double toZeroProbabilityChange = unityProbability * shiftToZeroSign;
             double toUnityProbabilityChange = zeroProbability * shiftToUnitySign;
 
-            // абсолютное изменение вероятности в терминах вероятности '+' - против часовой, '-' - по часовой
+            // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
             double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;    
             
             // сдвигаем связи на угол смещения вероятности кванта
-            EntangleHelper.Roll(quantum, probabilityChange);
+            EntangleHelper.Distribute(quantum, probabilityChange);
 
             // отсоединяем квант из цепи
             EntangleHelper.Collapse(quantum);

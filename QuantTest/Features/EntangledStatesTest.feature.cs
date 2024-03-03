@@ -353,13 +353,13 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
 #line hidden
 #line 64
- testRunner.And("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Quantums \'A\' and \'B\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 65
- testRunner.And("Quantums \'B\' and \'C\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Quantums \'B\' and \'C\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 66
- testRunner.And("Quantums \'A\' and \'C\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("Quantums \'A\' and \'C\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 67
  testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
