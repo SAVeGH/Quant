@@ -67,11 +67,11 @@ namespace QuantTest.StepDefinitions
             switch (intValue) 
             {
                 case 0:
-                    return 0;
+                    return 90.0 * Angles._rad;
                 case 1:
-                    return 120.0 * Angles._rad;
+                    return 210.0 * Angles._rad;
                 case 2:
-                    return 240.0 * Angles._rad;
+                    return 330.0 * Angles._rad;
             }
 
             return 0;
