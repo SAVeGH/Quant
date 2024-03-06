@@ -44,7 +44,7 @@ namespace QuantTest.StepDefinitions
             List<Quantum> quantumStream = (List<Quantum>)_scenarioContext[sourceStreamName];
             List<bool> measurmentResults = new List<bool>();
 
-            Guid guid = new Guid();
+            Guid guid = Guid.NewGuid();
             byte[] bytes = guid.ToByteArray();
             int seed = BitConverter.ToInt32(bytes, 0);
             Random rnd = new Random(seed);
