@@ -19,7 +19,10 @@ namespace QuantTest.StepDefinitions
         {
             List<Quantum> quantumsStream = new List<Quantum>();
 
-            Random randomAngle = new Random();
+            Guid guid = Guid.NewGuid();
+            int seed = BitConverter.ToInt32(guid.ToByteArray());
+
+            Random randomAngle = new Random(seed);
 
             for (int i = 0; i < p0; i++)            
                 quantumsStream.Add(new Quantum(Angles._360degree * randomAngle.NextDouble()));

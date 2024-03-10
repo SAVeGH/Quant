@@ -61,7 +61,9 @@ namespace QuantTest.StepDefinitions
         // просто 'тяжелая' операция с произвольным временем выполнения
         private void RandomDelay()
         {
-            Random random = new Random();
+            Guid guid = Guid.NewGuid();
+            int seed = BitConverter.ToInt32(guid.ToByteArray());
+            Random random = new Random(seed);
 
             double result = 0;
             double a = 12346789.0 * random.NextDouble();
