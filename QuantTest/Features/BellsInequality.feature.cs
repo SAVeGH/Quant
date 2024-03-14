@@ -122,15 +122,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
- testRunner.Given("System has stream of entangled quantums size of 100000", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 8
- testRunner.When("\'Alice\' has measured strem using arbitrary basises from three options basises", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 9
- testRunner.And("\'Bob\' has measured strem using arbitrary basises from three options basises", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("System has stream of entangled quantums size of 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 10
+ testRunner.When("Alice and Bob has measured strem using arbitrary basises from three options basis" +
+                        "es", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 11
  testRunner.Then("Comparision gives 1/2 of matched results for quantum case rather than 5/9 for the" +
                         " classical case with devation of 1 percents", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden

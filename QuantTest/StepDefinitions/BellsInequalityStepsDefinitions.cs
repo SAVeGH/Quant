@@ -37,7 +37,7 @@ namespace QuantTest.StepDefinitions
                 //Quantum quantumB = new Quantum(Angles._360degree * randomAngle.NextDouble());
 
                 // если А измеринтся в 1 то В точно в 0 в том же базисе. Поэтому inverse
-                EntangleHelper.Entangle(quantumA, quantumB, isInverse: true);
+                EntangleHelper.Entangle(quantumA, quantumB);
 
                 AliceStream.Add(quantumA);
                 BobStream.Add(quantumB);
@@ -51,25 +51,79 @@ namespace QuantTest.StepDefinitions
         [When(@"'([^']*)' has measured strem using arbitrary basises from three options basises")]
         public void WhenHasMeasuredStremUsingArbitraryBasisesFromThreeOptionsBasises(string name)
         {
-            string sourceStreamName = $"{name}Stream";
-            List<Quantum> quantumStream = (List<Quantum>)_scenarioContext[sourceStreamName];
-            List<bool> measurmentResults = new List<bool>();
+            string AliceStreamName = $"AliceStream";
+            string BobStreamName = $"BobStream";
+            List<Quantum> AliceQuantumStream = (List<Quantum>)_scenarioContext[AliceStreamName];
+            List<Quantum> BobQuantumStream = (List<Quantum>)_scenarioContext[BobStreamName];
+
+            List<bool> AliceMeasurmentResults = new List<bool>();
+            List<bool> BobMeasurmentResults = new List<bool>();
 
             Guid guid = Guid.NewGuid();
             byte[] bytes = guid.ToByteArray();
             int seed = BitConverter.ToInt32(bytes, 0);
             Random rnd = new Random(seed);
 
-            foreach (Quantum item in quantumStream) 
+            foreach (Quantum item in AliceQuantumStream) 
             {
                 double basisAngle = GetRandomBasisAngle(rnd);
                 bool mResult = MeasurmentHelper.Measure(item, basisAngle);
-                measurmentResults.Add(mResult);
+                AliceMeasurmentResults.Add(mResult);
             }
 
-            string measurmentResultsName = $"{name}MeasurmentResults";
-            _scenarioContext[measurmentResultsName] = measurmentResults;
+            foreach (Quantum item in BobQuantumStream)
+            {
+                double basisAngle = GetRandomBasisAngle(rnd);
+                bool mResult = MeasurmentHelper.Measure(item, basisAngle);
+                BobMeasurmentResults.Add(mResult);
+            }
+
+
+            string AliceMeasurmentResultsName = $"AliceMeasurmentResults";
+            _scenarioContext[AliceMeasurmentResultsName] = AliceMeasurmentResults;
+
+            string BobMeasurmentResultsName = $"AliceMeasurmentResults";
+            _scenarioContext[BobMeasurmentResultsName] = BobMeasurmentResults;
         }
+
+        [When(@"Alice and Bob has measured strem using arbitrary basises from three options basises")]
+        public void WhenAliceAndBobHasMeasuredStremUsingArbitraryBasisesFromThreeOptionsBasises()
+        {
+            string AliceStreamName = $"AliceStream";
+            string BobStreamName = $"BobStream";
+            List<Quantum> AliceQuantumStream = (List<Quantum>)_scenarioContext[AliceStreamName];
+            List<Quantum> BobQuantumStream = (List<Quantum>)_scenarioContext[BobStreamName];
+
+            List<bool> AliceMeasurmentResults = new List<bool>();
+            List<bool> BobMeasurmentResults = new List<bool>();
+
+            Guid guid = Guid.NewGuid();
+            byte[] bytes = guid.ToByteArray();
+            int seed = BitConverter.ToInt32(bytes, 0);
+            Random rnd = new Random(seed);
+
+            foreach (Quantum item in AliceQuantumStream)
+            {
+                double basisAngle = GetRandomBasisAngle(rnd);
+                bool mResult = MeasurmentHelper.Measure(item, basisAngle);
+                AliceMeasurmentResults.Add(mResult);
+            }
+
+            foreach (Quantum item in BobQuantumStream)
+            {
+                double basisAngle = GetRandomBasisAngle(rnd);
+                bool mResult = MeasurmentHelper.Measure(item, basisAngle);
+                BobMeasurmentResults.Add(mResult);
+            }
+
+
+            string AliceMeasurmentResultsName = $"AliceMeasurmentResults";
+            _scenarioContext[AliceMeasurmentResultsName] = AliceMeasurmentResults;
+
+            string BobMeasurmentResultsName = $"BobMeasurmentResults";
+            _scenarioContext[BobMeasurmentResultsName] = BobMeasurmentResults;
+        }
+
 
         private double GetRandomBasisAngle(Random rnd) 
         {
