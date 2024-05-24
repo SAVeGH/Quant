@@ -125,7 +125,7 @@ namespace QuantTest.StepDefinitions
             for (int i = 0; i < count; i++)
             {
                 if (MeasurmentHelper.Measure(q, 0)) trues++; else falses++;
-                q.Reset(Angles._45degree); // восстановить состояние после измерения
+                q.Reset(Angles._90degree); // восстановить состояние после измерения
                 if(doDelay) RandomDelay();
             }
             // Деление trues покажет веротность единицы 

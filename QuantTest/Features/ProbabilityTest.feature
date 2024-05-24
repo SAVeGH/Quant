@@ -4,7 +4,7 @@
 Scenario: Probability should decrease deviation with measurments amount grouth
 	Given System has quantums
 	| Name | Angle |
-	| A    | 45    |
+	| A    | 90    |
 	When Define deviation from probability 1/2 after 100 measurments of quantum 'A'	
 	And Define deviation from probability 1/2 after 10000 measurments of quantum 'A'
 	Then Measurment deviation after 10000 measurments of quantum 'A' is less than deviation after 100 measurments of quantum 'A'
@@ -15,6 +15,6 @@ Scenario: Probability should decrease deviation with measurments amount grouth
 Scenario: Probability should be distributed uniformly
 	Given System has quantums
 		| Name | Angle |
-		| A    | 45    |
+		| A    | 90    |
 	When Collect side results of 10000 measurment sets of qunat 'A' size of 100 measurments
 	Then Balance deviation should not exceed 5 percents 

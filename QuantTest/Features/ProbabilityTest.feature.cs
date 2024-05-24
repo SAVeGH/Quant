@@ -124,7 +124,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Angle"});
                 table5.AddRow(new string[] {
                             "A",
-                            "45"});
+                            "90"});
 #line 5
  testRunner.Given("System has quantums", ((string)(null)), table5, "Given ");
 #line hidden
@@ -175,7 +175,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Angle"});
                 table6.AddRow(new string[] {
                             "A",
-                            "45"});
+                            "90"});
 #line 16
  testRunner.Given("System has quantums", ((string)(null)), table6, "Given ");
 #line hidden
