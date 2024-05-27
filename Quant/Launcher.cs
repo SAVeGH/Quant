@@ -64,7 +64,7 @@ namespace Quant
                 for (int i = 0; i < 1000; i++)
                 {
                     double qAngle = q.Angle;
-                    if (MeasurmentHelper.Measure(q, 240.0 * Angles._rad)) trues++; else falses++;
+                    if (MeasurmentHelper.Measure(q, 90.0 * Angles._rad)) trues++; else falses++;
                     q.Reset(qAngle);
                     //Thread.Sleep(r.Next(0, 30));
                 }
