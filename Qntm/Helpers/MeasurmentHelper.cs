@@ -29,12 +29,9 @@ namespace Qntm.Helpers
 
             double resultDiff = Math.Min(anglesDiffRest, anglesDiff); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
             // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
+            // вероятности при текущем положении вектора
             double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
             double zeroProbability = 1.0 - unityProbability;
-
-            // вероятности при текущем положении вектора
-            //double unityProbability = Math.Pow(Math.Sin(actualQuantumMeasurmentAngle), 2.0);
-            //double zeroProbability = 1.0 - unityProbability;
 
             // насколько сдвинулись к 1. поэтому Sin. Если угол 0  - то вектор кванта на оси 0. Возводим компоненту амплитуды вероятности 1 в степень 2 для получениея вероятности 1.
             uint BasisNumerator = (uint)Math.Round((double)(QuantumThreadWorker.BasisDenominator - 1) * unityProbability);

@@ -38,7 +38,7 @@ namespace QuantTest.StepDefinitions
             List<Quantum> passedStream = new List<Quantum>();
 
             // фильтры ставятся с углами 0-90 что соответствует измерениям с углами 0-180 - поэтому умножаем угол измерения на 2
-            double measurmentAngle = ((double)(p0 * 2)) * Angles._rad;            
+            double measurmentAngle = ((double)(p0 * 2.0)) * Angles._rad;            
 
             foreach (Quantum quantum in quantumsStream) 
             {

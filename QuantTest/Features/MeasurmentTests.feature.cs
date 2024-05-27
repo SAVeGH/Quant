@@ -158,14 +158,14 @@ this.MeasurmentMustGiveCorrectPropability("0", "0", "0", "0", ((string[])(null))
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "45")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
         public virtual void MeasurmentMustGiveCorrectPropability_Variant1()
         {
 #line 5
-this.MeasurmentMustGiveCorrectPropability("45", "0", "0.5", "10", ((string[])(null)));
+this.MeasurmentMustGiveCorrectPropability("90", "0", "0.5", "10", ((string[])(null)));
 #line hidden
         }
         
@@ -173,14 +173,14 @@ this.MeasurmentMustGiveCorrectPropability("45", "0", "0.5", "10", ((string[])(nu
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 2")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 2")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "180")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
         public virtual void MeasurmentMustGiveCorrectPropability_Variant2()
         {
 #line 5
-this.MeasurmentMustGiveCorrectPropability("90", "0", "1", "0", ((string[])(null)));
+this.MeasurmentMustGiveCorrectPropability("180", "0", "1", "0", ((string[])(null)));
 #line hidden
         }
         
@@ -188,14 +188,14 @@ this.MeasurmentMustGiveCorrectPropability("90", "0", "1", "0", ((string[])(null)
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 3")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 3")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "135")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
         public virtual void MeasurmentMustGiveCorrectPropability_Variant3()
         {
 #line 5
-this.MeasurmentMustGiveCorrectPropability("135", "0", "0.5", "10", ((string[])(null)));
+this.MeasurmentMustGiveCorrectPropability("270", "0", "0.5", "10", ((string[])(null)));
 #line hidden
         }
         
@@ -203,71 +203,11 @@ this.MeasurmentMustGiveCorrectPropability("135", "0", "0.5", "10", ((string[])(n
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 4")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 4")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "180")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant4()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("180", "0", "0", "0", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "225")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant5()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("225", "0", "0.5", "10", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 6")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 6")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "270")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant6()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("270", "0", "1", "0", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 7")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 7")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "315")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant7()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("315", "0", "0.5", "10", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 8")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 8")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "360")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant8()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant4()
         {
 #line 5
 this.MeasurmentMustGiveCorrectPropability("360", "0", "0", "0", ((string[])(null)));
@@ -275,14 +215,14 @@ this.MeasurmentMustGiveCorrectPropability("360", "0", "0", "0", ((string[])(null
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 9")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 9")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant9()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant5()
         {
 #line 5
 this.MeasurmentMustGiveCorrectPropability("0", "90", "0.5", "10", ((string[])(null)));
@@ -290,59 +230,29 @@ this.MeasurmentMustGiveCorrectPropability("0", "90", "0.5", "10", ((string[])(nu
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 10")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 6")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 10")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "45")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 6")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant10()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant6()
         {
 #line 5
-this.MeasurmentMustGiveCorrectPropability("45", "90", "0", "0", ((string[])(null)));
+this.MeasurmentMustGiveCorrectPropability("90", "90", "0", "0", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 11")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 7")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 11")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "90")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant11()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("90", "90", "0.5", "10", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 12")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 12")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "135")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "1")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant12()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("135", "90", "1", "0", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 13")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 13")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 7")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "180")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant13()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant7()
         {
 #line 5
 this.MeasurmentMustGiveCorrectPropability("180", "90", "0.5", "10", ((string[])(null)));
@@ -350,59 +260,29 @@ this.MeasurmentMustGiveCorrectPropability("180", "90", "0.5", "10", ((string[])(
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 14")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 8")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 14")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "225")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant14()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("225", "90", "0", "0", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 15")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 15")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 8")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "270")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant15()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("270", "90", "0.5", "10", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 16")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 16")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "315")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "0")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant16()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant8()
         {
 #line 5
-this.MeasurmentMustGiveCorrectPropability("315", "90", "1", "0", ((string[])(null)));
+this.MeasurmentMustGiveCorrectPropability("270", "90", "1", "0", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 17")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 9")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 17")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 9")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "360")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.5")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant17()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant9()
         {
 #line 5
 this.MeasurmentMustGiveCorrectPropability("360", "90", "0.5", "10", ((string[])(null)));
@@ -410,14 +290,44 @@ this.MeasurmentMustGiveCorrectPropability("360", "90", "0.5", "10", ((string[])(
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 18")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 10")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 18")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 10")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "120")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.75")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant10()
+        {
+#line 5
+this.MeasurmentMustGiveCorrectPropability("120", "0", "0.75", "10", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 11")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 11")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "240")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "0")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.75")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant11()
+        {
+#line 5
+this.MeasurmentMustGiveCorrectPropability("240", "0", "0.75", "10", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 12")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 12")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "120")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.75")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant18()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant12()
         {
 #line 5
 this.MeasurmentMustGiveCorrectPropability("0", "120", "0.75", "10", ((string[])(null)));
@@ -425,14 +335,29 @@ this.MeasurmentMustGiveCorrectPropability("0", "120", "0.75", "10", ((string[])(
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 19")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 13")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 19")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 13")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "240")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "120")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.75")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant13()
+        {
+#line 5
+this.MeasurmentMustGiveCorrectPropability("240", "120", "0.75", "10", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 14")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 14")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "240")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.75")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant19()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant14()
         {
 #line 5
 this.MeasurmentMustGiveCorrectPropability("0", "240", "0.75", "10", ((string[])(null)));
@@ -440,32 +365,17 @@ this.MeasurmentMustGiveCorrectPropability("0", "240", "0.75", "10", ((string[])(
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 20")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 15")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 20")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "90")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "120")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.25")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant20()
-        {
-#line 5
-this.MeasurmentMustGiveCorrectPropability("90", "120", "0.25", "10", ((string[])(null)));
-#line hidden
-        }
-        
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Measurment must give correct propability: Variant 21")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "MeasurmentTests")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 21")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 15")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:qangle", "120")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mangle", "240")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.25")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:uprobalility", "0.75")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:deviation", "10")]
-        public virtual void MeasurmentMustGiveCorrectPropability_Variant21()
+        public virtual void MeasurmentMustGiveCorrectPropability_Variant15()
         {
 #line 5
-this.MeasurmentMustGiveCorrectPropability("90", "240", "0.25", "10", ((string[])(null)));
+this.MeasurmentMustGiveCorrectPropability("120", "240", "0.75", "10", ((string[])(null)));
 #line hidden
         }
     }

@@ -66,13 +66,13 @@ namespace QuantTest.StepDefinitions
             Random random = new Random(seed);
 
             double result = 0;
-            double a = 12346789.0 * random.NextDouble();
-            double b = 12346789.0 * random.NextDouble() + 1.0;
+            double a = 123456789.0 * random.NextDouble();
+            double b = 123456789.0 * random.NextDouble() + 1.0;
 
             int count = random.Next(1000, 10000);
 
             for (int i = 0; i < count; i++)
-                result = a / b;
+                result = result + a / b;
         }
 
     }
