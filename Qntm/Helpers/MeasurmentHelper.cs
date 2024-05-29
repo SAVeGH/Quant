@@ -23,7 +23,9 @@ namespace Qntm.Helpers
             // положение полюса 1 на шкале от 0 до 360
             double actualMeasureAngle1 = AngleHelper.Positive360RangeAngle(actualMeasureAngle0 + Angles._180degree);
 
-            double anglesDiff = Math.Abs(quantum.Angle - actualMeasureAngle0); // разница углов
+            double measurmentDiff = quantum.Angle - actualMeasureAngle0;
+
+            double anglesDiff = Math.Abs(measurmentDiff); // разница углов
 
             double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
 
@@ -39,12 +41,7 @@ namespace Qntm.Helpers
             // результат измерения относительно заданного базиса
             bool result = QuantumThreadWorker.Measure(BasisNumerator);
             //Debug.WriteLine("Measure: result: " + result.ToString());
-
-            //double shiftToZero = AngleShiftToZeroAxis(quantumMeasurmentAngle);
-            //double shiftToUnity = AngleShiftToUnityAxis(quantumMeasurmentAngle);
-
-            //double resultZeroAngle = quantum.Angle + shiftToZero;
-            //double resultUnityAngle = quantum.Angle + shiftToUnity;
+            
             // изменение угла кванта после измерения в заданном базисе
             // вектор кванта 'ложиться' ('прилипает') на ось 1 или 0 базиса измерения
             quantum.Angle = result ? actualMeasureAngle1 : actualMeasureAngle0;
