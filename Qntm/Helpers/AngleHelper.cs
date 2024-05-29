@@ -8,7 +8,7 @@ namespace Qntm.Helpers
         /// <summary>
         /// Положительный угол на шкале 0-360
         /// </summary>
-        /// <param name="angle">Значение угла (может быть + и -)</param>
+        /// <param name="angle">Значение угла (может быть + и -). Значение будет считаться радианами.</param>
         /// <returns>Положительный угол (0-360) в радианах</returns>
         public static double Positive360RangeAngle(double angle)
         {

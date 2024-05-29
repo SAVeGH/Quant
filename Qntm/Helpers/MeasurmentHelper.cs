@@ -29,7 +29,7 @@ namespace Qntm.Helpers
 
             double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
 
-            double resultDiff = Math.Min(anglesDiffRest, anglesDiff); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
+            double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
             // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
             // вероятности при текущем положении вектора
             double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
@@ -63,6 +63,29 @@ namespace Qntm.Helpers
             //EntangleHelper.Collapse(quantum);
 
             return result;
+        }
+
+        public static bool MeasureTest(double angle, double measurmentAngle /*заданный базис измерения - поворот установки*/)
+        {
+            //Debug.WriteLine("Measure: --------------------------------------------- ");
+            // положение полюса 0 на шкале от 0 до 360
+            double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(measurmentAngle); // чистый угол поворота установки (без лишних оборотов)
+            // положение полюса 1 на шкале от 0 до 360
+            double actualMeasureAngle1 = AngleHelper.Positive360RangeAngle(actualMeasureAngle0 + Angles._180degree);
+
+            double measurmentDiff = angle - actualMeasureAngle0;
+
+            double anglesDiff = Math.Abs(measurmentDiff); // разница углов
+
+            double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
+
+            double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
+            // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
+            // вероятности при текущем положении вектора
+            double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
+            double zeroProbability = 1.0 - unityProbability;
+
+            return true;
         }
 
         //public static bool GetMeasure(double quantumAngle, double measurmentAngle /*заданный базис измерения - поворот установки*/) 
