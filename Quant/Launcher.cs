@@ -14,7 +14,7 @@ namespace Quant
 	{
         public void Run()
         {
-            MeasurmentHelper.MeasureTest(180 * Angles._rad, 0 * Angles._rad);
+            MeasurmentHelper.MeasureTest(260 * Angles._rad, 92 * Angles._rad);
         }
 
         public void Runx()

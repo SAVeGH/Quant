@@ -81,25 +81,20 @@ namespace Qntm.Helpers
 
             double resultDiff = Math.Min(anglesDiff, anglesDiffRest);
 
-
-
-            bool? zeroClockwise = IsClockwise(angle, measurmentAngle);
-
-
+            bool? zeroClockwise = IsZeroClockwise(angle, measurmentAngle);
 
             return true;
         }
-        public static bool? IsClockwise(double qAngle, double mAngle)
+        public static bool? IsZeroClockwise(double qAngle, double mAngle)
         {
-            double diff = qAngle - mAngle
-            if (Math.Abs(qAngle - mAngle) % Angles._180degree == 0)
+            double restAngle = qAngle - mAngle;
+
+            if (Math.Abs(restAngle) % Angles._180degree == 0)
                 return null; // нет поворота - или оба на 0 или на 180 повернуты
 
-            if(qAngle > mAngle &&)
+            double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(restAngle);
 
-            return result;
-
-
+            return actualMeasureAngle0 > Angles._180degree;
         }
 
             //public static bool GetMeasure(double quantumAngle, double measurmentAngle /*заданный базис измерения - поворот установки*/) 
