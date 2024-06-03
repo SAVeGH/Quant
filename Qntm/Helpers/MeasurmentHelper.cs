@@ -29,6 +29,8 @@ namespace Qntm.Helpers
 
             double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
 
+            bool? isZeroClockwise = IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
+
             double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
             // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
             // вероятности при текущем положении вектора
@@ -50,17 +52,17 @@ namespace Qntm.Helpers
             //double shiftToZeroSign = shiftToZero >= 0 ? 1 : -1;
             //double shiftToUnitySign = shiftToUnity >= 0 ? 1 : -1;
 
-            //double toZeroProbabilityChange = unityProbability * shiftToZeroSign;
-            //double toUnityProbabilityChange = zeroProbability * shiftToUnitySign;
+            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? zeroProbability : -zeroProbability);
+            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : unityProbability);
 
             // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
-            //double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
+            double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
 
             // сдвигаем связи на угол смещения вероятности кванта
-            //EntangleHelper.Distribute(quantum, probabilityChange);
+            EntangleHelper.Distribute(quantum, probabilityChange);
 
             // отсоединяем квант из цепи
-            //EntangleHelper.Collapse(quantum);
+            EntangleHelper.Collapse(quantum);
 
             return result;
         }
