@@ -143,7 +143,7 @@ namespace Qntm.Helpers
             return referencesList;
         }
 
-        public static void Distribute(Quantum quantum, double probabilityChange)
+        public static void Distribute(Quantum quantum, double basisAngle0, double probabilityChange)
         {
             if (quantum == null)
                 return;
@@ -153,32 +153,10 @@ namespace Qntm.Helpers
 
             List<Quantum> passedList = new List<Quantum>();
 
-            Distribute(quantum, probabilityChange, passedList);
-            // сколько пришлось на каждую связь
-            //double probabilityChangePart = probabilityChange / quantum.QuantumPointers.Count;
-            //double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
-
-            //foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
-            //{
-            //    Quantum pointerQuantum = quantumPointer.Quantum;
-            //    int changeSign = quantumPointer.IsInverse ? -1 : 1;
-
-            //    double currentProbAngle = ProbabilityAngle(pointerQuantum); // текущий угол кванта в углах вероятности
-
-            //    double resultProbAngle = currentProbAngle + shiftProbabilityAngle * changeSign; // получился угол вероятности в радианах
-
-            //    pointerQuantum.Angle = QuantumAngle(resultProbAngle);
-            //}
-
-            //passedList.AddRange(quantum.QuantumPointers.Select(qp => qp.Quantum));
-
-            //foreach (QuantumPointer quantumPointer in quantum.QuantumPointers)
-            //{
-            //    Distribute(quantumPointer.Quantum, probabilityChangePart, passedList);
-            //}
+            Distribute(quantum, basisAngle0, probabilityChange, passedList);
         }
 
-        private static void Distribute(Quantum quantum, double probabilityChange, List<Quantum> passedList)
+        private static void Distribute(Quantum quantum, double basisAngle0, double probabilityChange, List<Quantum> passedList)
         {
             if (quantum == null)
                 return;
@@ -192,18 +170,32 @@ namespace Qntm.Helpers
 
             // сколько пришлось на каждую связь
             double probabilityChangePart = probabilityChange / linksList.Count;
-            double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения            
+            // вероятность - это квадрат синуса половинного угла
+            // поэтому распакуем в обратную сторону
+            double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
+
+            double probabilityChangeSign = probabilityChange < 0 ? -1.0 : 1.0;
 
             foreach (QuantumPointer quantumPointer in linksList)
             {
                 Quantum pointerQuantum = quantumPointer.Quantum;
                 int changeSign = quantumPointer.IsInverse ? -1 : 1;
 
-                double currentProbAngle = ProbabilityAngle(pointerQuantum); // текущий угол кванта в углах вероятности
+                double measurmentDiff = pointerQuantum.Angle - basisAngle0;
 
-                double resultProbAngle = currentProbAngle + shiftProbabilityAngle * changeSign; // получился угол вероятности в радианах
+                double anglesDiff = Math.Abs(measurmentDiff); // разница углов
 
-                pointerQuantum.Angle = QuantumAngle(resultProbAngle);
+                double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол
+
+                double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
+
+                // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
+                // вероятности при текущем положении вектора
+                double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
+
+
+
+                pointerQuantum.Angle = pointerQuantum.Angle + shiftAngle * changeSign; //QuantumAngle(resultProbAngle);
             }
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
@@ -213,6 +205,43 @@ namespace Qntm.Helpers
                 Distribute(quantumPointer.Quantum, probabilityChangePart, passedList);
             }
         }
+
+
+        //private static void Distribute(Quantum quantum, double probabilityChange, List<Quantum> passedList)
+        //{
+        //    if (quantum == null)
+        //        return;
+
+        //    if (quantum.QuantumPointers.Count == 0)
+        //        return;
+
+        //    passedList.Add(quantum);
+
+        //    List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
+
+        //    // сколько пришлось на каждую связь
+        //    double probabilityChangePart = probabilityChange / linksList.Count;
+        //    double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения            
+
+        //    foreach (QuantumPointer quantumPointer in linksList)
+        //    {
+        //        Quantum pointerQuantum = quantumPointer.Quantum;
+        //        int changeSign = quantumPointer.IsInverse ? -1 : 1;
+
+        //        double currentProbAngle = ProbabilityAngle(pointerQuantum); // текущий угол кванта в углах вероятности
+
+        //        double resultProbAngle = currentProbAngle + shiftProbabilityAngle * changeSign; // получился угол вероятности в радианах
+
+        //        pointerQuantum.Angle = QuantumAngle(resultProbAngle);
+        //    }
+
+        //    passedList.AddRange(linksList.Select(qp => qp.Quantum));
+
+        //    foreach (QuantumPointer quantumPointer in linksList)
+        //    {
+        //        Distribute(quantumPointer.Quantum, probabilityChangePart, passedList);
+        //    }
+        //}
 
         private static double QuantumAngle(double quntumProbabilityAngle)
         {

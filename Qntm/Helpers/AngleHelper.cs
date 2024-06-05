@@ -6,7 +6,7 @@ namespace Qntm.Helpers
     public static class AngleHelper
     {
         /// <summary>
-        /// Положительный угол на шкале 0-360
+        /// Положительный угол на шкале 0-360 в радианах
         /// </summary>
         /// <param name="angle">Значение угла (может быть + и -). Значение будет считаться радианами.</param>
         /// <returns>Положительный угол (0-360) в радианах</returns>
