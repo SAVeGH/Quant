@@ -20,10 +20,10 @@ Scenario: Bell state
 
 Examples:
 | A_Angle | B_Angle | MeasurmentResult |
-| 45      | 45      | match            |
-| 315     | 315     | match            |
-| 45      | 135     | opposed          |
-| 45      | 315     | opposed          |
+| 90      | 90      | match            |
+| 270     | 270     | match            |
+| 90      | 180     | opposed          |
+| 180     | 90      | opposed          |
 
 #1/sqrt(2)000> + 1/sqrt(2)111>
 Scenario: GHZ state

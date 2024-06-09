@@ -30,7 +30,7 @@ namespace Qntm.Helpers
             double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
 
             // определяет поворот вектора кваната к полюсу 0 произойдет по часовой стрелке или против
-            bool? isZeroClockwise = IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
+            bool? isZeroClockwise = AngleHelper.IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
 
             double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
 
@@ -51,9 +51,9 @@ namespace Qntm.Helpers
             quantum.Angle = result ? actualMeasureAngle1 : actualMeasureAngle0;
             //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
 
-            // изменение вероятностей: '+' - по часовой стрелке, '-' - против часовой стрелки
-            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? zeroProbability : -zeroProbability);
-            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : unityProbability);
+            // изменение вероятностей: '+' - против часовой стрелки (углы увеличиваются от 0), '-' - по часовой стрелке (углы уменьшаются)
+            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -zeroProbability : zeroProbability);
+            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? unityProbability : -unityProbability);
 
             // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
             double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
@@ -83,21 +83,11 @@ namespace Qntm.Helpers
 
             double resultDiff = Math.Min(anglesDiff, anglesDiffRest);
 
-            bool? zeroClockwise = IsZeroClockwise(angle, measurmentAngle);
+            bool? zeroClockwise = AngleHelper.IsZeroClockwise(angle, measurmentAngle);
 
             return true;
         }
-        public static bool? IsZeroClockwise(double qAngle, double mAngle)
-        {
-            double restAngle = qAngle - mAngle;
-
-            if (Math.Abs(restAngle) % Angles._180degree == 0)
-                return null; // нет поворота - или оба на 0 или на 180 повернуты
-
-            double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(restAngle);
-
-            return actualMeasureAngle0 > Angles._180degree;
-        }
+       
 
             //public static bool GetMeasure(double quantumAngle, double measurmentAngle /*заданный базис измерения - поворот установки*/) 
             //{

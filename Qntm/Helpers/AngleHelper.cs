@@ -20,6 +20,18 @@ namespace Qntm.Helpers
             return resultAngle;
         }
 
+        public static bool? IsZeroClockwise(double qAngle, double mAngle)
+        {
+            double restAngle = qAngle - mAngle;
+
+            if (Math.Abs(restAngle) % Angles._180degree == 0)
+                return null; // нет поворота - или оба на 0 или на 180 повернуты
+
+            double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(restAngle);
+
+            return actualMeasureAngle0 < Angles._180degree;
+        }
+
         public static double DegreeToRadians(double degreeAngle)
         {
             return Angles._rad * degreeAngle;

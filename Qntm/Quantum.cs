@@ -52,11 +52,6 @@ namespace Qntm
             }
 		}
 
-		public double QuantumPointersCount
-        {
-			get { return QuantumPointers.Count; }
-		}
-
 		public string Name { get; set; }
 
 	}

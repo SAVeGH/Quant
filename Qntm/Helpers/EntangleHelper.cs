@@ -172,7 +172,7 @@ namespace Qntm.Helpers
             double probabilityChangePart = probabilityChange / linksList.Count;
             // вероятность - это квадрат синуса половинного угла
             // поэтому распакуем в обратную сторону
-            double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
+            //double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
 
             double probabilityChangeSign = probabilityChange < 0 ? -1.0 : 1.0;
 
@@ -193,17 +193,46 @@ namespace Qntm.Helpers
                 // вероятности при текущем положении вектора
                 double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
 
+                double resultProbability = unityProbability + probabilityChange;
+                double resultAngle = 0.0;
 
+                if (resultProbability == 1.0)
+                {
+                    resultAngle = AngleHelper.Positive360RangeAngle(basisAngle0 + Angles._180degree); 
+                }
+                else if (resultProbability == 0.0)
+                {
+                    resultAngle = basisAngle0;
+                }
+                else if (resultProbability > 0.0 && resultProbability < 1.0)
+                {
+                    resultAngle = Math.Asin(Math.Sqrt(resultProbability)) * 2.0;
+                }
+                else if (resultProbability > 1.0)
+                {
+                    double probabilityPosition = 1.0 - (resultProbability - 1.0);
+                    resultAngle = (Angles._180degree - Math.Asin(Math.Sqrt(probabilityPosition)) * 2.0) + Angles._180degree;
+                }
+                else if (resultProbability < 0.0) 
+                {
+                    double probabilityPosition = Math.Abs(resultProbability);
+                    resultAngle = Angles._360degree - Math.Asin(Math.Sqrt(probabilityPosition)) * 2.0;
+                }
 
-                pointerQuantum.Angle = pointerQuantum.Angle + shiftAngle * changeSign; //QuantumAngle(resultProbAngle);
+                pointerQuantum.Angle = resultAngle * changeSign; //QuantumAngle(resultProbAngle);
             }
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
 
             foreach (QuantumPointer quantumPointer in linksList)
             {
-                Distribute(quantumPointer.Quantum, probabilityChangePart, passedList);
+                Distribute(quantumPointer.Quantum, basisAngle0, probabilityChangePart, passedList);
             }
+        }
+
+        private static double ProbabilityToAngle(double probability) 
+        {
+            return Math.Asin(Math.Sqrt(probability)) * 2.0;
         }
 
 
