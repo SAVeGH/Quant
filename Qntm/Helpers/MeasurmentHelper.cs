@@ -23,20 +23,12 @@ namespace Qntm.Helpers
             // положение полюса 1 на шкале от 0 до 360 в радианах
             double actualMeasureAngle1 = AngleHelper.Positive360RangeAngle(actualMeasureAngle0 + Angles._180degree);
 
-            double measurmentDiff = quantum.Angle - actualMeasureAngle0;
-
-            double anglesDiff = Math.Abs(measurmentDiff); // разница углов
-
-            double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
-
             // определяет поворот вектора кваната к полюсу 0 произойдет по часовой стрелке или против
-            bool? isZeroClockwise = AngleHelper.IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
-
-            double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
+            bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
 
             // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
             // вероятности при текущем положении вектора
-            double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
+            double unityProbability = ProbabilityHelper.UnityProbabilityByAngle(quantum.Angle, actualMeasureAngle0);
             double zeroProbability = 1.0 - unityProbability;
 
             // какой линии измерения соответсвует вероятность единицы

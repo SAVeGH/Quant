@@ -170,28 +170,15 @@ namespace Qntm.Helpers
 
             // сколько пришлось на каждую связь
             double probabilityChangePart = probabilityChange / linksList.Count;
-            // вероятность - это квадрат синуса половинного угла
-            // поэтому распакуем в обратную сторону
-            //double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения
 
             double probabilityChangeSign = probabilityChange < 0 ? -1.0 : 1.0;
 
             foreach (QuantumPointer quantumPointer in linksList)
             {
                 Quantum pointerQuantum = quantumPointer.Quantum;
-                int changeSign = quantumPointer.IsInverse ? -1 : 1;
+                double connectionChangeSign = quantumPointer.IsInverse ? -1.0 : 1.0;
 
-                double measurmentDiff = pointerQuantum.Angle - basisAngle0;
-
-                double anglesDiff = Math.Abs(measurmentDiff); // разница углов
-
-                double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол
-
-                double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
-
-                // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
-                // вероятности при текущем положении вектора
-                double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
+                double unityProbability = ProbabilityHelper.UnityProbabilityByAngle(pointerQuantum.Angle, basisAngle0);
 
                 double resultProbability = unityProbability + probabilityChange;
                 double resultAngle = 0.0;
@@ -219,7 +206,7 @@ namespace Qntm.Helpers
                     resultAngle = Angles._360degree - Math.Asin(Math.Sqrt(probabilityPosition)) * 2.0;
                 }
 
-                pointerQuantum.Angle = resultAngle * changeSign; //QuantumAngle(resultProbAngle);
+                pointerQuantum.Angle = resultAngle; 
             }
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
