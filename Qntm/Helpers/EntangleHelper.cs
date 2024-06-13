@@ -171,16 +171,23 @@ namespace Qntm.Helpers
             // сколько пришлось на каждую связь
             double probabilityChangePart = probabilityChange / linksList.Count;
 
-            double probabilityChangeSign = probabilityChange < 0 ? -1.0 : 1.0;
+            //double probabilityChangeSign = probabilityChange < 0 ? -1.0 : 1.0;
 
             foreach (QuantumPointer quantumPointer in linksList)
             {
                 Quantum pointerQuantum = quantumPointer.Quantum;
                 double connectionChangeSign = quantumPointer.IsInverse ? -1.0 : 1.0;
 
+                probabilityChangePart = probabilityChangePart * connectionChangeSign;
+
                 double unityProbability = ProbabilityHelper.UnityProbabilityByAngle(pointerQuantum.Angle, basisAngle0);
 
-                double resultProbability = unityProbability + probabilityChange;
+                bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(pointerQuantum.Angle, basisAngle0);
+
+                probabilityChangePart = !isZeroClockwise.HasValue ? probabilityChangePart : (isZeroClockwise.Value ? probabilityChangePart : -probabilityChangePart);
+
+                double resultProbability = unityProbability + probabilityChangePart;
+
                 double resultAngle = 0.0;
 
                 if (resultProbability == 1.0)

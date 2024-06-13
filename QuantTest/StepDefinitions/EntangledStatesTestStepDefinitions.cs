@@ -58,6 +58,20 @@ namespace QuantTest.StepDefinitions
             _scenarioContext[qResultName] = qResult;
         }
 
+        [When(@"Measure to '([^']*)' quantum '([^']*)' in basis (.*)")]
+        public void WhenMeasureToQuantumInBasis(string mResult, string a, double p2)
+        {
+            string qName = "Quantum_" + a;
+            Quantum q = (Quantum)_scenarioContext[qName];
+
+            bool mRes = Convert.ToBoolean(mResult);
+
+            bool qResult = MeasurmentHelper.MeasureTo(q, p2, mRes);
+
+            string qResultName = "Quantum_" + a + "_Result";
+            _scenarioContext[qResultName] = qResult;
+        }
+
         [Then(@"Measurment result of quantum '([^']*)' is '([^']*)' to measurment result of quantum '([^']*)'")]
         public void ThenMeasurmentResultOfQuantumIsToMeasurmentResultOfQuantum(string a, string match, string b)
         {

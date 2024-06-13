@@ -14,7 +14,7 @@ Scenario: Bell state
 	| A    | <A_Angle>    |
 	| B    | <B_Angle>    |
 	And Quantums 'A' and 'B' are entangled
-	When Measure quantum 'A' in basis 0
+	When Measure to 'true' quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
 	Then Measurment result of quantum 'A' is '<MeasurmentResult>' to measurment result of quantum 'B'
 
@@ -22,8 +22,8 @@ Examples:
 | A_Angle | B_Angle | MeasurmentResult |
 | 90      | 90      | match            |
 | 270     | 270     | match            |
-| 90      | 180     | opposed          |
-| 180     | 90      | opposed          |
+| 90      | 270     | opposed          |
+| 270     | 90      | opposed          |
 
 #1/sqrt(2)000> + 1/sqrt(2)111>
 Scenario: GHZ state
