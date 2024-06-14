@@ -21,7 +21,7 @@ namespace Qntm.Helpers
             return actualAngle < Angles._180degree;
         }
 
-        public static double UnityProbabilityByAngle(double quantumAngle, double measurmentAngle)
+        public static double UnityProbabilityInBasis(double quantumAngle, double measurmentAngle)
         {
             double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(measurmentAngle);
 
@@ -38,6 +38,32 @@ namespace Qntm.Helpers
             double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
 
             return unityProbability;
+        }
+
+        public static double AngleOfProbabilityInBasis(double probability, double basisAngle0)
+        {
+            double unityProbability = probability;
+            double resultAngle = ProbabilityToAngle(unityProbability); // > 1 && < 0 -> NaN           
+
+            if (probability > 1.0)
+            {
+                unityProbability = 2.0 - probability;
+                resultAngle = Angles._360degree - ProbabilityToAngle(unityProbability);
+            }
+            else if (probability < 0.0)
+            {
+                unityProbability = Math.Abs(probability);
+                resultAngle = Angles._360degree - ProbabilityToAngle(unityProbability);
+            }
+
+            resultAngle = AngleHelper.Positive360RangeAngle(resultAngle + basisAngle0);
+
+            return resultAngle;
+        }
+
+        private static double ProbabilityToAngle(double probability)
+        {
+            return Math.Asin(Math.Sqrt(probability)) * 2.0;
         }
     }
 }

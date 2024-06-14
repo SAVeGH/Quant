@@ -169,52 +169,10 @@ namespace Qntm.Helpers
             List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
 
             // сколько пришлось на каждую связь
-            double probabilityChangePart = probabilityChange / linksList.Count;
+            double probabilityChangePart = probabilityChange / linksList.Count;            
 
-            //double probabilityChangeSign = probabilityChange < 0 ? -1.0 : 1.0;
-
-            foreach (QuantumPointer quantumPointer in linksList)
-            {
-                Quantum pointerQuantum = quantumPointer.Quantum;
-                double connectionChangeSign = quantumPointer.IsInverse ? -1.0 : 1.0;
-
-                probabilityChangePart = probabilityChangePart * connectionChangeSign;
-
-                double unityProbability = ProbabilityHelper.UnityProbabilityByAngle(pointerQuantum.Angle, basisAngle0);
-
-                bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(pointerQuantum.Angle, basisAngle0);
-
-                probabilityChangePart = !isZeroClockwise.HasValue ? probabilityChangePart : (isZeroClockwise.Value ? probabilityChangePart : -probabilityChangePart);
-
-                double resultProbability = unityProbability + probabilityChangePart;
-
-                double resultAngle = 0.0;
-
-                if (resultProbability == 1.0)
-                {
-                    resultAngle = AngleHelper.Positive360RangeAngle(basisAngle0 + Angles._180degree); 
-                }
-                else if (resultProbability == 0.0)
-                {
-                    resultAngle = basisAngle0;
-                }
-                else if (resultProbability > 0.0 && resultProbability < 1.0)
-                {
-                    resultAngle = Math.Asin(Math.Sqrt(resultProbability)) * 2.0;
-                }
-                else if (resultProbability > 1.0)
-                {
-                    double probabilityPosition = 1.0 - (resultProbability - 1.0);
-                    resultAngle = (Angles._180degree - Math.Asin(Math.Sqrt(probabilityPosition)) * 2.0) + Angles._180degree;
-                }
-                else if (resultProbability < 0.0) 
-                {
-                    double probabilityPosition = Math.Abs(resultProbability);
-                    resultAngle = Angles._360degree - Math.Asin(Math.Sqrt(probabilityPosition)) * 2.0;
-                }
-
-                pointerQuantum.Angle = resultAngle; 
-            }
+            foreach (QuantumPointer quantumPointer in linksList)            
+                RotateAngle(quantumPointer, probabilityChangePart, basisAngle0);            
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
 
@@ -224,134 +182,22 @@ namespace Qntm.Helpers
             }
         }
 
-        private static double ProbabilityToAngle(double probability) 
+        private static void RotateAngle(QuantumPointer quantumPointer, double probabilityChangePart, double basisAngle0) 
         {
-            return Math.Asin(Math.Sqrt(probability)) * 2.0;
-        }
+            Quantum pointerQuantum = quantumPointer.Quantum;
+            double connectionChangeSign = quantumPointer.IsInverse ? -1.0 : 1.0;
 
+            probabilityChangePart = probabilityChangePart * connectionChangeSign;
 
-        //private static void Distribute(Quantum quantum, double probabilityChange, List<Quantum> passedList)
-        //{
-        //    if (quantum == null)
-        //        return;
+            double unityProbability = ProbabilityHelper.UnityProbabilityInBasis(pointerQuantum.Angle, basisAngle0);
 
-        //    if (quantum.QuantumPointers.Count == 0)
-        //        return;
+            bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(pointerQuantum.Angle, basisAngle0);
 
-        //    passedList.Add(quantum);
+            probabilityChangePart = (isZeroClockwise ?? false) ? probabilityChangePart : -probabilityChangePart;
 
-        //    List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
+            double resultProbability = unityProbability + probabilityChangePart;
 
-        //    // сколько пришлось на каждую связь
-        //    double probabilityChangePart = probabilityChange / linksList.Count;
-        //    double shiftProbabilityAngle = probabilityChangePart * Angles._90degree; // угол вероятности изменения            
-
-        //    foreach (QuantumPointer quantumPointer in linksList)
-        //    {
-        //        Quantum pointerQuantum = quantumPointer.Quantum;
-        //        int changeSign = quantumPointer.IsInverse ? -1 : 1;
-
-        //        double currentProbAngle = ProbabilityAngle(pointerQuantum); // текущий угол кванта в углах вероятности
-
-        //        double resultProbAngle = currentProbAngle + shiftProbabilityAngle * changeSign; // получился угол вероятности в радианах
-
-        //        pointerQuantum.Angle = QuantumAngle(resultProbAngle);
-        //    }
-
-        //    passedList.AddRange(linksList.Select(qp => qp.Quantum));
-
-        //    foreach (QuantumPointer quantumPointer in linksList)
-        //    {
-        //        Distribute(quantumPointer.Quantum, probabilityChangePart, passedList);
-        //    }
-        //}
-
-        private static double QuantumAngle(double quntumProbabilityAngle)
-        {
-
-            QuadrantHelper.QuantumQuadrant quadrant = QuadrantHelper.GetQuantumQuadrant(quntumProbabilityAngle);
-
-            double probabilityAngle = Math.Asin(Math.Abs(Math.Sin(quntumProbabilityAngle)));
-
-            switch (quadrant)
-            {
-                case QuadrantHelper.QuantumQuadrant.ZeroPlus: // вектор лежит на оси +0
-                    probabilityAngle = Angles._0degree;
-                    break;
-                case QuadrantHelper.QuantumQuadrant.ZeroMinus:
-                    probabilityAngle = Angles._180degree;
-                    break;
-                case QuadrantHelper.QuantumQuadrant.UnityPlus:
-                    probabilityAngle = Angles._90degree;
-                    break;
-                case QuadrantHelper.QuantumQuadrant.UnityMinus:
-                    probabilityAngle = Angles._270degree;
-                    break;
-
-                case QuadrantHelper.QuantumQuadrant.First:
-                    break;
-
-                case QuadrantHelper.QuantumQuadrant.Second:
-                    probabilityAngle = Angles._180degree - probabilityAngle;
-                    break;
-
-                case QuadrantHelper.QuantumQuadrant.Third:
-                    probabilityAngle = probabilityAngle + Angles._180degree;
-                    break;
-
-                case QuadrantHelper.QuantumQuadrant.Fourth:
-                    probabilityAngle = Angles._360degree - probabilityAngle;
-                    break;
-
-                default:
-                    return double.NaN;
-            }
-
-            return probabilityAngle; // угол вероятности в радианах
-        }
-
-        private static double ProbabilityAngle(Quantum quantum)
-        {
-
-            QuadrantHelper.QuantumQuadrant quadrant = QuadrantHelper.GetQuantumQuadrant(quantum.Angle);
-
-            double probabilityAngle = Math.Pow(Math.Sin(quantum.Angle), 2.0) * Angles._90degree; // доля от 90 градусов в радианах
-
-            switch (quadrant)
-            {
-                case QuadrantHelper.QuantumQuadrant.ZeroPlus: // вектор лежит на оси +0
-                    probabilityAngle = Angles._0degree;                    
-                    break;
-                case QuadrantHelper.QuantumQuadrant.ZeroMinus:
-                    probabilityAngle = Angles._180degree;
-                    break;
-                case QuadrantHelper.QuantumQuadrant.UnityPlus:
-                    probabilityAngle = Angles._90degree;
-                    break;
-                case QuadrantHelper.QuantumQuadrant.UnityMinus:
-                    probabilityAngle = Angles._270degree;
-                    break;
-
-                case QuadrantHelper.QuantumQuadrant.First:                   
-                    break;
-                    
-                case QuadrantHelper.QuantumQuadrant.Second:
-                    probabilityAngle = Angles._180degree - probabilityAngle; 
-                    break;
-                    
-                case QuadrantHelper.QuantumQuadrant.Third:
-                    probabilityAngle = probabilityAngle + Angles._180degree; 
-                    break;
-
-                case QuadrantHelper.QuantumQuadrant.Fourth:
-                    probabilityAngle = Angles._360degree - probabilityAngle;
-                    break;
-
-                default:
-                    return double.NaN;
-            }
-
-            return probabilityAngle; // угол вероятности в радианах
+            pointerQuantum.Angle = ProbabilityHelper.AngleOfProbabilityInBasis(resultProbability, basisAngle0);
         }
 
         public static string Grad(double rad)

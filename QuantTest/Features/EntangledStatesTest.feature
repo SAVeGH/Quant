@@ -14,7 +14,7 @@ Scenario: Bell state
 	| A    | <A_Angle>    |
 	| B    | <B_Angle>    |
 	And Quantums 'A' and 'B' are entangled
-	When Measure to 'true' quantum 'A' in basis 0
+	When Measure quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
 	Then Measurment result of quantum 'A' is '<MeasurmentResult>' to measurment result of quantum 'B'
 
