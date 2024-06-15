@@ -44,8 +44,8 @@ Given System has quantums
 
 Examples:
 | A_Angle | B_Angle | C_Angle | MeasurmentResult |
-| 45      | 45      | 45      | match            |
-| 315     | 315     | 315     | match            |
+| 90      | 90      | 90      | match            |
+| 270     | 270     | 270     | match            |
 
 
 # один из вариантов W состояния
