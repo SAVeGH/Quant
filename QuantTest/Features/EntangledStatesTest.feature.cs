@@ -317,7 +317,7 @@ this.GHZState("270", "270", "270", "match", ((string[])(null)));
             argumentsOfScenario.Add("B_Angle", b_Angle);
             argumentsOfScenario.Add("C_Angle", c_Angle);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("W state", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 58
+#line 59
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -349,28 +349,28 @@ this.ScenarioInitialize(scenarioInfo);
                 table3.AddRow(new string[] {
                             "C",
                             string.Format("{0}", c_Angle)});
-#line 59
+#line 60
 testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
 #line hidden
-#line 64
+#line 65
  testRunner.And("Quantums \'A\' and \'B\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 65
+#line 66
  testRunner.And("Quantums \'B\' and \'C\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 66
+#line 67
  testRunner.And("Quantums \'A\' and \'C\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 67
+#line 68
  testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 68
+#line 69
  testRunner.And("Measure quantum \'B\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 69
+#line 70
  testRunner.And("Measure quantum \'C\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 70
+#line 71
  testRunner.Then("Measurment result corresponds to W state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -386,7 +386,7 @@ testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "70.5288")]
         public virtual void WState_70_5288()
         {
-#line 58
+#line 59
 this.WState("70.5288", "70.5288", "70.5288", ((string[])(null)));
 #line hidden
         }

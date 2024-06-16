@@ -41,13 +41,13 @@ namespace Qntm.Helpers
             //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
 
             // изменение вероятностей: '+' - против часовой стрелки (углы увеличиваются от 0), '-' - по часовой стрелке (углы уменьшаются)
-            //double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : zeroProbability);
-            //double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? unityProbability : -zeroProbability);
+            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : zeroProbability);
+            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? zeroProbability : -unityProbability);
 
-            double toZeroProbabilityChange = 0.0;
-            double toUnityProbabilityChange = 0.0;
+            //double toZeroProbabilityChange = 0.0;
+            //double toUnityProbabilityChange = 0.0;
 
-            GetProbabilityChange(isZeroClockwise, unityProbability, zeroProbability, out toZeroProbabilityChange, out toUnityProbabilityChange);
+            //GetProbabilityChange(isZeroClockwise, unityProbability, zeroProbability, out toZeroProbabilityChange, out toUnityProbabilityChange);
 
             // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
             double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
@@ -61,25 +61,25 @@ namespace Qntm.Helpers
             return result;
         }
 
-        private static void GetProbabilityChange(bool? isZeroClockwise, double unityProbability, double zeroProbability , out double toZeroProbabilityChange, out double toUnityProbabilityChange) 
-        {
-            toZeroProbabilityChange = 0.0;
-            toUnityProbabilityChange = 0.0;
+        //private static void GetProbabilityChange(bool? isZeroClockwise, double unityProbability, double zeroProbability , out double toZeroProbabilityChange, out double toUnityProbabilityChange) 
+        //{
+        //    toZeroProbabilityChange = 0.0;
+        //    toUnityProbabilityChange = 0.0;
 
-            if (!isZeroClockwise.HasValue)               
-                return;            
+        //    if (!isZeroClockwise.HasValue)               
+        //        return;            
 
-            if (isZeroClockwise.Value)
-            {
-                toZeroProbabilityChange = -unityProbability;
-                toUnityProbabilityChange = zeroProbability;
-            }
-            else 
-            {
-                toZeroProbabilityChange = zeroProbability;
-                toUnityProbabilityChange = -unityProbability;
-            }
-        }
+        //    if (isZeroClockwise.Value)
+        //    {
+        //        toZeroProbabilityChange = -unityProbability;
+        //        toUnityProbabilityChange = zeroProbability;
+        //    }
+        //    else 
+        //    {
+        //        toZeroProbabilityChange = zeroProbability;
+        //        toUnityProbabilityChange = -unityProbability;
+        //    }
+        //}
 
         /// <summary>
         /// 
