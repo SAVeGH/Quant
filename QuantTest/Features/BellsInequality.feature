@@ -4,7 +4,7 @@ A short summary of the feature
 
 @tag1
 Scenario: Bells Inequality test
-	Given System has stream of entangled quantums size of 3
+	Given System has stream of entangled quantums size of 30000
 	#When 'Alice' has measured strem using arbitrary basises from three options basises
 	#And 'Bob' has measured strem using arbitrary basises from three options basises
 	When Alice and Bob has measured strem using arbitrary basises from three options basises

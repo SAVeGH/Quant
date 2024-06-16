@@ -27,17 +27,17 @@ namespace QuantTest.StepDefinitions
 
             for (int i = 0; i < p0; i++)
             {
-                double qAngle = Angles._360degree * randomAngle.NextDouble();
+                //double qAngle = Angles._360degree * randomAngle.NextDouble();
 
-                Quantum quantumA = new Quantum(qAngle);
-                Quantum quantumB = new Quantum(qAngle);
+                //Quantum quantumA = new Quantum(qAngle);
+                //Quantum quantumB = new Quantum(qAngle);
 
                 // странно, но это работает и без инверсии запутывания
-                //Quantum quantumA = new Quantum(Angles._360degree * randomAngle.NextDouble());
-                //Quantum quantumB = new Quantum(Angles._360degree * randomAngle.NextDouble());
+                Quantum quantumA = new Quantum(Angles._360degree * randomAngle.NextDouble());
+                Quantum quantumB = new Quantum(Angles._360degree * randomAngle.NextDouble());
 
                 // если А измеринтся в 1 то В точно в 0 в том же базисе. Поэтому inverse
-                EntangleHelper.Entangle(quantumA, quantumB);
+                EntangleHelper.Entangle(quantumA, quantumB, isInverse: true);
 
                 AliceStream.Add(quantumA);
                 BobStream.Add(quantumB);
@@ -132,11 +132,11 @@ namespace QuantTest.StepDefinitions
             switch (intValue) 
             {
                 case 0:
-                    return 0.0 * Angles._rad;
+                    return Angles._0degree;
                 case 1:
-                    return 120.0 * Angles._rad;
+                    return Angles._120degree;
                 case 2:
-                    return 240.0 * Angles._rad;
+                    return Angles._240degree;
             }
 
             return 0;
