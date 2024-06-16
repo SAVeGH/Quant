@@ -70,7 +70,7 @@ Given System has quantums
 	Then Measurment result corresponds to W state
 Examples:
 | A_Angle      | B_Angle      | C_Angle      |
-| 35.2644      | 35.2644      | 35.2644      |
+| 70.5288      | 70.5288      | 70.5288      |
 
 
 

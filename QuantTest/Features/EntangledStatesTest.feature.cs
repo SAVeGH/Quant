@@ -378,16 +378,16 @@ testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("W state: 35.2644")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("W state: 70.5288")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "35.2644")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "35.2644")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "35.2644")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "35.2644")]
-        public virtual void WState_35_2644()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "70.5288")]
+        public virtual void WState_70_5288()
         {
 #line 58
-this.WState("35.2644", "35.2644", "35.2644", ((string[])(null)));
+this.WState("70.5288", "70.5288", "70.5288", ((string[])(null)));
 #line hidden
         }
     }

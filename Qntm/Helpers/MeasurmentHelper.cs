@@ -12,7 +12,7 @@ namespace Qntm.Helpers
         /// <param name="quantum">Измеряемый квант (угол кванта в радианах)</param>
         /// <param name="measurmentAngle">Угол измерения в радианах (поворот установки)</param>
         /// <returns>Результат измерения кванта true/false в заданном базисе</returns>
-        public static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/)
+        public static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/, bool? setResult)
         {
             //Debug.WriteLine("Measure: --------------------------------------------- ");
             // положение полюса 0 на шкале от 0 до 360 в радианах
@@ -32,17 +32,22 @@ namespace Qntm.Helpers
             uint BasisNumerator = (uint)Math.Round((double)(QuantumThreadWorker.BasisDenominator - 1) * unityProbability);
 
             // результат измерения относительно заданного базиса
-            bool result = QuantumThreadWorker.Measure(BasisNumerator);
+            bool result = !setResult.HasValue ? QuantumThreadWorker.Measure(BasisNumerator) : setResult.Value;
             //Debug.WriteLine("Measure: result: " + result.ToString());
-            
+
             // изменение угла кванта после измерения в заданном базисе
             // вектор кванта 'ложиться' ('прилипает') на ось 1 или 0 базиса измерения
             quantum.Angle = result ? actualMeasureAngle1 : actualMeasureAngle0;
             //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
 
             // изменение вероятностей: '+' - против часовой стрелки (углы увеличиваются от 0), '-' - по часовой стрелке (углы уменьшаются)
-            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -zeroProbability : zeroProbability);
-            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? unityProbability : -unityProbability);
+            //double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : zeroProbability);
+            //double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? unityProbability : -zeroProbability);
+
+            double toZeroProbabilityChange = 0.0;
+            double toUnityProbabilityChange = 0.0;
+
+            GetProbabilityChange(isZeroClockwise, unityProbability, zeroProbability, out toZeroProbabilityChange, out toUnityProbabilityChange);
 
             // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
             double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
@@ -56,48 +61,40 @@ namespace Qntm.Helpers
             return result;
         }
 
+        private static void GetProbabilityChange(bool? isZeroClockwise, double unityProbability, double zeroProbability , out double toZeroProbabilityChange, out double toUnityProbabilityChange) 
+        {
+            toZeroProbabilityChange = 0.0;
+            toUnityProbabilityChange = 0.0;
+
+            if (!isZeroClockwise.HasValue)               
+                return;            
+
+            if (isZeroClockwise.Value)
+            {
+                toZeroProbabilityChange = -unityProbability;
+                toUnityProbabilityChange = zeroProbability;
+            }
+            else 
+            {
+                toZeroProbabilityChange = zeroProbability;
+                toUnityProbabilityChange = -unityProbability;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="quantum">Измеряемый квант (угол кванта в радианах)</param>
+        /// <param name="measurmentAngle">Угол измерения в радианах (поворот установки)</param>
+        /// <returns>Результат измерения кванта true/false в заданном базисе</returns>
+        public static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/)
+        {
+            return Measure(quantum, measurmentAngle, null);
+        }
+
         public static bool MeasureTo(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/, bool mResult)
         {
-            //Debug.WriteLine("Measure: --------------------------------------------- ");
-            // положение полюса 0 на шкале от 0 до 360 в радианах
-            double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(measurmentAngle); // чистый угол поворота установки (без лишних оборотов) в радианах
-            // положение полюса 1 на шкале от 0 до 360 в радианах
-            double actualMeasureAngle1 = AngleHelper.Positive360RangeAngle(actualMeasureAngle0 + Angles._180degree);
-
-            // определяет поворот вектора кваната к полюсу 0 произойдет по часовой стрелке или против
-            bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
-
-            // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
-            // вероятности при текущем положении вектора
-            double unityProbability = ProbabilityHelper.UnityProbabilityInBasis(quantum.Angle, actualMeasureAngle0);
-            double zeroProbability = 1.0 - unityProbability;
-
-            // какой линии измерения соответсвует вероятность единицы
-            uint BasisNumerator = (uint)Math.Round((double)(QuantumThreadWorker.BasisDenominator - 1) * unityProbability);
-
-            // результат измерения относительно заданного базиса
-            bool result = mResult;//QuantumThreadWorker.Measure(BasisNumerator);
-            //Debug.WriteLine("Measure: result: " + result.ToString());
-
-            // изменение угла кванта после измерения в заданном базисе
-            // вектор кванта 'ложиться' ('прилипает') на ось 1 или 0 базиса измерения
-            quantum.Angle = result ? actualMeasureAngle1 : actualMeasureAngle0;
-            //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
-
-            // изменение вероятностей: '+' - против часовой стрелки (углы увеличиваются от 0), '-' - по часовой стрелке (углы уменьшаются)
-            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -zeroProbability : zeroProbability);
-            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? unityProbability : -unityProbability);
-
-            // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
-            double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
-
-            // сдвигаем связи на угол смещения вероятности кванта
-            EntangleHelper.Distribute(quantum, actualMeasureAngle0, probabilityChange);
-
-            // отсоединяем квант из цепи
-            EntangleHelper.Collapse(quantum);
-
-            return result;
+            return Measure(quantum, measurmentAngle, mResult);
         }
 
         public static bool MeasureTest(double angle, double measurmentAngle /*заданный базис измерения - поворот установки*/)
