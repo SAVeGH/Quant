@@ -1,5 +1,4 @@
-﻿using Qntm.Constants;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +11,7 @@ namespace Qntm.Helpers
             QuantumPointer quantumPointer1 = new QuantumPointer(quantum1) { IsInverse = isInverse };
             QuantumPointer quantumPointer2 = new QuantumPointer(quantum2) { IsInverse = isInverse };
 
+            // обмен квантов ссылками
             if (!quantum1.QuantumPointers.Any(qp => qp.Quantum == quantum2))
                 quantum1.QuantumPointers.Add(quantumPointer2);
 
@@ -25,6 +25,11 @@ namespace Qntm.Helpers
 
         }
 
+        /// <summary>
+        /// Делает связи однонаправленными убирая обратые ссылки из квантов если они 
+        /// достижимы другим путем (без обратной ссылки)
+        /// </summary>
+        /// <param name="quantum">квант в цепи</param>
         public static void Ringify(Quantum quantum) 
         {
             List<QuantumPointer> waysList = quantum.QuantumPointers.ToList();
@@ -42,7 +47,7 @@ namespace Qntm.Helpers
 
             if (IsReachable(quantumFrom, quantumFrom, quantumTo)) 
             {
-                // удалить ссылку на quantumFrom из списка quantumTo
+                // если квант достижим без использования обратной ссылки - удалить ссылку на quantumFrom из списка quantumTo (удалить обратную ссылку)
                 QuantumPointer deletePointer = quantumTo.QuantumPointers.FirstOrDefault(qp => qp.Quantum == quantumFrom);
                 quantumTo.QuantumPointers.Remove(deletePointer);
             }
@@ -187,14 +192,14 @@ namespace Qntm.Helpers
             Quantum pointerQuantum = quantumPointer.Quantum;
             double connectionChangeSign = quantumPointer.IsInverse ? -1.0 : 1.0;
 
-            probabilityChangePart = probabilityChangePart * connectionChangeSign;
+            probabilityChangePart = probabilityChangePart * connectionChangeSign; // учесть инверсию связи
 
             double unityProbability = ProbabilityHelper.UnityProbabilityInBasis(pointerQuantum.Angle, basisAngle0);
 
             bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(pointerQuantum.Angle, basisAngle0);
 
             probabilityChangePart = (isZeroClockwise ?? false) ? probabilityChangePart : -probabilityChangePart;
-
+            // поворот вероятности
             double resultProbability = unityProbability + probabilityChangePart;
 
             pointerQuantum.Angle = ProbabilityHelper.AngleOfProbabilityInBasis(resultProbability, basisAngle0);

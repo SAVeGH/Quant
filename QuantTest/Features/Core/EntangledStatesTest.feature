@@ -1,6 +1,6 @@
 ﻿Feature: EntangledStatesTest
 
-Тест проверяет выполняются ли состояния Бэлла, GHZ и W
+Тесты проверяют выполняются ли состояния Бэлла, GHZ и W
 Такие состояния нельзя получить тензорным умножением матриц
 
 # состояния Бэлла:
@@ -14,16 +14,20 @@ Scenario: Bell state
 	| A    | <A_Angle>    |
 	| B    | <B_Angle>    |
 	And Quantums 'A' and 'B' are entangled
-	When Measure quantum 'A' in basis 0
+	When Measure to '<mValue>' quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
 	Then Measurment result of quantum 'A' is '<MeasurmentResult>' to measurment result of quantum 'B'
 
 Examples:
-| A_Angle | B_Angle | MeasurmentResult |
-| 90      | 90      | match            |
-| 270     | 270     | match            |
-| 90      | 270     | opposed          |
-| 270     | 90      | opposed          |
+| A_Angle | B_Angle | MeasurmentResult | mValue  |
+| 90      | 90      | match            | true    |
+| 270     | 270     | match            | true    |
+| 90      | 270     | opposed          | true    |
+| 270     | 90      | opposed          | true    |
+| 90      | 90      | match            | false   |
+| 270     | 270     | match            | false   |
+| 90      | 270     | opposed          | false   |
+| 270     | 90      | opposed          | false   |
 
 #1/sqrt(2)000> + 1/sqrt(2)111>
 Scenario: GHZ state
@@ -35,24 +39,28 @@ Given System has quantums
 	And Quantums 'A' and 'B' are entangled
 	And Quantums 'B' and 'C' are entangled
 	And Quantums 'A' and 'C' are entangled
+	# связи из A <-> B <-> C <-> A
+	# преобразуются в A -> B -> C -> A
 	And Ringify 'A'
-	When Measure quantum 'A' in basis 0
+	When Measure to '<mValue>' quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
 	And Measure quantum 'C' in basis 0
 	Then Measurment result of quantum 'A' is '<MeasurmentResult>' to measurment result of quantum 'B'
 	And Measurment result of quantum 'B' is '<MeasurmentResult>' to measurment result of quantum 'C'
 
 Examples:
-| A_Angle | B_Angle | C_Angle | MeasurmentResult |
-| 90      | 90      | 90      | match            |
-| 270     | 270     | 270     | match            |
+| A_Angle | B_Angle | C_Angle | MeasurmentResult | mValue  |
+| 90      | 90      | 90      | match            | true    |
+| 270     | 270     | 270     | match            | true    |
+| 90      | 90      | 90      | match            | false   |
+| 270     | 270     | 270     | match            | false   |
 
 
 # один из вариантов W состояния
 #1/sqrt(3)001> + 1/sqrt(3)010> + 1/sqrt(3)100>
 # угол 70.5288 это апмлитуда вероятности 0.57735 = sin(35.2644) (35.2644 = 70.5288 / 2), что является sqrt(0.3333...) т.е. вероятность получения 1 = 1/3
 # Если 'A' измерится в 0 то 'B','C' станут 90 градусов, что дает вероятность 'B' и 'C' 1 = 1/2, если в 1 то 'B','C' станут 0 градусов 
-# (угол пройденный 'A' 109.4712 (2/3 вероятности) поделится на 2 (количество связей), инвертируется и добавится к положению 'B' и 'C'. Вероятность 1 для 'B' и 'C' = 0)
+# (угол пройденный 'A' 109.4712 (2/3 вероятности) поделится на 2 (количество связей), инвертируется и добавится к положению 'B' и 'C' (по -1/3). Вероятность 1 для 'B' и 'C' станет 0)
 # Если 'B','C' стали 90 градусов, то измерение 'B' в 1 сбросит 'C' в 0 и наоборот.
 # Таким образом в 1/3 случаев получим 'A' = 1 и 'B','C' = 0, а в оставшихся случаях 'A' = 0 и 'B','C' поделят пополам состояния 01 и 10.
 # Начинать мерять можно с любого кванта - результат будет симметричным.
@@ -65,13 +73,14 @@ Given System has quantums
 	And Quantums 'A' and 'B' are entangled inverse
 	And Quantums 'B' and 'C' are entangled inverse
 	And Quantums 'A' and 'C' are entangled inverse
-	When Measure quantum 'A' in basis 0
+	When Measure to '<mValue>' quantum 'A' in basis 0
 	And Measure quantum 'B' in basis 0
 	And Measure quantum 'C' in basis 0
 	Then Measurment result corresponds to W state
 Examples:
-| A_Angle      | B_Angle      | C_Angle      |
-| 70.5288      | 70.5288      | 70.5288      |
+| A_Angle | B_Angle | C_Angle | mValue  |
+| 70.5288 | 70.5288 | 70.5288 | true    |
+| 70.5288 | 70.5288 | 70.5288 | false   |
 
 
 

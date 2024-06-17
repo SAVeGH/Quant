@@ -1,6 +1,10 @@
 ﻿Feature: Ringify
 
-A short summary of the feature
+Преобразование связей из двунаправленного кольца
+A <-> B <-> C <-> A
+в однонаправленное кольцо
+A -> B -> C -> A
+Все запутанные кванты по прежнему достижимы из любого кванта
 
 Scenario: Ringify three quants
 	Given System has quantums

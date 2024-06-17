@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace QuantTest.Features
+namespace QuantTest.Features.Core
 {
     using TechTalk.SpecFlow;
     using System;
@@ -48,8 +48,8 @@ namespace QuantTest.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "EntangledStatesTest", "Тест проверяет выполняются ли состояния Бэлла, GHZ и W\r\nТакие состояния нельзя по" +
-                    "лучить тензорным умножением матриц", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Core", "EntangledStatesTest", "Тесты проверяют выполняются ли состояния Бэлла, GHZ и W\r\nТакие состояния нельзя п" +
+                    "олучить тензорным умножением матриц", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -66,7 +66,7 @@ namespace QuantTest.Features
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "EntangledStatesTest")))
             {
-                global::QuantTest.Features.EntangledStatesTestFeature.FeatureSetup(null);
+                global::QuantTest.Features.Core.EntangledStatesTestFeature.FeatureSetup(null);
             }
         }
         
@@ -92,13 +92,14 @@ namespace QuantTest.Features
             testRunner.CollectScenarioErrors();
         }
         
-        public virtual void BellState(string a_Angle, string b_Angle, string measurmentResult, string[] exampleTags)
+        public virtual void BellState(string a_Angle, string b_Angle, string measurmentResult, string mValue, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("A_Angle", a_Angle);
             argumentsOfScenario.Add("B_Angle", b_Angle);
             argumentsOfScenario.Add("MeasurmentResult", measurmentResult);
+            argumentsOfScenario.Add("mValue", mValue);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Bell state", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
@@ -136,7 +137,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
- testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When(string.Format("Measure to \'{0}\' quantum \'A\' in basis 0", mValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 18
  testRunner.And("Measure quantum \'B\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -155,10 +156,11 @@ this.ScenarioInitialize(scenarioInfo);
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
         public virtual void BellState_Variant0()
         {
 #line 11
-this.BellState("90", "90", "match", ((string[])(null)));
+this.BellState("90", "90", "match", "true", ((string[])(null)));
 #line hidden
         }
         
@@ -169,10 +171,11 @@ this.BellState("90", "90", "match", ((string[])(null)));
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
         public virtual void BellState_Variant1()
         {
 #line 11
-this.BellState("270", "270", "match", ((string[])(null)));
+this.BellState("270", "270", "match", "true", ((string[])(null)));
 #line hidden
         }
         
@@ -183,10 +186,11 @@ this.BellState("270", "270", "match", ((string[])(null)));
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "opposed")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
         public virtual void BellState_Variant2()
         {
 #line 11
-this.BellState("90", "270", "opposed", ((string[])(null)));
+this.BellState("90", "270", "opposed", "true", ((string[])(null)));
 #line hidden
         }
         
@@ -197,14 +201,75 @@ this.BellState("90", "270", "opposed", ((string[])(null)));
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "opposed")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
         public virtual void BellState_Variant3()
         {
 #line 11
-this.BellState("270", "90", "opposed", ((string[])(null)));
+this.BellState("270", "90", "opposed", "true", ((string[])(null)));
 #line hidden
         }
         
-        public virtual void GHZState(string a_Angle, string b_Angle, string c_Angle, string measurmentResult, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Bell state: Variant 4")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 4")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void BellState_Variant4()
+        {
+#line 11
+this.BellState("90", "90", "match", "false", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Bell state: Variant 5")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 5")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void BellState_Variant5()
+        {
+#line 11
+this.BellState("270", "270", "match", "false", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Bell state: Variant 6")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 6")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "opposed")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void BellState_Variant6()
+        {
+#line 11
+this.BellState("90", "270", "opposed", "false", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Bell state: Variant 7")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 7")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "opposed")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void BellState_Variant7()
+        {
+#line 11
+this.BellState("270", "90", "opposed", "false", ((string[])(null)));
+#line hidden
+        }
+        
+        public virtual void GHZState(string a_Angle, string b_Angle, string c_Angle, string measurmentResult, string mValue, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
@@ -212,8 +277,9 @@ this.BellState("270", "90", "opposed", ((string[])(null)));
             argumentsOfScenario.Add("B_Angle", b_Angle);
             argumentsOfScenario.Add("C_Angle", c_Angle);
             argumentsOfScenario.Add("MeasurmentResult", measurmentResult);
+            argumentsOfScenario.Add("mValue", mValue);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GHZ state", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 29
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -245,34 +311,34 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "C",
                             string.Format("{0}", c_Angle)});
-#line 30
+#line 34
 testRunner.Given("System has quantums", ((string)(null)), table2, "Given ");
 #line hidden
-#line 35
+#line 39
  testRunner.And("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 36
+#line 40
  testRunner.And("Quantums \'B\' and \'C\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 37
+#line 41
  testRunner.And("Quantums \'A\' and \'C\' are entangled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 44
  testRunner.And("Ringify \'A\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 39
- testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 45
+ testRunner.When(string.Format("Measure to \'{0}\' quantum \'A\' in basis 0", mValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 40
+#line 46
  testRunner.And("Measure quantum \'B\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 41
+#line 47
  testRunner.And("Measure quantum \'C\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 42
+#line 48
  testRunner.Then(string.Format("Measurment result of quantum \'A\' is \'{0}\' to measurment result of quantum \'B\'", measurmentResult), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 43
+#line 49
  testRunner.And(string.Format("Measurment result of quantum \'B\' is \'{0}\' to measurment result of quantum \'C\'", measurmentResult), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
@@ -280,44 +346,79 @@ testRunner.Given("System has quantums", ((string)(null)), table2, "Given ");
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("GHZ state: 90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("GHZ state: Variant 0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "90")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
-        public virtual void GHZState_90()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
+        public virtual void GHZState_Variant0()
         {
-#line 29
-this.GHZState("90", "90", "90", "match", ((string[])(null)));
+#line 33
+this.GHZState("90", "90", "90", "match", "true", ((string[])(null)));
 #line hidden
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("GHZ state: 270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("GHZ state: Variant 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "270")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
-        public virtual void GHZState_270()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
+        public virtual void GHZState_Variant1()
         {
-#line 29
-this.GHZState("270", "270", "270", "match", ((string[])(null)));
+#line 33
+this.GHZState("270", "270", "270", "match", "true", ((string[])(null)));
 #line hidden
         }
         
-        public virtual void WState(string a_Angle, string b_Angle, string c_Angle, string[] exampleTags)
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("GHZ state: Variant 2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 2")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "90")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void GHZState_Variant2()
+        {
+#line 33
+this.GHZState("90", "90", "90", "match", "false", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("GHZ state: Variant 3")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 3")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "270")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:MeasurmentResult", "match")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void GHZState_Variant3()
+        {
+#line 33
+this.GHZState("270", "270", "270", "match", "false", ((string[])(null)));
+#line hidden
+        }
+        
+        public virtual void WState(string a_Angle, string b_Angle, string c_Angle, string mValue, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("A_Angle", a_Angle);
             argumentsOfScenario.Add("B_Angle", b_Angle);
             argumentsOfScenario.Add("C_Angle", c_Angle);
+            argumentsOfScenario.Add("mValue", mValue);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("W state", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 59
+#line 67
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -349,28 +450,28 @@ this.ScenarioInitialize(scenarioInfo);
                 table3.AddRow(new string[] {
                             "C",
                             string.Format("{0}", c_Angle)});
-#line 60
+#line 68
 testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
 #line hidden
-#line 65
+#line 73
  testRunner.And("Quantums \'A\' and \'B\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 66
+#line 74
  testRunner.And("Quantums \'B\' and \'C\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 67
+#line 75
  testRunner.And("Quantums \'A\' and \'C\' are entangled inverse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 68
- testRunner.When("Measure quantum \'A\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 76
+ testRunner.When(string.Format("Measure to \'{0}\' quantum \'A\' in basis 0", mValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 69
+#line 77
  testRunner.And("Measure quantum \'B\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 70
+#line 78
  testRunner.And("Measure quantum \'C\' in basis 0", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 71
+#line 79
  testRunner.Then("Measurment result corresponds to W state", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -378,16 +479,32 @@ testRunner.Given("System has quantums", ((string)(null)), table3, "Given ");
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("W state: 70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("W state: Variant 0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 0")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "70.5288")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "70.5288")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "70.5288")]
-        public virtual void WState_70_5288()
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "true")]
+        public virtual void WState_Variant0()
         {
-#line 59
-this.WState("70.5288", "70.5288", "70.5288", ((string[])(null)));
+#line 67
+this.WState("70.5288", "70.5288", "70.5288", "true", ((string[])(null)));
+#line hidden
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("W state: Variant 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "EntangledStatesTest")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Variant 1")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:A_Angle", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:B_Angle", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:C_Angle", "70.5288")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:mValue", "false")]
+        public virtual void WState_Variant1()
+        {
+#line 67
+this.WState("70.5288", "70.5288", "70.5288", "false", ((string[])(null)));
 #line hidden
         }
     }

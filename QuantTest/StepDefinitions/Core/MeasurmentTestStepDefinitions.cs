@@ -1,14 +1,7 @@
 ﻿using Qntm;
-using Qntm.Constants;
 using Qntm.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace QuantTest.StepDefinitions
+namespace QuantTest.StepDefinitions.Core
 {
     [Binding]
     public class MeasurmentTestStepDefinitions
@@ -42,7 +35,7 @@ namespace QuantTest.StepDefinitions
             Assert.IsTrue(deviationPercent <= p1);
         }
 
-        private double RunMeasurment(Quantum q, double measurmentAngle,int count)
+        private double RunMeasurment(Quantum q, double measurmentAngle, int count)
         {
             int falses = 0;
             int trues = 0;
@@ -52,14 +45,14 @@ namespace QuantTest.StepDefinitions
             {
                 if (MeasurmentHelper.Measure(q, measurmentAngle)) trues++; else falses++;
                 q.Reset(angle); // восстановить состояние после измерения
-                RandomDelay();
+                NutJob();
             }
 
-            return (double)trues / (double)(falses + trues);
+            return trues / (double)(falses + trues);
         }
 
         // просто 'тяжелая' операция с произвольным временем выполнения
-        private void RandomDelay()
+        private static void NutJob()
         {
             Guid guid = Guid.NewGuid();
             int seed = BitConverter.ToInt32(guid.ToByteArray());

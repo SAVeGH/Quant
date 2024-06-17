@@ -7,7 +7,7 @@ namespace Qntm.Helpers
     public static class MeasurmentHelper
     {
         /// <summary>
-        /// 
+        /// Измеряет квант в заднном базисе со сдвигом квантовой цепи на величину изменения вероятности и отсоединением кванта из цепи (коллапс).
         /// </summary>
         /// <param name="quantum">Измеряемый квант (угол кванта в радианах)</param>
         /// <param name="measurmentAngle">Угол измерения в радианах (поворот установки)</param>
@@ -41,15 +41,16 @@ namespace Qntm.Helpers
             //Debug.WriteLine("Measure: set new quantum.Angle: " + Grad(quantum.Angle));
 
             // изменение вероятностей: '+' - против часовой стрелки (углы увеличиваются от 0), '-' - по часовой стрелке (углы уменьшаются)
-            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : zeroProbability);
-            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? zeroProbability : -unityProbability);
+            // Пример: вероятность 1 - 0.6, 0 - 0.4. 
+            // Если случится 1 - то вектор прошел от 0.6 до 1 т.е. изменился на 0.4 (zeroProbability)
+            // Если случится 0 - то вектор прошел от 0.6 до 0 т.е. изменился на 0.6 (unityProbability)
 
-            //double toZeroProbabilityChange = 0.0;
-            //double toUnityProbabilityChange = 0.0;
+            // на сколько поменялась бы вероятность при измерении в 0
+            double toZeroProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? -unityProbability : unityProbability);
+            // на сколько поменялась бы вероятность при измерении в 1
+            double toUnityProbabilityChange = !isZeroClockwise.HasValue ? 0 : (isZeroClockwise.Value ? zeroProbability : -zeroProbability);
 
-            //GetProbabilityChange(isZeroClockwise, unityProbability, zeroProbability, out toZeroProbabilityChange, out toUnityProbabilityChange);
-
-            // абсолютное изменение вероятности в терминах поворота угла вероятности к оси 1 или 0
+            // изменение вероятности в результате измерения
             double probabilityChange = result ? toUnityProbabilityChange : toZeroProbabilityChange;
 
             // сдвигаем связи на угол смещения вероятности кванта
@@ -60,26 +61,6 @@ namespace Qntm.Helpers
 
             return result;
         }
-
-        //private static void GetProbabilityChange(bool? isZeroClockwise, double unityProbability, double zeroProbability , out double toZeroProbabilityChange, out double toUnityProbabilityChange) 
-        //{
-        //    toZeroProbabilityChange = 0.0;
-        //    toUnityProbabilityChange = 0.0;
-
-        //    if (!isZeroClockwise.HasValue)               
-        //        return;            
-
-        //    if (isZeroClockwise.Value)
-        //    {
-        //        toZeroProbabilityChange = -unityProbability;
-        //        toUnityProbabilityChange = zeroProbability;
-        //    }
-        //    else 
-        //    {
-        //        toZeroProbabilityChange = zeroProbability;
-        //        toUnityProbabilityChange = -unityProbability;
-        //    }
-        //}
 
         /// <summary>
         /// 

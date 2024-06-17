@@ -2,6 +2,7 @@
 
 namespace Qntm.Constants
 {
+    // константы для часто используемых углов
     public static class Angles
     {
         public const double _0degree = 0.0;

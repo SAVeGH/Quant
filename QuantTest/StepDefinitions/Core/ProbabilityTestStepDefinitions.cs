@@ -4,7 +4,7 @@ using Qntm.Helpers;
 using QuantTest.Tables;
 using TechTalk.SpecFlow.Assist;
 
-namespace QuantTest.StepDefinitions
+namespace QuantTest.StepDefinitions.Core
 {
     [Binding]
     public class ProbabilityTestStepDefinitions
@@ -21,14 +21,14 @@ namespace QuantTest.StepDefinitions
         {
             var qTable = table.CreateSet<QuantumTable>();
 
-            foreach (var row in qTable) 
+            foreach (var row in qTable)
             {
                 Quantum q = new Quantum(AngleHelper.DegreeToRadians(row.Angle));
                 q.Name = row.Name;
                 //q.Scale = row.Scale;
                 string qName = "Quantum_" + row.Name;
                 _scenarioContext[qName] = q;
-            }            
+            }
         }
 
         [When(@"Define deviation from probability 1/2 after (.*) measurments of quantum '([^']*)'")]
@@ -40,15 +40,15 @@ namespace QuantTest.StepDefinitions
             double deviationSqrSum = 0.0;
             // выполняется пачка из 10 замеров сетов заданного размера
             // Для усреднения т.к. вероятностно отклонение от 1/2 пачки из 100 измерений может оказаться меьше отклонения пачки из 10000 зимерений
-            for (int i = 0; i < 10; i++) 
+            for (int i = 0; i < 10; i++)
             {
                 double result = RunMeasurment(q, p0);
 
-                double deviationSqr = Math.Pow((result - 0.5), 2);
+                double deviationSqr = Math.Pow(result - 0.5, 2);
 
                 deviationSqrSum = deviationSqrSum + deviationSqr;
 
-            }           
+            }
 
             string resultName = $"Quantum_{a}_DeviationSqr_after_{p0}_measurments";
 
@@ -62,7 +62,7 @@ namespace QuantTest.StepDefinitions
             Quantum q = (Quantum)_scenarioContext[qName];
             double result = RunMeasurment(q, p0);
 
-            double deviationSqr = Math.Pow((result - 0.5), 2);
+            double deviationSqr = Math.Pow(result - 0.5, 2);
 
             string resultName = $"Quantum_{a}_DeviationSqr_after_{p0}_measurments";
 
@@ -97,12 +97,12 @@ namespace QuantTest.StepDefinitions
             {
                 double unityProbability = RunMeasurment(q, setSize);
                 double zeroProbability = 1 - unityProbability;
-                
+
                 if (unityProbability > 0.5) trues++;
                 if (zeroProbability > 0.5) falses++;
             }
 
-            double deviationPercent = (double)Math.Abs(trues - falses) / (double)setsAmount;
+            double deviationPercent = Math.Abs(trues - falses) / (double)setsAmount;
 
             _scenarioContext["SetsDeviationPercent"] = deviationPercent;
         }
@@ -111,10 +111,10 @@ namespace QuantTest.StepDefinitions
         public void ThenBalanceDeviationShouldNotExceedPercents(int p0)
         {
             double deviationPercent = (double)_scenarioContext["SetsDeviationPercent"];
-            
+
             Console.WriteLine($"deviationPercent: {deviationPercent}");
 
-            Assert.IsTrue(deviationPercent < (double)p0 / 100.0);
+            Assert.IsTrue(deviationPercent < p0 / 100.0);
         }
 
         private double RunMeasurment(Quantum q, int count, bool doDelay = true)
@@ -126,14 +126,14 @@ namespace QuantTest.StepDefinitions
             {
                 if (MeasurmentHelper.Measure(q, 0)) trues++; else falses++;
                 q.Reset(Angles._90degree); // восстановить состояние после измерения
-                if(doDelay) RandomDelay();
+                if (doDelay) RandomDelay();
             }
             // Деление trues покажет веротность единицы 
-            return (double)trues / (double)(falses + trues);
+            return trues / (double)(falses + trues);
         }
 
         // просто 'тяжелая' операция с произвольным временем выполнения
-        private void RandomDelay() 
+        private void RandomDelay()
         {
             Random random = new Random();
 
@@ -143,8 +143,8 @@ namespace QuantTest.StepDefinitions
 
             int count = random.Next(100, 1000);
 
-            for (int i = 0; i < count; i++)            
-                result = a / b;            
+            for (int i = 0; i < count; i++)
+                result = a / b;
         }
     }
 }

@@ -27,17 +27,17 @@ namespace QuantTest.StepDefinitions
 
             for (int i = 0; i < p0; i++)
             {
-                //double qAngle = Angles._360degree * randomAngle.NextDouble();
+                double qAngle = Angles._360degree * randomAngle.NextDouble();
 
-                //Quantum quantumA = new Quantum(qAngle);
-                //Quantum quantumB = new Quantum(qAngle);
+                // Замечание: тест работает даже если задавать каждому кванту произвольный угол и затем запутывать.
+                // Так же тест проохдит если при запутывании ставить инверсию связи.
 
-                // странно, но это работает и без инверсии запутывания
-                Quantum quantumA = new Quantum(Angles._360degree * randomAngle.NextDouble());
-                Quantum quantumB = new Quantum(Angles._360degree * randomAngle.NextDouble());
+                // состояние Бэлла:
+                // 1/sqrt(2)00> + 1/sqrt(2)11>
+                Quantum quantumA = new Quantum(qAngle);
+                Quantum quantumB = new Quantum(qAngle);
 
-                // если А измеринтся в 1 то В точно в 0 в том же базисе. Поэтому inverse
-                EntangleHelper.Entangle(quantumA, quantumB, isInverse: true);
+                EntangleHelper.Entangle(quantumA, quantumB);
 
                 AliceStream.Add(quantumA);
                 BobStream.Add(quantumB);

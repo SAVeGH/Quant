@@ -2,7 +2,7 @@
 using Qntm.Constants;
 using Qntm.Helpers;
 
-namespace QuantTest.StepDefinitions
+namespace QuantTest.StepDefinitions.Core
 {
     [Binding]
     public class EntangledStatesTestStepDefinitions
@@ -81,7 +81,7 @@ namespace QuantTest.StepDefinitions
             string qBResultName = "Quantum_" + b + "_Result";
             bool qBResult = (bool)_scenarioContext[qBResultName];
 
-            if(match == "match")
+            if (match == "match")
                 Assert.IsTrue(qAResult == qBResult);
             else
                 Assert.IsFalse(qAResult == qBResult);

@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace QuantTest.Features
+namespace QuantTest.Features.Core
 {
     using TechTalk.SpecFlow;
     using System;
@@ -48,7 +48,7 @@ namespace QuantTest.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "MeasurmentTests", "Измерения кваната под разными углами", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features/Core", "MeasurmentTests", "Измерения кваната под разными углами", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -65,7 +65,7 @@ namespace QuantTest.Features
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "MeasurmentTests")))
             {
-                global::QuantTest.Features.MeasurmentTestsFeature.FeatureSetup(null);
+                global::QuantTest.Features.Core.MeasurmentTestsFeature.FeatureSetup(null);
             }
         }
         

@@ -1,9 +1,5 @@
 ﻿using Qntm.Constants;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Qntm.Helpers
 {
@@ -34,12 +30,19 @@ namespace Qntm.Helpers
             double resultDiff = Math.Min(anglesDiff, anglesDiffRest); // выбираем наименьший. Он и будет давать проекцию на линию 0 - 180 (0 - 1)
 
             // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
-            // вероятности при текущем положении вектора
+            // Вероятность 1 при текущем положении вектора
             double unityProbability = Math.Pow(Math.Sin(resultDiff / 2.0), 2.0);
 
             return unityProbability;
         }
 
+        /// <summary>
+        /// Находит угол кванта соответсвующий переданной вероятности в заданном базисе
+        /// </summary>
+        /// <param name="probability">Вероятность полученная в результате поворота вероятности. Значение от -1 до +2. Значения за диапазоном 0-1 - означает проворот
+        /// с пересечением линии измерения</param>
+        /// <param name="basisAngle0">Угол кванта соответсвующий вероятности</param>
+        /// <returns></returns>
         public static double AngleOfProbabilityInBasis(double probability, double basisAngle0)
         {
             double unityProbability = probability;
