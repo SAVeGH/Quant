@@ -166,10 +166,5 @@ namespace QuantTest.StepDefinitions
 
             Assert.IsTrue(deviationPercent <= p0);
         }
-
-
-
-
-
     }
 }

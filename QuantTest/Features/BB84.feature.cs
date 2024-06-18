@@ -92,13 +92,13 @@ namespace QuantTest.Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("BB84 key")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("BB84 key transmittion without intercept")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BB84")]
-        public virtual void BB84Key()
+        public virtual void BB84KeyTransmittionWithoutIntercept()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BB84 key", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("BB84 key transmittion without intercept", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -123,9 +123,18 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("Alice generates 4n size key where n is 1000", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
-testRunner.When("StubWhen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.And("\'Alice\' chose basis for each bit in the key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 8
+testRunner.And("\'Bob\' chose basis for each bit in the key", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 9
+testRunner.And("Alice makes transmittion quantums sequence", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 10
+testRunner.When("StubWhen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 11
 testRunner.Then("StubThen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
