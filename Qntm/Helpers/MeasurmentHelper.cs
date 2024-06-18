@@ -12,7 +12,7 @@ namespace Qntm.Helpers
         /// <param name="quantum">Измеряемый квант (угол кванта в радианах)</param>
         /// <param name="measurmentAngle">Угол измерения в радианах (поворот установки)</param>
         /// <returns>Результат измерения кванта true/false в заданном базисе</returns>
-        public static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/, bool? setResult)
+        private static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/, bool? setResult)
         {
             //Debug.WriteLine("Measure: --------------------------------------------- ");
             // положение полюса 0 на шкале от 0 до 360 в радианах
@@ -77,27 +77,6 @@ namespace Qntm.Helpers
         {
             return Measure(quantum, measurmentAngle, mResult);
         }
-
-        public static bool MeasureTest(double angle, double measurmentAngle /*заданный базис измерения - поворот установки*/)
-        {
-            //Debug.WriteLine("Measure: --------------------------------------------- ");
-            // положение полюса 0 на шкале от 0 до 360
-            double actualMeasureAngle0 = AngleHelper.Positive360RangeAngle(measurmentAngle); // чистый угол поворота установки (без лишних оборотов)
-            // положение полюса 1 на шкале от 0 до 360
-            //double actualMeasureAngle1 = AngleHelper.Positive360RangeAngle(actualMeasureAngle0 + Angles._180degree);
-
-            double measurmentDiff = angle - actualMeasureAngle0;
-
-            double anglesDiff = Math.Abs(measurmentDiff); // разница углов
-
-            double anglesDiffRest = Angles._360degree - anglesDiff; // ответный угол 
-
-            double resultDiff = Math.Min(anglesDiff, anglesDiffRest);
-
-            bool? zeroClockwise = ProbabilityHelper.IsZeroClockwise(angle, measurmentAngle);
-
-            return true;
-        }        
 
         public static string Grad(double rad)
         {

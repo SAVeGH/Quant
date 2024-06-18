@@ -1,5 +1,6 @@
 ﻿using Qntm;
 using Qntm.Helpers;
+using QuantTest.Helpers;
 
 namespace QuantTest.StepDefinitions.Core
 {
@@ -53,10 +54,8 @@ namespace QuantTest.StepDefinitions.Core
 
         // просто 'тяжелая' операция с произвольным временем выполнения
         private static void NutJob()
-        {
-            Guid guid = Guid.NewGuid();
-            int seed = BitConverter.ToInt32(guid.ToByteArray());
-            Random random = new Random(seed);
+        {            
+            Random random = RandomHelper.Create();
 
             double result = 0;
             double a = 123456789.0 * random.NextDouble();

@@ -13,11 +13,6 @@ namespace Quant
 	public class Launcher
 	{
         public void Run()
-        {
-            MeasurmentHelper.MeasureTest(260 * Angles._rad, 92 * Angles._rad);
-        }
-
-        public void Runx()
 		{
             try
             {

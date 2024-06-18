@@ -1,6 +1,7 @@
 ﻿using Qntm;
 using Qntm.Constants;
 using Qntm.Helpers;
+using QuantTest.Helpers;
 using TechTalk.SpecFlow;
 
 namespace QuantTest.StepDefinitions
@@ -17,10 +18,8 @@ namespace QuantTest.StepDefinitions
 
         [Given(@"System has stream of entangled quantums size of (.*)")]
         public void GivenSystemHasStreamOfEntangledQuantumsSizeOf(int p0)
-        {
-            Guid guid = Guid.NewGuid();
-            int seed = BitConverter.ToInt32(guid.ToByteArray());
-            Random randomAngle = new Random(seed);
+        {            
+            Random randomAngle = RandomHelper.Create();
 
             List<Quantum> AliceStream = new List<Quantum>();
             List<Quantum> BobStream = new List<Quantum>();
@@ -30,7 +29,7 @@ namespace QuantTest.StepDefinitions
                 double qAngle = Angles._360degree * randomAngle.NextDouble();
 
                 // Замечание: тест работает даже если задавать каждому кванту произвольный угол и затем запутывать.
-                // Так же тест проохдит если при запутывании ставить инверсию связи.
+                // Так же тест проходит если при запутывании ставить инверсию связи.
 
                 // состояние Бэлла:
                 // 1/sqrt(2)00> + 1/sqrt(2)11>
@@ -58,11 +57,8 @@ namespace QuantTest.StepDefinitions
 
             List<bool> AliceMeasurmentResults = new List<bool>();
             List<bool> BobMeasurmentResults = new List<bool>();
-
-            Guid guid = Guid.NewGuid();
-            byte[] bytes = guid.ToByteArray();
-            int seed = BitConverter.ToInt32(bytes, 0);
-            Random rnd = new Random(seed);
+            
+            Random rnd = RandomHelper.Create();
 
             foreach (Quantum item in AliceQuantumStream) 
             {
@@ -96,11 +92,8 @@ namespace QuantTest.StepDefinitions
 
             List<bool> AliceMeasurmentResults = new List<bool>();
             List<bool> BobMeasurmentResults = new List<bool>();
-
-            Guid guid = Guid.NewGuid();
-            byte[] bytes = guid.ToByteArray();
-            int seed = BitConverter.ToInt32(bytes, 0);
-            Random rnd = new Random(seed);
+            
+            Random rnd = RandomHelper.Create();
 
             foreach (Quantum item in AliceQuantumStream)
             {
@@ -142,34 +135,6 @@ namespace QuantTest.StepDefinitions
             return 0;
         }
 
-        //[Then(@"Comparision gives 1/2 of matched results")]
-        //public void ThenComparisionGivesOfMatchedResults()
-        //{
-        //    List<bool> AliceMeasurmentResults = (List<bool>)_scenarioContext["AliceMeasurmentResults"];
-        //    List<bool> BobMeasurmentResults = (List<bool>)_scenarioContext["BobMeasurmentResults"];
-
-        //    List<bool> comparisionResults = new List<bool>();
-
-        //    for (int i = 0; i < AliceMeasurmentResults.Count; i++) 
-        //    {
-        //        bool AliceResult = AliceMeasurmentResults[i];
-        //        bool BobResult = BobMeasurmentResults[i];
-        //        bool cmpResult = AliceResult == BobResult;
-
-        //        comparisionResults.Add(cmpResult);
-        //    }
-
-        //    double complains = (double)comparisionResults.Count(item => item == true);
-
-        //    double result = complains / (double)comparisionResults.Count;
-
-        //    double deviationPercent = Math.Abs(result - 0.5) * 100.0;
-        //    //Console.WriteLine($"deviationPercent: {deviationPercent}, Measurement result: {measurmentResult}");
-        //    Assert.IsTrue(deviationPercent <= 10);
-
-
-        //}
-
         [Then(@"Comparision gives 1/2 of matched results for quantum case rather than 5/9 for the classical case with devation of (.*) percents")]
         public void ThenComparisionGivesOfMatchedResultsForQuantumCaseRatherThanForTheClassicalCaseWithDevationOfPercents(double p0)
         {
@@ -196,9 +161,6 @@ namespace QuantTest.StepDefinitions
 
             // Отклонение от 1/2 меньше чем от 5/9
             Assert.IsTrue(Math.Abs(quantumCaseExpectation - result) < Math.Abs(classicCaseExpectation - result));
-
-            //double deviationPercent = Math.Abs(result - 0.5) * 100.0;
-            //Console.WriteLine($"deviationPercent: {deviationPercent}, Measurement result: {measurmentResult}");
 
             double deviationPercent = Math.Abs(quantumCaseExpectation - result) * 100.0 / quantumCaseExpectation;
 

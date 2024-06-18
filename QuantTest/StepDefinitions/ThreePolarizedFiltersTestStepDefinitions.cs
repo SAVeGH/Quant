@@ -1,6 +1,7 @@
 ﻿using Qntm;
 using Qntm.Constants;
 using Qntm.Helpers;
+using QuantTest.Helpers;
 
 namespace QuantTest.StepDefinitions
 {
@@ -19,10 +20,7 @@ namespace QuantTest.StepDefinitions
         {
             List<Quantum> quantumsStream = new List<Quantum>();
 
-            Guid guid = Guid.NewGuid();
-            int seed = BitConverter.ToInt32(guid.ToByteArray());
-
-            Random randomAngle = new Random(seed);
+            Random randomAngle = RandomHelper.Create();
 
             for (int i = 0; i < p0; i++)            
                 quantumsStream.Add(new Quantum(Angles._360degree * randomAngle.NextDouble()));
