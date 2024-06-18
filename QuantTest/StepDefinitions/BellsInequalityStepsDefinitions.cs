@@ -47,8 +47,8 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["StreamSize"] = p0;
         }
 
-        [When(@"'([^']*)' has measured strem using arbitrary basises from three options basises")]
-        public void WhenHasMeasuredStremUsingArbitraryBasisesFromThreeOptionsBasises(string name)
+        [When(@"Alice and Bob has measured stream using arbitrary basises from three options basises")]
+        public void WhenAliceAndBobHasMeasuredStreamUsingArbitraryBasisesFromThreeOptionsBasises()
         {
             string AliceStreamName = $"AliceStream";
             string BobStreamName = $"BobStream";
@@ -78,7 +78,7 @@ namespace QuantTest.StepDefinitions
             string AliceMeasurmentResultsName = $"AliceMeasurmentResults";
             _scenarioContext[AliceMeasurmentResultsName] = AliceMeasurmentResults;
 
-            string BobMeasurmentResultsName = $"AliceMeasurmentResults";
+            string BobMeasurmentResultsName = $"BobMeasurmentResults";
             _scenarioContext[BobMeasurmentResultsName] = BobMeasurmentResults;
         }
 

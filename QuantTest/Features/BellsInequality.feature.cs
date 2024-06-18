@@ -94,11 +94,9 @@ namespace QuantTest.Features
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
         [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Bells Inequality test")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "BellsInequality")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute("tag1")]
         public virtual void BellsInequalityTest()
         {
-            string[] tagsOfScenario = new string[] {
-                    "tag1"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Bells Inequality test", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 6
@@ -124,11 +122,11 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
  testRunner.Given("System has stream of entangled quantums size of 30000", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 10
- testRunner.When("Alice and Bob has measured strem using arbitrary basises from three options basis" +
-                        "es", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 8
+ testRunner.When("Alice and Bob has measured stream using arbitrary basises from three options basi" +
+                        "ses", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 11
+#line 9
  testRunner.Then("Comparision gives 1/2 of matched results for quantum case rather than 5/9 for the" +
                         " classical case with devation of 1 percents", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
