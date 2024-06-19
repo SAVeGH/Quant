@@ -22,6 +22,10 @@ And 'Alice' chose basis for each bit in the key
 And 'Bob' chose basis for each bit in the key
 And Alice makes quantums stream
 When Alice sends quantums stream to Bob
+# На этапе перехвата у Евы нет информации о базисах Алисы и Боба
+# Есть только поток квантов переданных Алисой. Закэшировать (клонировать) кванты до получения 
+# информации о базисах она то же не может. Поэтому лучшее что она может сделать - это
+# сгенерировать свою последовательноть базисов и измерить кванты. 
 And 'Eva' chose basis for each bit in the key
 And Eva intercepts transmittion
 And Alice and Bob compares their basises in unencripted form

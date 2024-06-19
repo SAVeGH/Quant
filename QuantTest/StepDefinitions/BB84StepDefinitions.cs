@@ -253,9 +253,6 @@ namespace QuantTest.StepDefinitions
             Assert.IsFalse(isIdentical);
         }
 
-
-
-
         private Quantum MakeQuantum(bool keyValue, bool basisValue) 
         {
             double quantumAngle = double.NaN;
