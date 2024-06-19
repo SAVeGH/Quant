@@ -1,13 +1,7 @@
-﻿using QuantTest.Helpers;
-using Qntm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Qntm;
 using Qntm.Constants;
-using System.Xml.Linq;
 using Qntm.Helpers;
+using QuantTest.Helpers;
 
 namespace QuantTest.StepDefinitions
 {
@@ -20,26 +14,6 @@ namespace QuantTest.StepDefinitions
         {
             _scenarioContext = scenarioContext;
         }
-
-        [Then(@"StubThen")]
-        public void ThenStubThen()
-        {
-            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
-            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
-
-            bool isIdentical = true;
-
-            for (int i = 0; i < AliceKeyBits.Count; i++) 
-            {
-                if (AliceKeyBits[i] != BobKeyBits[i]) 
-                {
-                    isIdentical = false;
-                    break;
-                }
-            }
-        }
-
-
 
         [Given(@"Alice generates 4n size key where n is (.*)")]
         public void GivenAliceGenerates4NSizeKeyWhereNIs(int p0)
@@ -57,6 +31,59 @@ namespace QuantTest.StepDefinitions
 
             List<bool> basisSequence = RandomSequence(length);
             _scenarioContext[$"{name}BasisSequence"] = basisSequence;
+        }
+
+        [Given(@"Alice makes quantums stream")]
+        public void GivenAliceMakesQuantumsStream()
+        {
+            int length = (int)_scenarioContext["blockSize"];
+
+            List<Quantum> AliceQuantums = new List<Quantum>();
+
+            List<bool> AliceKeySequence = (List<bool>)_scenarioContext["AliceKeySequence"];
+            List<bool> AliceBasisSequence = (List<bool>)_scenarioContext["AliceBasisSequence"];
+
+            for (int i = 0; i < AliceKeySequence.Count; i++)
+            {
+                bool keyValue = AliceKeySequence[i];
+                bool basisValue = AliceBasisSequence[i]; // true - вертикальный базис V, false - горизонтальный базис H
+                double quantumAngle = double.NaN;
+
+                if (keyValue)
+                {
+                    // отправляем 1
+                    if (basisValue)
+                    {
+                        // V
+                        quantumAngle = Angles._180degree;
+                    }
+                    else
+                    {
+                        // H
+                        quantumAngle = Angles._270degree;
+                    }
+                }
+                else
+                {
+                    // отправляем 0
+                    if (basisValue)
+                    {
+                        // V
+                        quantumAngle = Angles._0degree;
+                    }
+                    else
+                    {
+                        // H
+                        quantumAngle = Angles._90degree;
+                    }
+                }
+
+                Quantum quantum = new Quantum(quantumAngle);
+
+                AliceQuantums.Add(quantum);
+            }
+
+            _scenarioContext["AliceQuantums"] = AliceQuantums;
         }
 
         [When(@"Alice sends quantums stream to Bob")]
@@ -125,62 +152,63 @@ namespace QuantTest.StepDefinitions
             _scenarioContext[$"{name}KeyBits"] = keyBits;
         }
 
-
-        [Given(@"Alice makes quantums stream")]
-        public void GivenAliceMakesQuantumsStream()
+        [When(@"Alice and Bob compares one half of their key bits in unencripted form")]
+        public void WhenAliceAndBobComparesOneHalfOfTheirKeyBitsInUnencriptedForm()
         {
-            int length = (int)_scenarioContext["blockSize"];
+            int blockSize = (int)_scenarioContext["blockSize"];
 
-            List<Quantum> AliceQuantums = new List<Quantum>();
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
 
-            List<bool> AliceKeySequence = (List<bool>)_scenarioContext["AliceKeySequence"];
-            List<bool> AliceBasisSequence = (List<bool>)_scenarioContext["AliceBasisSequence"];
+            List<bool> AliceKeyComparisionBits = AliceKeyBits.Skip(blockSize).ToList();
+            List<bool> BobKeyComparisionBits = BobKeyBits.Skip(blockSize).ToList();
 
-            for (int i = 0; i < AliceKeySequence.Count; i++) 
+            bool isIdentical = true;
+
+            for (int i = 0; i < AliceKeyComparisionBits.Count; i++)
             {
-                bool keyValue = AliceKeySequence[i];
-                bool basisValue = AliceBasisSequence[i]; // true - вертикальный базис V, false - горизонтальный базис H
-                double quantumAngle = double.NaN;
-
-                if (keyValue)
+                if (AliceKeyComparisionBits[i] != BobKeyComparisionBits[i])
                 {
-                    // отправляем 1
-                    if (basisValue)
-                    {
-                        // V
-                        quantumAngle = Angles._180degree;
-                    }
-                    else 
-                    {
-                        // H
-                        quantumAngle = Angles._270degree;
-                    }
+                    isIdentical = false;
+                    break;
                 }
-                else 
-                {
-                    // отправляем 0
-                    if (basisValue)
-                    {
-                        // V
-                        quantumAngle = Angles._0degree;
-                    }
-                    else 
-                    {
-                        // H
-                        quantumAngle = Angles._90degree;
-                    }
-                }
-
-                Quantum quantum = new Quantum(quantumAngle);
-
-                AliceQuantums.Add(quantum);
             }
 
-            _scenarioContext["AliceQuantums"] = AliceQuantums;
+            _scenarioContext["KeyBitsComparisionResult"] = isIdentical;
         }
 
+        [Then(@"Comparision of key bits are identical")]
+        public void ThenComparisionOfKeyBitsAreIdentical()
+        {
+            bool isIdentical = (bool)_scenarioContext["KeyBitsComparisionResult"];
 
+            Assert.IsTrue(isIdentical);
+        }
 
+        [Then(@"Alice and Bob keys are identical")]
+        public void ThenAliceAndBobKeysAreIdentical()
+        {
+            int blockSize = (int)_scenarioContext["blockSize"];
+
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
+
+            List<bool> AliceKey = AliceKeyBits.Take(blockSize).ToList();
+            List<bool> BobKey = BobKeyBits.Take(blockSize).ToList();
+
+            bool isIdentical = true;
+
+            for (int i = 0; i < AliceKey.Count; i++)
+            {
+                if (AliceKey[i] != BobKey[i])
+                {
+                    isIdentical = false;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(isIdentical);
+        }
 
         private List<bool> RandomSequence(int length) 
         {

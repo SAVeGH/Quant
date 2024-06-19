@@ -147,7 +147,13 @@ testRunner.And("\'Alice\' leave key bits that corresponds to coinciding basises"
 testRunner.And("\'Bob\' leave key bits that corresponds to coinciding basises", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 15
-testRunner.Then("StubThen", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.And("Alice and Bob compares one half of their key bits in unencripted form", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 16
+testRunner.Then("Comparision of key bits are identical", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 17
+testRunner.And("Alice and Bob keys are identical", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
