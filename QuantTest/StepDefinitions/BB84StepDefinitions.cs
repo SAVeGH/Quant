@@ -25,6 +25,7 @@ namespace QuantTest.StepDefinitions
         }
 
         [Given(@"'([^']*)' chose basis for each bit in the key")]
+        [When(@"'([^']*)' chose basis for each bit in the key")]
         public void GivenChoseBasisForEachBitInTheKey(string name)
         {
             int length = (int)_scenarioContext["blockSize"];
@@ -36,8 +37,6 @@ namespace QuantTest.StepDefinitions
         [Given(@"Alice makes quantums stream")]
         public void GivenAliceMakesQuantumsStream()
         {
-            int length = (int)_scenarioContext["blockSize"];
-
             List<Quantum> AliceQuantums = new List<Quantum>();
 
             List<bool> AliceKeySequence = (List<bool>)_scenarioContext["AliceKeySequence"];
@@ -46,39 +45,9 @@ namespace QuantTest.StepDefinitions
             for (int i = 0; i < AliceKeySequence.Count; i++)
             {
                 bool keyValue = AliceKeySequence[i];
-                bool basisValue = AliceBasisSequence[i]; // true - вертикальный базис V, false - горизонтальный базис H
-                double quantumAngle = double.NaN;
+                bool basisValue = AliceBasisSequence[i]; // true - вертикальный базис V, false - горизонтальный базис H                
 
-                if (keyValue)
-                {
-                    // отправляем 1
-                    if (basisValue)
-                    {
-                        // V
-                        quantumAngle = Angles._180degree;
-                    }
-                    else
-                    {
-                        // H
-                        quantumAngle = Angles._270degree;
-                    }
-                }
-                else
-                {
-                    // отправляем 0
-                    if (basisValue)
-                    {
-                        // V
-                        quantumAngle = Angles._0degree;
-                    }
-                    else
-                    {
-                        // H
-                        quantumAngle = Angles._90degree;
-                    }
-                }
-
-                Quantum quantum = new Quantum(quantumAngle);
+                Quantum quantum = MakeQuantum(keyValue, basisValue);
 
                 AliceQuantums.Add(quantum);
             }
@@ -155,13 +124,13 @@ namespace QuantTest.StepDefinitions
         [When(@"Alice and Bob compares one half of their key bits in unencripted form")]
         public void WhenAliceAndBobComparesOneHalfOfTheirKeyBitsInUnencriptedForm()
         {
-            int blockSize = (int)_scenarioContext["blockSize"];
-
             List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
             List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
 
-            List<bool> AliceKeyComparisionBits = AliceKeyBits.Skip(blockSize).ToList();
-            List<bool> BobKeyComparisionBits = BobKeyBits.Skip(blockSize).ToList();
+            int blockLength = AliceKeyBits.Count / 2;
+
+            List<bool> AliceKeyComparisionBits = AliceKeyBits.Skip(blockLength).ToList();
+            List<bool> BobKeyComparisionBits = BobKeyBits.Skip(blockLength).ToList();
 
             bool isIdentical = true;
 
@@ -177,8 +146,8 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["KeyBitsComparisionResult"] = isIdentical;
         }
 
-        [Then(@"Comparision of key bits are identical")]
-        public void ThenComparisionOfKeyBitsAreIdentical()
+        [Then(@"Compared key bits are identical")]
+        public void ThenComparedKeyBitsAreIdentical()
         {
             bool isIdentical = (bool)_scenarioContext["KeyBitsComparisionResult"];
 
@@ -187,14 +156,14 @@ namespace QuantTest.StepDefinitions
 
         [Then(@"Alice and Bob keys are identical")]
         public void ThenAliceAndBobKeysAreIdentical()
-        {
-            int blockSize = (int)_scenarioContext["blockSize"];
-
+        {            
             List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
             List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
 
-            List<bool> AliceKey = AliceKeyBits.Take(blockSize).ToList();
-            List<bool> BobKey = BobKeyBits.Take(blockSize).ToList();
+            int blockLength = AliceKeyBits.Count / 2;
+
+            List<bool> AliceKey = AliceKeyBits.Take(blockLength).ToList();
+            List<bool> BobKey = BobKeyBits.Take(blockLength).ToList();
 
             bool isIdentical = true;
 
@@ -208,6 +177,121 @@ namespace QuantTest.StepDefinitions
             }
 
             Assert.IsTrue(isIdentical);
+        }
+
+        [When(@"Eva intercepts transmittion")]
+        public void WhenEvaInterceptsTransmittion()
+        {
+            // Ева может еще не знает о выбранных базисах и результат их сравнения
+            // Передается пока только пток квантов
+            // Что бы узнать что передала Алиса  - нужно длеать измерение
+
+            List<Quantum> AliceQuantums = (List<Quantum>)_scenarioContext["AliceQuantums"];
+            List<bool> EvaBasisSequence = (List<bool>)_scenarioContext["EvaBasisSequence"];
+
+            for (int i = 0; i < AliceQuantums.Count; i++)
+            {
+                Quantum quantum = AliceQuantums[i];
+                bool EvaBasis = EvaBasisSequence[i];
+                double measurmentAngle = EvaBasis ? Angles._0degree : Angles._90degree;
+                bool mResult = MeasurmentHelper.Measure(quantum, measurmentAngle);
+            }
+        }
+
+        [Then(@"Compared key bits are not identical and differ for 1/4 with deviation of (.*)")]
+        public void ThenComparedKeyBitsAreNotIdenticalAndDifferForWithDeviationOf(double p0)
+        {
+            bool isIdentical = (bool)_scenarioContext["KeyBitsComparisionResult"];
+
+            Assert.IsFalse(isIdentical);
+
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
+
+            int blockLength = AliceKeyBits.Count / 2;
+
+            List<bool> AliceKeyComparisionBits = AliceKeyBits.Skip(blockLength).ToList();
+            List<bool> BobKeyComparisionBits = BobKeyBits.Skip(blockLength).ToList();
+
+            int diffCount = 0;
+
+            for (int i = 0; i < AliceKeyComparisionBits.Count; i++)
+            {
+                if (AliceKeyComparisionBits[i] != BobKeyComparisionBits[i])
+                    diffCount++;
+            }
+
+            double deviation = (double)diffCount / (double)blockLength;
+
+            double deviationPercent = Math.Abs(deviation - 0.25) * 100.0;
+
+            Assert.IsTrue(deviationPercent <= p0);
+        }
+
+        [Then(@"Alice and Bob keys are not identical")]
+        public void ThenAliceAndBobKeysAreNotIdentical()
+        {
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
+
+            int blockLength = AliceKeyBits.Count / 2;
+
+            List<bool> AliceKey = AliceKeyBits.Take(blockLength).ToList();
+            List<bool> BobKey = BobKeyBits.Take(blockLength).ToList();
+
+            bool isIdentical = true;
+
+            for (int i = 0; i < AliceKey.Count; i++)
+            {
+                if (AliceKey[i] != BobKey[i])
+                {
+                    isIdentical = false;
+                    break;
+                }
+            }
+
+            Assert.IsFalse(isIdentical);
+        }
+
+
+
+
+        private Quantum MakeQuantum(bool keyValue, bool basisValue) 
+        {
+            double quantumAngle = double.NaN;
+
+            if (keyValue)
+            {
+                // отправляем 1
+                if (basisValue)
+                {
+                    // V
+                    quantumAngle = Angles._180degree;
+                }
+                else
+                {
+                    // H
+                    quantumAngle = Angles._270degree;
+                }
+            }
+            else
+            {
+                // отправляем 0
+                if (basisValue)
+                {
+                    // V
+                    quantumAngle = Angles._0degree;
+                }
+                else
+                {
+                    // H
+                    quantumAngle = Angles._90degree;
+                }
+            }
+
+            Quantum quantum = new Quantum(quantumAngle);
+
+            return quantum;
         }
 
         private List<bool> RandomSequence(int length) 
