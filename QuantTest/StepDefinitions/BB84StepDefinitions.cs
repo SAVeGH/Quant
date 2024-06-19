@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Qntm.Constants;
+using System.Xml.Linq;
+using Qntm.Helpers;
 
 namespace QuantTest.StepDefinitions
 {
@@ -19,16 +21,22 @@ namespace QuantTest.StepDefinitions
             _scenarioContext = scenarioContext;
         }
 
-        [When(@"StubWhen")]
-        public void WhenStubWhen()
-        {
-            //throw new PendingStepException();
-        }
-
         [Then(@"StubThen")]
         public void ThenStubThen()
         {
-            //throw new PendingStepException();
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
+
+            bool isIdentical = true;
+
+            for (int i = 0; i < AliceKeyBits.Count; i++) 
+            {
+                if (AliceKeyBits[i] != BobKeyBits[i]) 
+                {
+                    isIdentical = false;
+                    break;
+                }
+            }
         }
 
 
@@ -42,15 +50,6 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["AliceKeySequence"] = AliceKeySequence;
         }
 
-        [Given(@"Alice chose basis for each bit in the key")]
-        public void GivenAliceChoseBasisForEachBitInTheKey()
-        {
-            int length = (int)_scenarioContext["blockSize"];
-
-            List<bool> AliceBasisSequence = RandomSequence(length);
-            _scenarioContext["AliceBasisSequence"] = AliceBasisSequence;
-        }
-
         [Given(@"'([^']*)' chose basis for each bit in the key")]
         public void GivenChoseBasisForEachBitInTheKey(string name)
         {
@@ -60,9 +59,75 @@ namespace QuantTest.StepDefinitions
             _scenarioContext[$"{name}BasisSequence"] = basisSequence;
         }
 
+        [When(@"Alice sends quantums stream to Bob")]
+        public void WhenAliceSendsQuantumsStreamToBob()
+        {
+            //throw new PendingStepException();
+        }
 
-        [Given(@"Alice makes transmittion quantums sequence")]
-        public void GivenAliceMakesTransmittionQuantumsSequence()
+        [When(@"Bob measure quantums stream with chosen basises for each quantum")]
+        public void WhenBobMeasureQuantumsStreamWithChosenBasisesForEachQuantum()
+        {
+            List<Quantum> AliceQuantums = (List<Quantum>)_scenarioContext["AliceQuantums"];
+            List<bool> BobBasisSequence = (List<bool>)_scenarioContext["BobBasisSequence"];
+            List<bool> BobKeySequence = new List<bool>();
+
+            for (int i = 0; i < AliceQuantums.Count; i++) 
+            {
+                Quantum quantum = AliceQuantums[i];
+                bool BobBasis = BobBasisSequence[i];
+                double measurmentAngle = BobBasis ? Angles._0degree : Angles._90degree;
+                bool mResult = MeasurmentHelper.Measure(quantum, measurmentAngle);
+                BobKeySequence.Add(mResult);                
+            }
+
+            _scenarioContext["BobKeySequence"] = BobKeySequence;
+        }
+
+        [When(@"Alice and Bob compares their basises in unencripted form")]
+        public void WhenAliceAndBobComparesTheirBasisesInUnencriptedForm()
+        {
+            List<bool> AliceBasisSequence = (List<bool>)_scenarioContext["AliceBasisSequence"];
+            List<bool> BobBasisSequence = (List<bool>)_scenarioContext["BobBasisSequence"];
+
+            List<bool> CommonBasisSequence = new List<bool>();
+
+            for (int i = 0; i < AliceBasisSequence.Count; i++) 
+            {
+                bool AliceBasis = AliceBasisSequence[i];
+                bool BobBasis = BobBasisSequence[i];
+
+                bool isCoinside = AliceBasis == BobBasis;
+
+                CommonBasisSequence.Add(isCoinside);
+            }
+
+            _scenarioContext["CommonBasisSequence"] = CommonBasisSequence;
+        }
+
+        [When(@"'([^']*)' leave key bits that corresponds to coinciding basises")]
+        public void WhenLeaveKeyBitsThatCorrespondsToCoincidingBasises(string name)
+        {
+            List<bool> CommonBasisSequence = (List<bool>)_scenarioContext["CommonBasisSequence"];
+
+            List<bool> keySequence = (List<bool>)_scenarioContext[$"{name}KeySequence"];
+
+            List<bool> keyBits = new List<bool>();
+
+            for (int i = 0; i < CommonBasisSequence.Count; i++) 
+            {
+                if (CommonBasisSequence[i] == false)
+                    continue;
+
+                keyBits.Add(keySequence[i]);
+            }
+
+            _scenarioContext[$"{name}KeyBits"] = keyBits;
+        }
+
+
+        [Given(@"Alice makes quantums stream")]
+        public void GivenAliceMakesQuantumsStream()
         {
             int length = (int)_scenarioContext["blockSize"];
 
