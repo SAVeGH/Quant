@@ -7,11 +7,11 @@ using TechTalk.SpecFlow;
 namespace QuantTest.StepDefinitions
 {
     [Binding]
-    public class BellsInequalityStepsDefinitions
+    public class BellsInequalityStepDefinitions
     {
         private ScenarioContext _scenarioContext;
 
-        public BellsInequalityStepsDefinitions(ScenarioContext scenarioContext)
+        public BellsInequalityStepDefinitions(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }

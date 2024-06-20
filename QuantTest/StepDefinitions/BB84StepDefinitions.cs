@@ -18,7 +18,7 @@ namespace QuantTest.StepDefinitions
         [Given(@"Alice generates 4n size key where n is (.*)")]
         public void GivenAliceGenerates4NSizeKeyWhereNIs(int p0)
         {
-            List<bool> AliceKeySequence = RandomSequence(p0);
+            List<bool> AliceKeySequence = RandomHelper.RandomSequence(p0); //  количество будет p0 * 32 (8 бит по 4 байта)
 
             _scenarioContext["blockSize"] = p0;
             _scenarioContext["AliceKeySequence"] = AliceKeySequence;
@@ -30,7 +30,7 @@ namespace QuantTest.StepDefinitions
         {
             int length = (int)_scenarioContext["blockSize"];
 
-            List<bool> basisSequence = RandomSequence(length);
+            List<bool> basisSequence = RandomHelper.RandomSequence(length);
             _scenarioContext[$"{name}BasisSequence"] = basisSequence;
         }
 
@@ -184,7 +184,7 @@ namespace QuantTest.StepDefinitions
         {
             // Ева может еще не знает о выбранных базисах и результат их сравнения
             // Передается пока только пток квантов
-            // Что бы узнать что передала Алиса  - нужно длеать измерение
+            // Что бы узнать что передала Алиса  - нужно делать измерение
 
             List<Quantum> AliceQuantums = (List<Quantum>)_scenarioContext["AliceQuantums"];
             List<bool> EvaBasisSequence = (List<bool>)_scenarioContext["EvaBasisSequence"];
@@ -289,39 +289,6 @@ namespace QuantTest.StepDefinitions
             Quantum quantum = new Quantum(quantumAngle);
 
             return quantum;
-        }
-
-        private List<bool> RandomSequence(int length) 
-        {
-            List<bool> sequence = new List<bool>();
-
-            Random random = RandomHelper.Create();
-
-            for (int i = 0; i < length; i++)
-            {
-                int intValue = random.Next();
-
-                byte[] intArray = BitConverter.GetBytes(intValue);
-
-                for (int j = 0; j < 4; j++)
-                {
-                    byte b = intArray[j];
-
-                    WriteByteValue(b, sequence);
-                }
-            }
-
-            return sequence;
-        }
-
-        private void WriteByteValue(byte b, List<bool> sequence) 
-        {
-            for (int i = 0; i < 8; i++) 
-            {
-                bool bValue = (b & 1) == 1;
-                sequence.Add(bValue);
-                b = (byte)(b >> 1);
-            }
         }
     }
 }
