@@ -15,7 +15,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext = scenarioContext;
         }
 
-        [Given(@"Alice generates 4n size key where n is (.*)")]
+        [Given(@"Alice generates 4n size key where n is (.*)"), Scope(Tag = "BB84")]
         public void GivenAliceGenerates4NSizeKeyWhereNIs(int p0)
         {
             List<bool> AliceKeySequence = RandomHelper.RandomSequence(p0); //  количество будет p0 * 32 (8 бит по 4 байта)
@@ -24,6 +24,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["AliceKeySequence"] = AliceKeySequence;
         }
 
+        [Scope(Tag = "BB84")]
         [Given(@"'([^']*)' chose basis for each bit in the key")]
         [When(@"'([^']*)' chose basis for each bit in the key")]
         public void GivenChoseBasisForEachBitInTheKey(string name)
@@ -34,7 +35,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext[$"{name}BasisSequence"] = basisSequence;
         }
 
-        [Given(@"Alice makes quantums stream")]
+        [Given(@"Alice makes quantums stream"), Scope(Tag = "BB84")]
         public void GivenAliceMakesQuantumsStream()
         {
             List<Quantum> AliceQuantums = new List<Quantum>();
@@ -55,13 +56,13 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["AliceQuantums"] = AliceQuantums;
         }
 
-        [When(@"Alice sends quantums stream to Bob")]
+        [When(@"Alice sends quantums stream to Bob"), Scope(Tag = "BB84")]
         public void WhenAliceSendsQuantumsStreamToBob()
         {
             //throw new PendingStepException();
         }
 
-        [When(@"Bob measure quantums stream with chosen basises for each quantum")]
+        [When(@"Bob measure quantums stream with chosen basises for each quantum"), Scope(Tag = "BB84")]
         public void WhenBobMeasureQuantumsStreamWithChosenBasisesForEachQuantum()
         {
             List<Quantum> AliceQuantums = (List<Quantum>)_scenarioContext["AliceQuantums"];
@@ -80,7 +81,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["BobKeySequence"] = BobKeySequence;
         }
 
-        [When(@"Alice and Bob compares their basises in unencripted form")]
+        [When(@"Alice and Bob compares their basises in unencripted form"), Scope(Tag = "BB84")]
         public void WhenAliceAndBobComparesTheirBasisesInUnencriptedForm()
         {
             List<bool> AliceBasisSequence = (List<bool>)_scenarioContext["AliceBasisSequence"];
@@ -101,7 +102,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["CommonBasisSequence"] = CommonBasisSequence;
         }
 
-        [When(@"'([^']*)' leave key bits that corresponds to coinciding basises")]
+        [When(@"'([^']*)' leave key bits that corresponds to coinciding basises"), Scope(Tag = "BB84")]
         public void WhenLeaveKeyBitsThatCorrespondsToCoincidingBasises(string name)
         {
             List<bool> CommonBasisSequence = (List<bool>)_scenarioContext["CommonBasisSequence"];
@@ -121,7 +122,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext[$"{name}KeyBits"] = keyBits;
         }
 
-        [When(@"Alice and Bob compares one half of their key bits in unencripted form")]
+        [When(@"Alice and Bob compares one half of their key bits in unencripted form"), Scope(Tag = "BB84")]
         public void WhenAliceAndBobComparesOneHalfOfTheirKeyBitsInUnencriptedForm()
         {
             List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
@@ -146,7 +147,7 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["KeyBitsComparisionResult"] = isIdentical;
         }
 
-        [Then(@"Compared key bits are identical")]
+        [Then(@"Compared key bits are identical"), Scope(Tag = "BB84")]
         public void ThenComparedKeyBitsAreIdentical()
         {
             bool isIdentical = (bool)_scenarioContext["KeyBitsComparisionResult"];
@@ -154,7 +155,7 @@ namespace QuantTest.StepDefinitions
             Assert.IsTrue(isIdentical);
         }
 
-        [Then(@"Alice and Bob keys are identical")]
+        [Then(@"Alice and Bob keys are identical"), Scope(Tag = "BB84")]
         public void ThenAliceAndBobKeysAreIdentical()
         {            
             List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
@@ -179,7 +180,7 @@ namespace QuantTest.StepDefinitions
             Assert.IsTrue(isIdentical);
         }
 
-        [When(@"Eva intercepts transmittion")]
+        [When(@"Eva intercepts transmittion"), Scope(Tag = "BB84")]
         public void WhenEvaInterceptsTransmittion()
         {
             // Ева может еще не знает о выбранных базисах и результат их сравнения
@@ -198,7 +199,7 @@ namespace QuantTest.StepDefinitions
             }
         }
 
-        [Then(@"Compared key bits are not identical and differ for 1/4 with deviation of (.*)")]
+        [Then(@"Compared key bits are not identical and differ for 1/4 with deviation of (.*)"), Scope(Tag = "BB84")]
         public void ThenComparedKeyBitsAreNotIdenticalAndDifferForWithDeviationOf(double p0)
         {
             bool isIdentical = (bool)_scenarioContext["KeyBitsComparisionResult"];
@@ -228,7 +229,7 @@ namespace QuantTest.StepDefinitions
             Assert.IsTrue(deviationPercent <= p0);
         }
 
-        [Then(@"Alice and Bob keys are not identical")]
+        [Then(@"Alice and Bob keys are not identical"), Scope(Tag = "BB84")]
         public void ThenAliceAndBobKeysAreNotIdentical()
         {
             List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];

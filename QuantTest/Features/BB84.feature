@@ -2,6 +2,7 @@
 
 Проверка работы протокола передачи ключей BB84
 
+@BB84
 Scenario: BB84 key transmittion without intercept
 Given Alice generates 4n size key where n is 1000
 And 'Alice' chose basis for each bit in the key
@@ -16,6 +17,7 @@ And Alice and Bob compares one half of their key bits in unencripted form
 Then Compared key bits are identical
 And Alice and Bob keys are identical
 
+@BB84
 Scenario: BB84 key transmittion with intrusion
 Given Alice generates 4n size key where n is 1000
 And 'Alice' chose basis for each bit in the key
