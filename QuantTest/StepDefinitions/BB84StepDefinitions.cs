@@ -222,9 +222,9 @@ namespace QuantTest.StepDefinitions
                     diffCount++;
             }
 
-            double deviation = (double)diffCount / (double)blockLength;
+            double comparisionResult = (double)diffCount / (double)blockLength;
 
-            double deviationPercent = Math.Abs(deviation - 0.25) * 100.0;
+            double deviationPercent = Math.Abs(comparisionResult - 0.25) * 100.0 / 0.25;
 
             Assert.IsTrue(deviationPercent <= p0);
         }

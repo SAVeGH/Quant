@@ -14,6 +14,6 @@ And 'Bob' measure own quantums stream with chosen basises for each quantum
 And Alice and Bob compares their basises in unencripted form
 And 'Alice' leave key bits that corresponds to coinciding basises
 And 'Bob' leave key bits that corresponds to coinciding basises
-And Alice and Bob compares one half of their key bits in unencripted form
-Then Compared key bits are identical
+And Alice and Bob compares key bits where basises differ in unencripted form
+Then Compared key bits with different basises matches in 0.25 cases with deviation 10
 And Alice and Bob keys are identical

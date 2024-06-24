@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Qntm;
 using Qntm.Constants;
 using Qntm.Helpers;
-using Qntm;
 using QuantTest.Helpers;
-using System.Xml.Linq;
 
 namespace QuantTest.StepDefinitions
 {
@@ -28,14 +22,14 @@ namespace QuantTest.StepDefinitions
 
             List<bool> AliceKeySequence = RandomHelper.RandomSequence(blockSize); //  количество будет p0 * 96 (8 бит по 4 байта 3 раза)
 
-            _scenarioContext["blockSize"] = blockSize;
+            _scenarioContext["KeySequenceSize"] = AliceKeySequence.Count;
             _scenarioContext["AliceKeySequence"] = AliceKeySequence;
         }
 
         [Given(@"'([^']*)' chose basis for each bit in the key"), Scope(Tag = "Ekkert")]
         public void GivenChoseBasisForEachBitInTheKey(string name)
         {
-            int length = (int)_scenarioContext["blockSize"];
+            int length = (int)_scenarioContext["KeySequenceSize"];
             List<double> basisSequence = new List<double>();
             Random random = RandomHelper.Create();
 
@@ -54,7 +48,6 @@ namespace QuantTest.StepDefinitions
             Random randomAngle = RandomHelper.Create();
 
             List<bool> AliceKeySequence = (List<bool>)_scenarioContext["AliceKeySequence"];
-            //int blockSize = (int)_scenarioContext["blockSize"];
 
             List<Quantum> AliceStream = new List<Quantum>();
             List<Quantum> BobStream = new List<Quantum>();
@@ -79,7 +72,6 @@ namespace QuantTest.StepDefinitions
 
             _scenarioContext["AliceStream"] = AliceStream;
             _scenarioContext["BobStream"] = BobStream;
-            _scenarioContext["StreamSize"] = AliceKeySequence.Count;
         }
 
         [When(@"Alice sends quantums stream to Bob"), Scope(Tag = "Ekkert")]
@@ -128,12 +120,12 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["CommonBasisSequence"] = CommonBasisSequence;
         }
 
-        [When(@"'([^']*)' leave key bits that corresponds to coinciding basises")]
+        [When(@"'([^']*)' leave key bits that corresponds to coinciding basises"), Scope(Tag = "Ekkert")]
         public void WhenLeaveKeyBitsThatCorrespondsToCoincidingBasises(string name)
         {
             List<bool> CommonBasisSequence = (List<bool>)_scenarioContext["CommonBasisSequence"];
 
-            List<bool> keySequence = (List<bool>)_scenarioContext[$"{name}KeySequence"];
+            List<bool> measurmentResults = (List<bool>)_scenarioContext[$"{name}MeasurmentResults"];
 
             List<bool> keyBits = new List<bool>();
 
@@ -142,12 +134,80 @@ namespace QuantTest.StepDefinitions
                 if (CommonBasisSequence[i] == false)
                     continue;
 
-                keyBits.Add(keySequence[i]);
+                keyBits.Add(measurmentResults[i]);
             }
 
             _scenarioContext[$"{name}KeyBits"] = keyBits;
         }
 
+        [When(@"Alice and Bob compares key bits where basises differ in unencripted form"), Scope(Tag = "Ekkert")]
+        public void WhenAliceAndBobComparesKeyBitsWhereBasisesDifferInUnencriptedForm()
+        {
+            List<bool> CommonBasisSequence = (List<bool>)_scenarioContext["CommonBasisSequence"];
+
+            List<bool> AliceMeasurmentResults = (List<bool>)_scenarioContext["AliceMeasurmentResults"];
+            List<bool> BobMeasurmentResults = (List<bool>)_scenarioContext["BobMeasurmentResults"];
+
+            List<bool> AliceDifferentBasisBits = new List<bool>();
+            List<bool> BobDifferentBasisBits = new List<bool>(); ;
+
+            for (int i = 0; i < CommonBasisSequence.Count; i++)
+            {
+                if (CommonBasisSequence[i] == true)
+                    continue;
+
+                bool AliceBit = AliceMeasurmentResults[i];
+                bool BobBit = BobMeasurmentResults[i];
+
+                AliceDifferentBasisBits.Add(AliceBit);
+                BobDifferentBasisBits.Add(BobBit);
+            }
+
+            _scenarioContext["AliceDifferentBasisBits"] = AliceDifferentBasisBits;
+            _scenarioContext["BobDifferentBasisBits"] = BobDifferentBasisBits;
+        }
+
+        [Then(@"Compared key bits with different basises matches in (.*) cases with deviation (.*)"), Scope(Tag = "Ekkert")]
+        public void ThenComparedKeyBitsWithDifferentBasisesMatchesInCasesWithDeviation(double p0, double p1)
+        {
+            int matchedCount = 0;
+
+            List<bool> AliceDifferentBasisBits = (List<bool>)_scenarioContext["AliceDifferentBasisBits"];
+            List<bool> BobDifferentBasisBits = (List<bool>)_scenarioContext["BobDifferentBasisBits"];
+
+            for (int i = 0; i < AliceDifferentBasisBits.Count; i++)
+            {
+                if (AliceDifferentBasisBits[i] == BobDifferentBasisBits[i])
+                    matchedCount++;
+            }
+
+            double comparisionResult = (double)matchedCount / (double)AliceDifferentBasisBits.Count;
+
+            double deviationPercent = Math.Abs(comparisionResult - p0) * 100.0 / p0;
+
+            Assert.IsTrue(deviationPercent <= p1);
+
+        }
+
+        [Then(@"Alice and Bob keys are identical"), Scope(Tag = "Ekkert")]
+        public void ThenAliceAndBobKeysAreIdentical()
+        {
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
+
+            bool isIdentical = true;
+
+            for (int i = 0; i < AliceKeyBits.Count; i++)
+            {
+                if (AliceKeyBits[i] != BobKeyBits[i])
+                {
+                    isIdentical = false;
+                    break;
+                }
+            }
+
+            Assert.IsTrue(isIdentical);
+        }
 
         private double GetRandomBasisAngle(Random rnd)
         {
