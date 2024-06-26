@@ -183,7 +183,7 @@ namespace QuantTest.StepDefinitions
         [When(@"Eva intercepts transmittion"), Scope(Tag = "BB84")]
         public void WhenEvaInterceptsTransmittion()
         {
-            // Ева может еще не знает о выбранных базисах и результат их сравнения
+            // Ева еще не знает о выбранных базисах и результат их сравнения
             // Передается пока только пток квантов
             // Что бы узнать что передала Алиса  - нужно делать измерение
 

@@ -26,7 +26,9 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["AliceKeySequence"] = AliceKeySequence;
         }
 
-        [Given(@"'([^']*)' chose basis for each bit in the key"), Scope(Tag = "Ekkert")]
+        [Scope(Tag = "Ekkert")]
+        [Given(@"'([^']*)' chose basis for each bit in the key")]
+        [When(@"'([^']*)' chose basis for each bit in the key")]
         public void GivenChoseBasisForEachBitInTheKey(string name)
         {
             int length = (int)_scenarioContext["KeySequenceSize"];
@@ -55,9 +57,6 @@ namespace QuantTest.StepDefinitions
             for (int i = 0; i < AliceKeySequence.Count; i++)
             {
                 double qAngle = AliceKeySequence[i] ? Angles._180degree : Angles._0degree; // 1 or 0
-
-                // Замечание: тест работает даже если задавать каждому кванту произвольный угол и затем запутывать.
-                // Так же тест проходит если при запутывании ставить инверсию связи.
 
                 // состояние Бэлла:
                 // 1/sqrt(2)00> + 1/sqrt(2)11>
@@ -167,10 +166,25 @@ namespace QuantTest.StepDefinitions
             _scenarioContext["BobDifferentBasisBits"] = BobDifferentBasisBits;
         }
 
-        [Then(@"Compared key bits with different basises matches in (.*) cases with deviation (.*)"), Scope(Tag = "Ekkert")]
-        public void ThenComparedKeyBitsWithDifferentBasisesMatchesInCasesWithDeviation(double p0, double p1)
+        [Then(@"Compared key bits with different basises matches in 1/4 cases with deviation (.*)"), Scope(Tag = "Ekkert")]
+        public void ThenComparedKeyBitsWithDifferentBasisesMatchesIn_1_4_CasesWithDeviation(double p0)
+        {            
+            double comparisionTarget = 0.25; // 1/4
+
+            CompareDifferentBasisBits(comparisionTarget, p0);
+        }
+
+        [Then(@"Compared key bits with different basises matches in 3/8 cases with deviation (.*)"), Scope(Tag = "Ekkert")]
+        public void ThenComparedKeyBitsWithDifferentBasisesMatchesIn_3_8_CasesWithDeviation(double p0)
         {
-            int matchedCount = 0;
+            double comparisionTarget = 3.0 / 8.0; // 3/8
+
+            CompareDifferentBasisBits(comparisionTarget, p0);
+        }
+
+        private void CompareDifferentBasisBits(double comparisionTarget, double deviation) 
+        {
+            int matchedCount = 0;            
 
             List<bool> AliceDifferentBasisBits = (List<bool>)_scenarioContext["AliceDifferentBasisBits"];
             List<bool> BobDifferentBasisBits = (List<bool>)_scenarioContext["BobDifferentBasisBits"];
@@ -183,10 +197,27 @@ namespace QuantTest.StepDefinitions
 
             double comparisionResult = (double)matchedCount / (double)AliceDifferentBasisBits.Count;
 
-            double deviationPercent = Math.Abs(comparisionResult - p0) * 100.0 / p0;
+            double deviationPercent = Math.Abs(comparisionResult - comparisionTarget) * 100.0 / comparisionTarget;
 
-            Assert.IsTrue(deviationPercent <= p1);
+            Assert.IsTrue(deviationPercent <= deviation);
+        }
 
+        [When(@"Eva intercepts transmittion"), Scope(Tag = "Ekkert")]
+        public void WhenEvaInterceptsTransmittion()
+        {
+            // Ева еще не знает о выбранных базисах и результат их сравнения
+            // Передается пока только пток квантов
+            // Что бы узнать что передала Алиса  - нужно делать измерение
+
+            List<double> basisSequence = (List<double>)_scenarioContext["EvaBasisSequence"];
+            List<Quantum> quantumStream = (List<Quantum>)_scenarioContext["BobStream"];
+
+            for (int i = 0; i < quantumStream.Count; i++)
+            {
+                Quantum quantum = quantumStream[i];
+                double basisAngle = basisSequence[i];
+                bool mResult = MeasurmentHelper.Measure(quantum, basisAngle);
+            }
         }
 
         [Then(@"Alice and Bob keys are identical"), Scope(Tag = "Ekkert")]
@@ -208,6 +239,27 @@ namespace QuantTest.StepDefinitions
 
             Assert.IsTrue(isIdentical);
         }
+
+        [Then(@"Alice and Bob keys are not identical"), Scope(Tag = "Ekkert")]
+        public void ThenAliceAndBobKeysAreNotIdentical()
+        {
+            List<bool> AliceKeyBits = (List<bool>)_scenarioContext["AliceKeyBits"];
+            List<bool> BobKeyBits = (List<bool>)_scenarioContext["BobKeyBits"];
+
+            bool isIdentical = true;
+
+            for (int i = 0; i < AliceKeyBits.Count; i++)
+            {
+                if (AliceKeyBits[i] != BobKeyBits[i])
+                {
+                    isIdentical = false;
+                    break;
+                }
+            }
+
+            Assert.IsFalse(isIdentical);
+        }
+
 
         private double GetRandomBasisAngle(Random rnd)
         {
