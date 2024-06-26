@@ -41,7 +41,7 @@ namespace Qntm.Helpers
         /// </summary>
         /// <param name="probability">Вероятность полученная в результате поворота вероятности. Значение от -1 до +2. Значения за диапазоном 0-1 - означает проворот
         /// с пересечением линии измерения</param>
-        /// <param name="basisAngle0">Угол кванта соответсвующий вероятности</param>
+        /// <param name="basisAngle0">Угол направления на 0 базиса</param>
         /// <returns></returns>
         public static double AngleOfProbabilityInBasis(double probability, double basisAngle0)
         {

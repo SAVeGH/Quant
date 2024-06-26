@@ -10,7 +10,7 @@ namespace Qntm.Helpers
         /// Измеряет квант в заднном базисе со сдвигом квантовой цепи на величину изменения вероятности и отсоединением кванта из цепи (коллапс).
         /// </summary>
         /// <param name="quantum">Измеряемый квант (угол кванта в радианах)</param>
-        /// <param name="measurmentAngle">Угол измерения в радианах (поворот установки)</param>
+        /// <param name="measurmentAngle">Угол измерения в радианах (направление на 0 установки)</param>
         /// <returns>Результат измерения кванта true/false в заданном базисе</returns>
         private static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/, bool? setResult)
         {
@@ -22,8 +22,7 @@ namespace Qntm.Helpers
 
             // определяет поворот вектора кваната к полюсу 0 произойдет по часовой стрелке или против
             bool? isZeroClockwise = ProbabilityHelper.IsZeroClockwise(quantum.Angle, actualMeasureAngle0);
-
-            // для нахождения синуса используем половинный угол т.к. 0 - 1 это разворот на 180 градусов, а sin 0..1 это углы от 0 до 90.
+            
             // вероятности при текущем положении вектора
             double unityProbability = ProbabilityHelper.UnityProbabilityInBasis(quantum.Angle, actualMeasureAngle0);
             double zeroProbability = 1.0 - unityProbability;
@@ -66,7 +65,7 @@ namespace Qntm.Helpers
         /// 
         /// </summary>
         /// <param name="quantum">Измеряемый квант (угол кванта в радианах)</param>
-        /// <param name="measurmentAngle">Угол измерения в радианах (поворот установки)</param>
+        /// <param name="measurmentAngle">Угол измерения в радианах (поворот нуля установки)</param>
         /// <returns>Результат измерения кванта true/false в заданном базисе</returns>
         public static bool Measure(Quantum quantum, double measurmentAngle /*заданный базис измерения - поворот установки*/)
         {
