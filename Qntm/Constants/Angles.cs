@@ -5,6 +5,7 @@ namespace Qntm.Constants
     // константы для часто используемых углов
     public static class Angles
     {
+        // значения углов в радианах
         public const double _0degree = 0.0;
         public const double _30degree = Math.PI / 6.0;        
         public const double _45degree = Math.PI / 4.0;
@@ -14,8 +15,10 @@ namespace Qntm.Constants
         public const double _180degree = Math.PI;
         public const double _240degree = _120degree * 2.0;
         public const double _270degree = _90degree * 3.0;
-        public const double _360degree = 2.0 * Math.PI;
+        public const double _360degree = _180degree * 2.0;
+        // для перевода градусов в радианы (сколько радиан занимает 1 градус)
         public const double _rad = Math.PI / 180.0;
+        // для перевода радиан в градусы (сколько градусов в 1 радиане)
         public const double _grad = 180.0 / Math.PI;
     }
 }

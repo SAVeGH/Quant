@@ -20,13 +20,28 @@ namespace Quant
 
                 //Quantum q = new Quantum(Angles._0degree/*Math.PI / 4.0)*/);
                 Quantum q = new Quantum(0); 
-                 RunMeasurment(q);
+                 RunMeasurment2();
                
             }
             finally 
             {
                 QuantumThreadWorker.Stop();
             }
+        }
+
+        private void RunMeasurment2()
+        {
+
+            Quantum q = new Quantum(0);
+
+            Console.WriteLine(MeasurmentHelper.Measure(q, Angles._0degree));
+
+            q.Angle = Angles._270degree;
+
+            Console.WriteLine(MeasurmentHelper.Measure(q, Angles._0degree));
+
+
+
         }
 
         private void RunMeasurment1(Quantum q)
