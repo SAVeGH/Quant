@@ -7,12 +7,14 @@ namespace Qntm
     public class Quantum
     {
 		double _angle = double.NaN;
+        double _value = double.NaN;
 
-		public HashSet<QuantumPointer> QuantumPointers { get; private set; } = new HashSet<QuantumPointer>();
+        public HashSet<QuantumPointer> QuantumPointers { get; private set; } = new HashSet<QuantumPointer>();
 
         public Quantum(double angle)
         {			
             Angle = angle;
+            Value = 1.0; // размер кванта по умолчанию
         }
 
         public void Reset(double angle) 
@@ -28,9 +30,10 @@ namespace Qntm
 		{
             // Если базис измерения совпадает с направлением 0 кванта:
             // Положение 0 (градусов) означает 'спин вверх' и при измерении дает 0 (False)
-            // Положение 270 (градусов) означает 'спин вниз' и при измерении дает 1 (True)
+            // Положение 180 (градусов) означает 'спин вниз' и при измерении дает 1 (True)
             // Разница между 0 и 1 составляет 180 градусов
-            // Положения 90 градусов и 180 градусов означают вероятность 1/2
+            // Положения 90 градусов и 270 градусов означают вероятность 1/2
+            // Отсчет положительных углов - против часовой стрелки.
             get { return _angle; }
 			set 
 			{
@@ -39,7 +42,14 @@ namespace Qntm
             }
 		}
 
-		public string Name { get; set; }
+
+        public double Value 
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+		public string Name { get; set; } // для тестов
 
 	}
 }
