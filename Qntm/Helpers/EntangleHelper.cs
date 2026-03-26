@@ -173,18 +173,34 @@ namespace Qntm.Helpers
 
             List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
 
-            // сколько пришлось на каждую связь
-            double probabilityChangePart = probabilityChange / linksList.Count;            
+            // сколько пришлось на каждую связь (учет размера кванта Value)           
+            Dictionary<QuantumPointer, double> probabilityChangeParts = QuantumsChangeParts(probabilityChange, linksList);
 
-            foreach (QuantumPointer quantumPointer in linksList)            
-                RotateAngle(quantumPointer, probabilityChangePart, basisAngle0);            
+            foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)            
+                RotateAngle(quantumPointer, probabilityChangeParts[quantumPointer], basisAngle0);            
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
 
-            foreach (QuantumPointer quantumPointer in linksList)
+            foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)
             {
-                Distribute(quantumPointer.Quantum, basisAngle0, probabilityChangePart, passedList);
+                Distribute(quantumPointer.Quantum, basisAngle0, probabilityChangeParts[quantumPointer], passedList);
             }
+        }
+
+        private static Dictionary<QuantumPointer, double> QuantumsChangeParts(double probabilityChange, List<QuantumPointer> linksList) 
+        {
+            Dictionary<QuantumPointer, double> changeParts = new Dictionary<QuantumPointer, double>();
+
+            double qValuesSum = linksList.Sum(qp => qp.Quantum.Value); // полный размер всех квантов по ссылкам
+
+            foreach (QuantumPointer quantumPointer in linksList) 
+            {
+                double qChangePart = quantumPointer.Quantum.Value / qValuesSum; // какая доля общего изменения пришлась на каждую связь
+                                                                                // в зависимости от размера кванта
+                changeParts[quantumPointer] = qChangePart * probabilityChange;
+            }
+
+            return changeParts;
         }
 
         private static void RotateAngle(QuantumPointer quantumPointer, double probabilityChangePart, double basisAngle0) 
