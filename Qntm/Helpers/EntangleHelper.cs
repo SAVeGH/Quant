@@ -73,29 +73,33 @@ namespace Qntm.Helpers
 
         public static void Collapse(Quantum quantum)
         {
-            // кванты на которые ссылается квант - тут как минимум 1 ссылка будет т.к. запутанный квант обязательно на кого то ссылается
+            // кванты на которые ссылается данный квант - тут как минимум 1 ссылка будет т.к. запутанный квант обязательно на кого то ссылается
             List<Quantum> outLinks = quantum.QuantumPointers.Select(qp => qp.Quantum).ToList();
-            // кванты которые ссылаются на квант
+            // кванты которые ссылаются на данный квант
             List<Quantum> inLinks = GetReferencesList(quantum);
-            
+
+            // рекоммуникация квантов. Проход по все квантам на которые ссылался данный квант.
+            // квантовая цепь не разрывется. Кванты которые ссылались на удаляемый квант будут ссылаться на все кванты на которые ссылался удаляемый квант (вместо удаляемого кванта).
+            // кванты на которые ссылался удаляемый квант получат ссылки на все кванты которые ссылались на удаляемый квант.
             foreach (Quantum outQuantum in outLinks)
             {
                 if (inLinks.Contains(outQuantum))
                 {
                     // квант имел и прямую и обратную ссылку
-                    // взять все которые ссылаются на квант кроме себя
-                    // добавить ссылки на все inLinks
+                    // взять все кванты которые ссылаются на удаляемый квант (кроме себя - текущего кванта)
+                    // добавить текущему кванту ссылки на все inLinks (т.е. на всех кто ссылался на удаляемый квант)
                     foreach (Quantum inQuantum in inLinks.Where(q => q != outQuantum)) 
                     {
                         if (outQuantum.QuantumPointers.Any(qp => qp.Quantum == inQuantum))
-                            continue;
+                            continue; // уже есть ссылка на inQuantum - не добавляем
 
                         QuantumPointer pointer = new QuantumPointer(inQuantum);
 
                         outQuantum.QuantumPointers.Add(pointer);
                     }
                 }
-               
+
+                // раздать ссылку на outQuantum всем квантам которые ссылались на удаляемый квант (кроме себя - текущего кванта)
                 // все inLinks должны получить ссылку на outQuantum    
                 foreach (Quantum inQuantum in inLinks.Where(q => q != outQuantum))
                 {
@@ -119,6 +123,7 @@ namespace Qntm.Helpers
             quantum.QuantumPointers.Clear();
         }
 
+        // Проход по всем квантам цепи и сбор всех квантов которые ссылаются на quantum
         private static List<Quantum> GetReferencesList(Quantum quantum)
         {
             List<Quantum> referencesList = new List<Quantum>();
@@ -129,19 +134,27 @@ namespace Qntm.Helpers
             return referencesList.Distinct().ToList();
         }
 
+        /// <summary>
+        /// Рекурсивно проходит по всем квантам цепи и собирает все квантоы которые ссылаются на quantumSearch
+        /// </summary>
+        /// <param name="quantumSearch"> квант ссылки на который ищем</param>
+        /// <param name="quantum">квант в ссылка которого ищется quantumSearch</param>
+        /// <param name="referencesList">массив с результатом поиска</param>
+        /// <returns></returns>
         private static List<Quantum> GetReferencesList(Quantum quantumSearch, Quantum quantum, List<Quantum> referencesList)
         {
             if(quantum == quantumSearch)
-                return referencesList;
+                return referencesList; // нашел самого себя  - не добавляем в список ссылок
 
-            if(referencesList.Contains(quantum))
-                return referencesList;
+            if (referencesList.Contains(quantum))
+                return referencesList; // уже добавили в список - не обрабатываем дальше
 
             foreach (QuantumPointer quantumPointer in quantum.QuantumPointers) 
             {
                 if (quantumPointer.Quantum == quantumSearch)
-                    referencesList.Add(quantum);
+                    referencesList.Add(quantum); // квант ссылается на quantumSearch - добавляем в список ссылок
 
+                // рекрсивно обойти дальше по цепи
                 GetReferencesList(quantumSearch, quantumPointer.Quantum, referencesList);
             }
 
