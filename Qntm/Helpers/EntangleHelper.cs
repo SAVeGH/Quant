@@ -193,6 +193,9 @@ namespace Qntm.Helpers
 
             double qValuesSum = linksList.Sum(qp => qp.Quantum.Value); // полный размер всех квантов по ссылкам
 
+            if(qValuesSum == 0)
+                return changeParts;
+
             foreach (QuantumPointer quantumPointer in linksList) 
             {
                 double qChangePart = quantumPointer.Quantum.Value / qValuesSum; // какая доля общего изменения пришлась на каждую связь
