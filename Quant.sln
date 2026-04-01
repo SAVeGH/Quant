@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuantTest", "QuantTest\Quan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qntm.Gates", "Qntm.Gates\Qntm.Gates.csproj", "{26018F4E-8F6A-409C-8C41-3E4ED1416963}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qntm.Functions", "Qntm.Functions\Qntm.Functions.csproj", "{F9108C68-64D3-4776-B8BC-288BD611C1B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{26018F4E-8F6A-409C-8C41-3E4ED1416963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26018F4E-8F6A-409C-8C41-3E4ED1416963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26018F4E-8F6A-409C-8C41-3E4ED1416963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9108C68-64D3-4776-B8BC-288BD611C1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9108C68-64D3-4776-B8BC-288BD611C1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9108C68-64D3-4776-B8BC-288BD611C1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9108C68-64D3-4776-B8BC-288BD611C1B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
