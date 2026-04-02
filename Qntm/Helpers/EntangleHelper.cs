@@ -83,6 +83,7 @@ namespace Qntm.Helpers
             // кванты на которые ссылался удаляемый квант получат ссылки на все кванты которые ссылались на удаляемый квант.
             foreach (Quantum outQuantum in outLinks)
             {
+                // квант на который сслыется удаляемый квант содержится в списке кванотв которые ссылаются на удаляемый квант - значит у кванта есть и прямая и обратная ссылка
                 if (inLinks.Contains(outQuantum))
                 {
                     // квант имел и прямую и обратную ссылку
@@ -110,6 +111,20 @@ namespace Qntm.Helpers
                 
                     inQuantum.QuantumPointers.Add(pointer);
                 }                
+            }
+
+            // кванты которые ссылаются на удаляемый квант но не содержатся в списке квантов на которые ссылался удаляемый квант - значит у них была только прямя ссылка на удаляемый квант
+            foreach (Quantum inQuantum in inLinks.Where(inLink => !outLinks.Contains(inLink))) 
+            {
+                foreach (Quantum outQuantum in outLinks) 
+                {
+                    if (inQuantum.QuantumPointers.Any(qp => qp.Quantum == outQuantum))
+                        continue;
+
+                    QuantumPointer pointer = new QuantumPointer(outQuantum);
+
+                    inQuantum.QuantumPointers.Add(pointer);
+                }
             }
 
             // удалить все ссылки на квант в других квантах
