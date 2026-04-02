@@ -114,7 +114,7 @@ namespace Qntm.Helpers
             }
 
             // кванты которые ссылаются на удаляемый квант но не содержатся в списке квантов на которые ссылался удаляемый квант - значит у них была только прямя ссылка на удаляемый квант
-            foreach (Quantum inQuantum in inLinks.Where(inLink => !outLinks.Contains(inLink))) 
+            foreach (Quantum inQuantum in inLinks.Except(outLinks)) 
             {
                 foreach (Quantum outQuantum in outLinks) 
                 {
