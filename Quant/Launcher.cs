@@ -7,12 +7,55 @@ using System.Threading.Tasks;
 using Qntm;
 using Qntm.Constants;
 using Qntm.Helpers;
+using Qntm.Functions;
+using Qntm.Gates;
 
 namespace Quant
 {
 	public class Launcher
 	{
         public void Run()
+        {
+            try
+            {
+                QuantumThreadWorker.Run(129);
+
+                //Quantum q = new Quantum(Angles._0degree/*Math.PI / 4.0)*/);
+                Quantum q = new Quantum(Angles._0degree);
+                q.Name = "A";
+                Quantum q1 = new Quantum(Angles._0degree);
+                q1.Name = "B";
+
+                Gates.H(q);
+                Gates.X(q1);
+                Gates.H(q1);
+
+                EntangleHelper.Entangle(q, q1);
+
+                DeuthQuantumFunction qf = new DeuthQuantumFunction(DeutchFunctions.ConstFalse);
+                DeuthQuantumFunction qt = new DeuthQuantumFunction(DeutchFunctions.ConstTrue);
+                DeuthQuantumFunction qid = new DeuthQuantumFunction(DeutchFunctions.BalancedId);
+                DeuthQuantumFunction qnot = new DeuthQuantumFunction(DeutchFunctions.BalancedNot);
+
+                double qff = qf.CallFunction(q);
+                double qft = qt.CallFunction(q);
+                double qfid = qid.CallFunction(q);
+                double qfnot = qnot.CallFunction(q);
+
+                //Console.WriteLine($"false: {qft}");
+
+                Console.WriteLine($"false: {qff}, true: {qft}, id: {qfid}, not: {qfnot}");
+
+
+
+            }
+            finally
+            {
+                QuantumThreadWorker.Stop();
+            }
+        }
+
+        public void Run111()
 		{
             try
             {
