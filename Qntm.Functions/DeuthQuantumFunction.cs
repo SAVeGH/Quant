@@ -1,17 +1,16 @@
 ﻿using Qntm.Constants;
+using Qntm.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using Qntm.Helpers;
 
 namespace Qntm.Functions
 {
     public class DeuthQuantumFunction : QuantumFunction
     {
         Func<bool, bool> deutchFunction;
+
         public DeuthQuantumFunction(Func<bool,bool> blackBox) 
         {
             deutchFunction = blackBox;
@@ -19,23 +18,27 @@ namespace Qntm.Functions
 
         protected override async Task<double> Call(Quantum q) 
         {
-            List<Tuple<bool, Task<bool>>> fnTasks = new List<Tuple<bool,Task<bool>>>();
+            List<DeuthTaskData> fnTasks = new List<DeuthTaskData>();
 
+            // создаем таски для выполнения по всем возможным параметрам функции
             FillTasks(q, q, fnTasks);
 
-            await Task.WhenAll(fnTasks.Select(item=> item.Item2));
+            // ждем параллельного выполнения всех тасок ("квантовый параллелизм")
+            await Task.WhenAll(fnTasks.Select(item=> item.CallTask));
 
-            return TranslateResult(fnTasks);
+            return TranslateResult(q, fnTasks);
         }
 
-        private double TranslateResult(List<Tuple<bool, Task<bool>>> fnTasks) 
+        private double TranslateResult(Quantum basisQuantum, List<DeuthTaskData> fnTasks) 
         {
             double result = 0.0;
 
-            foreach (Tuple<bool, Task<bool>> item in fnTasks) 
+            foreach (DeuthTaskData callItem in fnTasks) 
             {
-                bool inputValue = item.Item1;
-                bool outputValue = item.Item2.Result;
+                bool inputValue = !(callItem.CallQuantum.Angle == basisQuantum.Angle); // параметр вызова функции
+                bool outputValue = callItem.CallTask.Result; // результат функции для данного параметра
+
+                outputValue = inputValue ? XOR(inputValue, outputValue) : outputValue; // если параметр функции 1 (т.е. это "нижний" кубит), то делается XOR (исключающее ИЛИ).
 
                 if (inputValue != outputValue)
                     result = result + Angles._180degree;
@@ -44,21 +47,37 @@ namespace Qntm.Functions
             return AngleHelper.Positive360RangeAngle(result);
         }
 
-        protected void FillTasks(Quantum q, Quantum nextQ, List<Tuple<bool, Task<bool>>> fnTasks)
+        private void FillTasks(Quantum q, Quantum nextQ, List<DeuthTaskData> fnTasks)
         {
-            bool fnInputParam = nextQ.Angle == q.Angle;
+            bool fnInputParam = !(nextQ.Angle == q.Angle); // угол стартового кванта используется как "базис функции" - направление на 0 
+                                                           // поэтому если углы совпали - считаем что квант в этом базисе имеет состояние 0 (т.е. параметр false)
 
-            Tuple<bool, Task<bool>> taskCallParams = new Tuple<bool, Task<bool>>(fnInputParam, FunctionWrapper(fnInputParam, deutchFunction));
+            DeuthTaskData taskData = new DeuthTaskData() 
+            {
+                CallQuantum = nextQ, // на каком кванте вызвана функция
+                CallTask = FunctionWrapper(fnInputParam, deutchFunction) // вызов с парамтром в базисе функции
+            };            
 
-            fnTasks.Add(taskCallParams);
+            fnTasks.Add(taskData);
 
             foreach (QuantumPointer qPointer in nextQ.QuantumPointers)
             {
                 if (qPointer.Quantum == q)
-                    return;
+                    return; // обошли цепь по кругу - выходим
 
                 FillTasks(q, qPointer.Quantum, fnTasks);
             }
         }
+
+        private static bool XOR(bool a, bool b) 
+        {
+            return a != b;
+        }
+    }
+
+    public class DeuthTaskData 
+    {
+        public Quantum CallQuantum { get; set; } // квант относительно которого выполняется функция
+        public Task<bool> CallTask { get; set; } // задача, которая выполняет функцию для данного кванта
     }
 }

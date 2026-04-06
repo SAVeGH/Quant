@@ -202,10 +202,10 @@ namespace Qntm.Helpers
             List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
 
             // сколько пришлось на каждую связь (учет размера кванта Value)           
-            Dictionary<QuantumPointer, double> probabilityChangeParts = QuantumsChangeParts(probabilityChange, linksList);
+            Dictionary<QuantumPointer, double> probabilityChangeParts = QuantumsChangeParts(linksList);
 
             foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)            
-                RotateAngle(quantumPointer, probabilityChangeParts[quantumPointer], basisAngle0);            
+                RotateAngle(quantumPointer, probabilityChange * probabilityChangeParts[quantumPointer], basisAngle0);            
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
 
@@ -215,7 +215,7 @@ namespace Qntm.Helpers
             }
         }
 
-        private static Dictionary<QuantumPointer, double> QuantumsChangeParts(double probabilityChange, List<QuantumPointer> linksList) 
+        private static Dictionary<QuantumPointer, double> QuantumsChangeParts(List<QuantumPointer> linksList) 
         {
             Dictionary<QuantumPointer, double> changeParts = new Dictionary<QuantumPointer, double>();
 
@@ -228,7 +228,7 @@ namespace Qntm.Helpers
             {
                 double qChangePart = quantumPointer.Quantum.Value / qValuesSum; // какая доля общего изменения пришлась на каждую связь
                                                                                 // в зависимости от размера кванта
-                changeParts[quantumPointer] = qChangePart * probabilityChange;
+                changeParts[quantumPointer] = qChangePart;
             }
 
             return changeParts;
@@ -256,5 +256,40 @@ namespace Qntm.Helpers
         {
             return ((180.0 / Math.PI) * rad).ToString("0.000000");
         }
+
+        //public static void RotateQuantum(Quantum quantum, double angle) 
+        //{
+        //    List<Quantum> passedList = new List<Quantum>();
+
+        //    RotateQuantum(quantum, angle, passedList);
+        //}
+
+        //private static void RotateQuantum(Quantum quantum, double angle, List<Quantum> passedList)
+        //{
+        //    quantum.Angle = angle;
+
+        //    if (quantum.QuantumPointers.Count == 0)
+        //        return;
+
+        //    passedList.Add(quantum);
+
+        //    List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
+
+        //    // сколько пришлось на каждую связь (учет размера кванта Value)           
+        //    Dictionary<QuantumPointer, double> angleChangeParts = QuantumsChangeParts(linksList);
+
+        //    foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)
+        //        RotateAngle(quantumPointer, probabilityChangeParts[quantumPointer], basisAngle0);
+
+        //    passedList.AddRange(linksList.Select(qp => qp.Quantum));
+
+        //    foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)
+        //    {
+        //        Distribute(quantumPointer.Quantum, basisAngle0, probabilityChangeParts[quantumPointer], passedList);
+        //    }
+
+
+        //    //quantum.Angle = AngleHelper.Positive360RangeAngle(quantum.Angle + angle);
+        //}
     }
 }
