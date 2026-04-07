@@ -21,9 +21,7 @@ namespace Qntm.Functions
         // Обертка для асинхронного вызова функции
         protected static Task<T> FunctionWrapper<T>(T prm, Func<T, T> blackBox)
         {
-            T result = blackBox(prm);
-
-            return Task.FromResult(result);
+            return Task.Run(() => { T result = blackBox(prm); return result; });
         }
     }
 }

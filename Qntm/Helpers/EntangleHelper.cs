@@ -201,21 +201,23 @@ namespace Qntm.Helpers
 
             List<QuantumPointer> linksList = quantum.QuantumPointers.Where(qp => !passedList.Contains(qp.Quantum)).ToList();
 
-            // сколько пришлось на каждую связь (учет размера кванта Value)           
-            Dictionary<QuantumPointer, double> probabilityChangeParts = QuantumsChangeParts(linksList);
+            // сколько пришлось на каждую связь (доля изменения). Учет размера кванта Value.           
+            Dictionary<QuantumPointer, double> probabilityChangeParts = QuantumsChangeParts(quantum, linksList);
 
-            foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)            
+            foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)
+                // поворачиваем вероятность кванта по ссылке на долю изменения 
                 RotateAngle(quantumPointer, probabilityChange * probabilityChangeParts[quantumPointer], basisAngle0);            
 
             passedList.AddRange(linksList.Select(qp => qp.Quantum));
 
             foreach (QuantumPointer quantumPointer in probabilityChangeParts.Keys)
             {
-                Distribute(quantumPointer.Quantum, basisAngle0, probabilityChangeParts[quantumPointer], passedList);
+                // распределяем долю изменения кванта по его ссылкам
+                Distribute(quantumPointer.Quantum, basisAngle0, probabilityChange * probabilityChangeParts[quantumPointer], passedList);
             }
         }
 
-        private static Dictionary<QuantumPointer, double> QuantumsChangeParts(List<QuantumPointer> linksList) 
+        private static Dictionary<QuantumPointer, double> QuantumsChangeParts(Quantum quantum, List<QuantumPointer> linksList) 
         {
             Dictionary<QuantumPointer, double> changeParts = new Dictionary<QuantumPointer, double>();
 
