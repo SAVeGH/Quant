@@ -52,7 +52,7 @@ namespace Qntm
             set { _value = value; }
         }
 
-		public string Name { get; set; } // для тестов
+		public string Name { get; set; } // для тестов test
 
 	}
 }
