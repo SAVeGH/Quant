@@ -221,17 +221,17 @@ namespace Qntm.Helpers
         {
             Dictionary<QuantumPointer, double> changeParts = new Dictionary<QuantumPointer, double>();
 
-            //double qValuesSum = linksList.Sum(qp => qp.Quantum.Value); // полный размер всех квантов по ссылкам
-
             if (linksList.Count == 0)
                 return changeParts;
 
+            double linkPart = (1.0 / linksList.Count); // сколько пришлось на каждую связь
+
             foreach (QuantumPointer quantumPointer in linksList) 
             {
-                double qChangePart = quantumPointer.Quantum.Value != 0.0 ? 
-                    (1.0 / linksList.Count) * (quantum.Value / quantumPointer.Quantum.Value) : 
-                    0; //quantumPointer.Quantum.Value / qValuesSum; // какая доля общего изменения пришлась на каждую связь
-                                                                                // в зависимости от размера кванта
+                double qChangePart = quantumPointer.Quantum.Value != 0.0 ?
+                    linkPart * (quantum.Value / quantumPointer.Quantum.Value) : // доля приходящаяся на квант в зависимости от его размера
+                    0;
+
                 changeParts[quantumPointer] = qChangePart;
             }
 
