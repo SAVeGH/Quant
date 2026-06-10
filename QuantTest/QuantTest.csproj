@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Qntm\Qntm.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Circuits\" />
+  </ItemGroup>
+
 </Project>

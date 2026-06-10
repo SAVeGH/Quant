@@ -311,12 +311,12 @@ await testRunner.GivenAsync("System has quantums", ((string)(null)), table3, "Gi
         }
         
         [global::NUnit.Framework.TestAttribute()]
-        [global::NUnit.Framework.DescriptionAttribute("Different Values state")]
+        [global::NUnit.Framework.DescriptionAttribute("A0B1 state does not exists")]
         [global::NUnit.Framework.TestCaseAttribute("90.0", "1.0", "48.1897", "3.0", "false", "A", "B", "0.0", "0", "14", null)]
         [global::NUnit.Framework.TestCaseAttribute("90.0", "1.0", "48.1897", "3.0", "true", "A", "B", "0.33333333", "5", "15", null)]
         [global::NUnit.Framework.TestCaseAttribute("90.0", "1.0", "48.1897", "3.0", "false", "B", "A", "0.0", "0", "16", null)]
         [global::NUnit.Framework.TestCaseAttribute("90.0", "1.0", "48.1897", "3.0", "true", "B", "A", "1.0", "0", "17", null)]
-        public async global::System.Threading.Tasks.Task DifferentValuesState(string a_Angle, string a_Value, string b_Angle, string b_Value, string mValue, string mFirstName, string mSecondName, string secondMeasurmentUnityProbability, string deviation, string @__pickleIndex, string[] exampleTags)
+        public async global::System.Threading.Tasks.Task A0B1StateDoesNotExists(string a_Angle, string a_Value, string b_Angle, string b_Value, string mValue, string mFirstName, string mSecondName, string secondMeasurmentUnityProbability, string deviation, string @__pickleIndex, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
@@ -330,10 +330,10 @@ await testRunner.GivenAsync("System has quantums", ((string)(null)), table3, "Gi
             argumentsOfScenario.Add("secondMeasurmentUnityProbability", secondMeasurmentUnityProbability);
             argumentsOfScenario.Add("deviation", deviation);
             string pickleIndex = @__pickleIndex;
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Different Values state", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("A0B1 state does not exists", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 86
+#line 94
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -355,25 +355,25 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
                             "B",
                             string.Format("{0}", b_Angle),
                             string.Format("{0}", b_Value)});
-#line 87
+#line 95
 await testRunner.GivenAsync("System has quantums", ((string)(null)), table4, "Given ");
 #line hidden
-#line 91
+#line 99
  await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 92
+#line 100
  await testRunner.WhenAsync(string.Format("Measure to \'{0}\' quantum \'{1}\' in basis 0", mValue, mFirstName), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 93
+#line 101
  await testRunner.AndAsync(string.Format("Quantum \'{0}\' is measured 100 times in 0 basis", mSecondName), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 94
+#line 102
  await testRunner.AndAsync(string.Format("Measure quantum \'{0}\' in basis 0", mSecondName), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 95
+#line 103
  await testRunner.ThenAsync(string.Format("Quantum \'{0}\' probability corresponds to {1} with deviation of {2}", mSecondName, secondMeasurmentUnityProbability, deviation), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 96
+#line 104
  await testRunner.AndAsync("State \'A\' is 0 and \'B\' is 1 does not exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
