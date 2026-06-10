@@ -82,5 +82,25 @@ Examples:
 | 70.5288 | 70.5288 | 70.5288 | true    |
 | 70.5288 | 70.5288 | 70.5288 | false   |
 
+#24.0948
+Scenario: Different Values state
+Given System has quantums
+	| Name | Angle     | Value     |
+	| A    | <A_Angle> | <A_Value> |
+	| B    | <B_Angle> | <B_Value> |
+	And Quantums 'A' and 'B' are entangled
+	When Measure to '<mValue>' quantum '<mFirstName>' in basis 0
+	And Quantum '<mSecondName>' is measured 100 times in 0 basis
+	And Measure quantum '<mSecondName>' in basis 0
+	Then Quantum '<mSecondName>' probability corresponds to <secondMeasurmentUnityProbability> with deviation of <deviation>	
+	And State 'A' is 0 and 'B' is 1 does not exists
+Examples:
+| A_Angle | A_Value | B_Angle | B_Value | mValue | mFirstName | mSecondName | secondMeasurmentUnityProbability | deviation |
+| 90.0    | 1.0     | 48.1897 | 3.0     | false  | A          | B           | 0.0                              | 0         |
+| 90.0    | 1.0     | 48.1897 | 3.0     | true   | A          | B           | 0.33333333                       | 5         |
+| 90.0    | 1.0     | 48.1897 | 3.0     | false  | B          | A           | 0.0                              | 0         |
+| 90.0    | 1.0     | 48.1897 | 3.0     | true   | B          | A           | 1.0                              | 0         |
+
+
 
 

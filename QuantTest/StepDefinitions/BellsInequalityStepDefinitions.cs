@@ -2,7 +2,6 @@
 using Qntm.Constants;
 using Qntm.Helpers;
 using QuantTest.Helpers;
-using TechTalk.SpecFlow;
 
 namespace QuantTest.StepDefinitions
 {

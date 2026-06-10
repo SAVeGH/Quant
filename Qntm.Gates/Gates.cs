@@ -7,12 +7,18 @@ namespace Qntm.Gates
     {
         public static void H(Quantum q) 
         {
-            q.Angle = Angles._90degree - q.Angle;
+            double resultAngle = Angles._90degree - q.Angle;
+            double angleShift = resultAngle - q.Angle;
+
+            Quantum.ShiftAngle(q, angleShift);
         }
 
         public static void X(Quantum q)
         {
-            q.Angle = Angles._180degree - q.Angle; // negate value
+            double resultAngle = Angles._180degree - q.Angle;
+            double angleShift = resultAngle - q.Angle;
+
+            Quantum.ShiftAngle(q, angleShift); // negate value            
         }
     }
 }

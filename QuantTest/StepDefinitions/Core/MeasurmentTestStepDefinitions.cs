@@ -15,26 +15,63 @@ namespace QuantTest.StepDefinitions.Core
         }
 
         [When(@"Quantum '([^']*)' is measured (.*) times in (.*) basis")]
-        public void WhenQuantumIsMeasuredTimesInBasis(string a, int p1, double p2)
+        public void WhenQuantumIsMeasuredTimesInBasis(string name, int timesCount, double qBasis)
         {
-            string qName = "Quantum_" + a;
+            string qName = $"Quantum_{name}";
             Quantum q = (Quantum)_scenarioContext[qName];
 
-            double result = RunMeasurment(q, AngleHelper.DegreeToRadians(p2), p1);
+            double unityPobabilityResult = RunMeasurment(q, AngleHelper.DegreeToRadians(qBasis), timesCount);
 
-            _scenarioContext["MeasurmentResult"] = result;
+            _scenarioContext[$"{name}_MeasurmentResult"] = unityPobabilityResult;
         }
 
-
-        [Then(@"Probability corresponds to (.*) with deviation of (.*)")]
-        public void ThenProbabilityCorrespondsToWithDeviationOf(double p0, int p1)
+        [Then(@"Quantum '([^']*)' probability corresponds to (.*) with deviation of (.*)")]
+        public void ThenQuantumProbabilityCorrespondsToWithDeviationOf(string qName, double qProbability, int qDeviationPercent)
         {
-            double measurmentResult = (double)_scenarioContext["MeasurmentResult"];
+            double measurmentResult = (double)_scenarioContext[$"{qName}_MeasurmentResult"];
 
-            double deviationPercent = Math.Abs(measurmentResult - p0) * 100.0;
+            double deviationPercent = Math.Abs(measurmentResult - qProbability) * 100.0;
             Console.WriteLine($"deviationPercent: {deviationPercent}, Measurement result: {measurmentResult}");
-            Assert.IsTrue(deviationPercent <= p1);
+            Assert.IsTrue(deviationPercent <= qDeviationPercent);
         }
+        
+
+        [When(@"Quantum '([^']*)' is measured to '([^']*)' in (.*) basis")]
+        public void WhenQuantumIsMeasuredToInBasis(string name, string mResult, double basis)
+        {
+            string qName = $"Quantum_{name}";
+            Quantum q = (Quantum)_scenarioContext[qName];
+
+            bool measurmentResult = Convert.ToBoolean(mResult);
+
+            MeasurmentHelper.MeasureTo(q, AngleHelper.DegreeToRadians(basis), measurmentResult);
+        }
+
+        [Then(@"Quantum '([^']*)' angle corresponds to (.*)")]
+        public void ThenQuantumAngleCorrespondsTo(string name, double resultAngle)
+        {
+            string qName = $"Quantum_{name}";
+            Quantum q = (Quantum)_scenarioContext[qName];
+
+            double resAngle = AngleHelper.DegreeToRadians(resultAngle);
+
+            Assert.IsTrue(q.Angle == resAngle);
+        }
+
+
+
+
+
+
+        //[Then(@"Probability corresponds to (.*) with deviation of (.*)")]
+        //public void ThenProbabilityCorrespondsToWithDeviationOf(double p0, int p1)
+        //{
+        //    double measurmentResult = (double)_scenarioContext["MeasurmentResult"];
+
+        //    double deviationPercent = Math.Abs(measurmentResult - p0) * 100.0;
+        //    Console.WriteLine($"deviationPercent: {deviationPercent}, Measurement result: {measurmentResult}");
+        //    Assert.IsTrue(deviationPercent <= p1);
+        //}
 
         private double RunMeasurment(Quantum q, double measurmentAngle, int count)
         {
@@ -49,7 +86,9 @@ namespace QuantTest.StepDefinitions.Core
                 NutJob();
             }
 
-            return trues / (double)(falses + trues);
+            q.Reset(angle);
+
+            return (double)trues / (double)(count);
         }
 
         // просто 'тяжелая' операция с произвольным временем выполнения

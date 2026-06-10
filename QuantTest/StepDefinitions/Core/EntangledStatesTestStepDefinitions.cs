@@ -1,6 +1,7 @@
 ﻿using Qntm;
 using Qntm.Constants;
 using Qntm.Helpers;
+using System.Xml.Linq;
 
 namespace QuantTest.StepDefinitions.Core
 {
@@ -47,28 +48,60 @@ namespace QuantTest.StepDefinitions.Core
         }
 
         [When(@"Measure quantum '([^']*)' in basis (.*)")]
-        public void WhenMeasureQuantumInBasis(string a, double p1)
+        public void WhenMeasureQuantumInBasis(string name, double qBasis)
         {
-            string qName = "Quantum_" + a;
+            string qName = $"Quantum_{name}";
             Quantum q = (Quantum)_scenarioContext[qName];
 
-            bool qResult = MeasurmentHelper.Measure(q, p1);
+            bool qResult = MeasurmentHelper.Measure(q, qBasis);
 
-            string qResultName = "Quantum_" + a + "_Result";
+            string qResultName = $"Quantum_{name}_Result";
             _scenarioContext[qResultName] = qResult;
         }
 
+        //[When(@"Measure (.*) times quantum '([^']*)' in basis (.*)")]
+        //public void WhenMeasureTimesQuantumInBasis(int mTimes, string name, double basis)
+        //{
+        //    string qName = "Quantum_" + name;
+        //    Quantum q = (Quantum)_scenarioContext[qName];
+
+        //    double qAngle = q.Angle;
+        //    int trueCounts = 0;
+
+        //    bool qResult = MeasurmentHelper.Measure(q, basis);
+
+        //    string qResultName = "Quantum_" + name + "_Result";
+        //    _scenarioContext[qResultName] = qResult;
+
+        //    q.Reset(qAngle);
+
+        //    for (int i = 0; i < mTimes; i++) 
+        //    {
+        //        qResult = MeasurmentHelper.Measure(q, basis);
+
+        //        if (qResult) trueCounts++;
+
+        //        q.Reset(qAngle);
+        //    }
+
+        //    double resProbability = (double)trueCounts / (double)mTimes;
+
+        //    string qResultProbabilityName = "Quantum_" + name + "_ResultProbability";
+        //    _scenarioContext[qResultProbabilityName] = resProbability;
+        //}
+
+
         [When(@"Measure to '([^']*)' quantum '([^']*)' in basis (.*)")]
-        public void WhenMeasureToQuantumInBasis(string mResult, string a, double p2)
+        public void WhenMeasureToQuantumInBasis(string mResult, string name, double p2)
         {
-            string qName = "Quantum_" + a;
+            string qName = $"Quantum_{name}";
             Quantum q = (Quantum)_scenarioContext[qName];
 
             bool mRes = Convert.ToBoolean(mResult);
 
             bool qResult = MeasurmentHelper.MeasureTo(q, p2, mRes);
 
-            string qResultName = "Quantum_" + a + "_Result";
+            string qResultName = $"Quantum_{name}_Result";
             _scenarioContext[qResultName] = qResult;
         }
 
@@ -109,6 +142,34 @@ namespace QuantTest.StepDefinitions.Core
             Assert.IsTrue(result == 1);
         }
 
+        //[Then(@"Quantum '([^']*)' measurment result corresponds to (.*) state with (.*) percent deviation")]
+        //public void ThenQuantumMeasurmentResultCorrespondsToStateWithPercentDeviation(string qName, double qUnityProbability, double deviationPercent)
+        //{
+        //    string qResultProbabilityName = "Quantum_" + qName + "_ResultProbability";
+        //    double resProbability = (double)_scenarioContext[qResultProbabilityName];
 
+        //    double measuredDeviationPercent = Math.Abs(resProbability - qUnityProbability) / 100.0;
+
+        //    double allowedDeviationPercent = deviationPercent / 100.0;
+
+        //    Assert.IsTrue(measuredDeviationPercent <= allowedDeviationPercent);
+        //}
+
+        [Then(@"State '([^']*)' is (.*) and '([^']*)' is (.*) does not exists")]
+        public void ThenStateIsAndIsDoesNotExists(string aName, int aState, string bName, int bState)
+        {
+            string qAResultName = $"Quantum_{aName}_Result";
+            string qBResultName = $"Quantum_{bName}_Result";
+
+            bool qAResult = (bool)_scenarioContext[qAResultName];
+            bool qBResult = (bool)_scenarioContext[qBResultName];
+
+            bool aResultState = Convert.ToBoolean(aState);
+            bool bResultState = Convert.ToBoolean(bState);
+
+            bool disallowedSateExists = qAResult == aResultState && qBResult == bResultState;
+
+            Assert.IsTrue(!disallowedSateExists);
+        }
     }
 }

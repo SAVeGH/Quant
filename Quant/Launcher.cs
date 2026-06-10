@@ -21,31 +21,12 @@ namespace Quant
                 QuantumThreadWorker.Run(129);
 
                 //Quantum q = new Quantum(Angles._0degree/*Math.PI / 4.0)*/);
-                Quantum q = new Quantum(Angles._0degree);
-                q.Name = "A";
-                Quantum q1 = new Quantum(Angles._0degree);
-                q1.Name = "B";
+                //Quantum q = new Quantum(48.1897 * Angles._rad);
+                //q.Name = "A";
 
-                Gates.H(q);
-                Gates.X(q1);
-                Gates.H(q1);
+                DeutchTest();
 
-                EntangleHelper.Entangle(q, q1);
-
-                DeuthQuantumFunction qf = new DeuthQuantumFunction(DeutchFunctions.ConstFalse);
-                DeuthQuantumFunction qt = new DeuthQuantumFunction(DeutchFunctions.ConstTrue);
-                DeuthQuantumFunction qid = new DeuthQuantumFunction(DeutchFunctions.BalancedId);
-                DeuthQuantumFunction qnot = new DeuthQuantumFunction(DeutchFunctions.BalancedNot);
-
-                double qff = qf.CallFunction(q);
-                double qft = qt.CallFunction(q);
-                double qfid = qid.CallFunction(q);
-                double qfnot = qnot.CallFunction(q);
-
-                //Console.WriteLine($"false: {qft}");
-
-                Console.WriteLine($"false: {qff}, true: {qft}, id: {qfid}, not: {qfnot}");
-
+                //Quantum.ShiftProbability1(q, 1.0 / 6.0, Angles._180degree);
 
 
             }
@@ -54,6 +35,39 @@ namespace Quant
                 QuantumThreadWorker.Stop();
             }
         }
+
+        public void DeutchTest() 
+        {
+            QuantumThreadWorker.Run(129);
+
+            //Quantum q = new Quantum(Angles._0degree/*Math.PI / 4.0)*/);
+            Quantum q = new Quantum(Angles._0degree);
+            q.Name = "A";
+            Quantum q1 = new Quantum(Angles._0degree);
+            q1.Name = "B";
+
+            Gates.H(q);
+            Gates.X(q1);
+            Gates.H(q1);
+
+            EntangleHelper.Entangle(q, q1);
+
+            DeuthQuantumFunction qf = new DeuthQuantumFunction(DeutchFunctions.ConstFalse);
+            DeuthQuantumFunction qt = new DeuthQuantumFunction(DeutchFunctions.ConstTrue);
+            DeuthQuantumFunction qid = new DeuthQuantumFunction(DeutchFunctions.BalancedId);
+            DeuthQuantumFunction qnot = new DeuthQuantumFunction(DeutchFunctions.BalancedNot);
+
+            double qff = qf.CallFunction(q);
+            double qft = qt.CallFunction(q);
+            double qfid = qid.CallFunction(q);
+            double qfnot = qnot.CallFunction(q);
+
+            //Console.WriteLine($"false: {qft}");
+
+            Console.WriteLine($"false: {qff}, true: {qft}, id: {qfid}, not: {qfnot}");
+
+        }
+
 
         public void Run111()
 		{
@@ -79,7 +93,7 @@ namespace Quant
 
             Console.WriteLine(MeasurmentHelper.Measure(q, Angles._0degree));
 
-            q.Angle = Angles._270degree;
+            //q.Angle = Angles._270degree;
 
             Console.WriteLine(MeasurmentHelper.Measure(q, Angles._0degree));
 

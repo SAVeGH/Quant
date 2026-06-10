@@ -18,7 +18,7 @@ namespace QuantTest.StepDefinitions
         [Given(@"Alice generates 4n size key where n is (.*)"), Scope(Tag = "BB84")]
         public void GivenAliceGenerates4NSizeKeyWhereNIs(int p0)
         {
-            List<bool> AliceKeySequence = RandomHelper.RandomSequence(p0); //  количество будет p0 * 32 (8 бит по 4 байта)
+            List<bool> AliceKeySequence = RandomHelper.RandomSequence(p0); //  количество будет p0 * 32 (8 бит по 4 байта)            
 
             _scenarioContext["blockSize"] = p0;
             _scenarioContext["AliceKeySequence"] = AliceKeySequence;
