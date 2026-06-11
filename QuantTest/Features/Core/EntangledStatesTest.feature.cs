@@ -141,17 +141,17 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "A",
                             string.Format("{0}", a_Angle)});
-                table1.AddRow(new string[] {
+                table2.AddRow(new string[] {
                             "B",
                             string.Format("{0}", b_Angle)});
 #line 12
- await testRunner.GivenAsync("System has quantums", ((string)(null)), table1, "Given ");
+ await testRunner.GivenAsync("System has quantums", ((string)(null)), table2, "Given ");
 #line hidden
 #line 16
  await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -198,20 +198,20 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "A",
                             string.Format("{0}", a_Angle)});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "B",
                             string.Format("{0}", b_Angle)});
-                table2.AddRow(new string[] {
+                table3.AddRow(new string[] {
                             "C",
                             string.Format("{0}", c_Angle)});
 #line 34
-await testRunner.GivenAsync("System has quantums", ((string)(null)), table2, "Given ");
+await testRunner.GivenAsync("System has quantums", ((string)(null)), table3, "Given ");
 #line hidden
 #line 39
  await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -270,20 +270,20 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table3 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "A",
                             string.Format("{0}", a_Angle)});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "B",
                             string.Format("{0}", b_Angle)});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "C",
                             string.Format("{0}", c_Angle)});
 #line 68
-await testRunner.GivenAsync("System has quantums", ((string)(null)), table3, "Given ");
+await testRunner.GivenAsync("System has quantums", ((string)(null)), table4, "Given ");
 #line hidden
 #line 73
  await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled inverse", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -333,7 +333,7 @@ await testRunner.GivenAsync("System has quantums", ((string)(null)), table3, "Gi
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("A0B1 state does not exists", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 94
+#line 95
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -343,37 +343,37 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table4 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle",
                             "Value"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "A",
                             string.Format("{0}", a_Angle),
                             string.Format("{0}", a_Value)});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "B",
                             string.Format("{0}", b_Angle),
                             string.Format("{0}", b_Value)});
-#line 95
-await testRunner.GivenAsync("System has quantums", ((string)(null)), table4, "Given ");
-#line hidden
-#line 99
- await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 96
+await testRunner.GivenAsync("System has quantums", ((string)(null)), table5, "Given ");
 #line hidden
 #line 100
- await testRunner.WhenAsync(string.Format("Measure to \'{0}\' quantum \'{1}\' in basis 0", mValue, mFirstName), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 101
- await testRunner.AndAsync(string.Format("Quantum \'{0}\' is measured 100 times in 0 basis", mSecondName), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync(string.Format("Measure to \'{0}\' quantum \'{1}\' in basis 0", mValue, mFirstName), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 102
- await testRunner.AndAsync(string.Format("Measure quantum \'{0}\' in basis 0", mSecondName), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("Quantum \'{0}\' is measured 100 times in 0 basis", mSecondName), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 103
- await testRunner.ThenAsync(string.Format("Quantum \'{0}\' probability corresponds to {1} with deviation of {2}", mSecondName, secondMeasurmentUnityProbability, deviation), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.AndAsync(string.Format("Measure quantum \'{0}\' in basis 0", mSecondName), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 104
+ await testRunner.ThenAsync(string.Format("Quantum \'{0}\' probability corresponds to {1} with deviation of {2}", mSecondName, secondMeasurmentUnityProbability, deviation), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 105
  await testRunner.AndAsync("State \'A\' is 0 and \'B\' is 1 does not exists", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }

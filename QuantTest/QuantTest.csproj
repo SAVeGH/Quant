@@ -16,6 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Qntm.Functions\Qntm.Functions.csproj" />
+    <ProjectReference Include="..\Qntm.Gates\Qntm.Gates.csproj" />
     <ProjectReference Include="..\Qntm\Qntm.csproj" />
   </ItemGroup>
 

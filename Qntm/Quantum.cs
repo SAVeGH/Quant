@@ -16,19 +16,16 @@ namespace Qntm
 
         public Quantum(double angle)
         {
-            //Angle = angle;
             _angle = angle;
-            Value = 1.0; // размер кванта по умолчанию. Определяет 'вес' кванта при распределении вероятности. 
-                         // Т.е. если квант A имеет Value = 0.5 и связан с квантом B который имеет Value = 1.0, то при повороте
-                         // кванта A на 90 градусов, угол связанного кванта B изменится на только на 45 градусов. Если же
-                         // квант B будет повернут на 90 градусов, то угол связанного кванта A изменится на 180 градусов.
+            _value = 1.0; // размер кванта по умолчанию. Определяет 'вес' кванта при распределении вероятности. 
+                          // Т.е. если квант A имеет Value = 0.5 и связан с квантом B который имеет Value = 1.0, то при повороте
+                          // кванта A на 90 градусов, угол связанного кванта B изменится на только на 45 градусов. Если же
+                          // квант B будет повернут на 90 градусов, то угол связанного кванта A изменится на 180 градусов.
         }
 
-        public void Reset(double angle) 
-		{
-            //Angle = angle;
+        public void Reset(double angle) // для тестов
+        {
             _angle = angle;
-
         }
 
         /// <summary>
@@ -55,12 +52,22 @@ namespace Qntm
             }
         }
 
-        public double AngleGrad 
+        public double Value
+        {
+            get { return _value; }
+            set { _value = value; }
+        }
+
+        public string Name { get; set; } // для тестов
+
+        public double AngleGrad // для тестов
         {
             get { return AngleHelper.RadiansToDegree(Angle); }
         }
 
-        public static int Precision { get; set; } = 5;        
+        public static int Precision { get; set; } = 5; // 10e-5 - по умолчанию 0.00001 часть угла.
+                                                       // Т.е. если угол кванта после смещения оказался в пределах 0.00001 градуса от базиса измерения,
+                                                       // то приравниваем его к базису измерения.       
 
         public static void ShiftAngle(Quantum quantum, double angleShift)
         {
@@ -143,16 +150,7 @@ namespace Qntm
 
             // 15. устанавливаем новое положение угла кванта после смещения на угол, который соответствует смещению вероятности
             quantum.Angle = resultQuantumAngle;
-        }
-
-
-        public double Value 
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
-
-		public string Name { get; set; } // для тестов
+        }	
 
         public static void Distribute(Quantum quantum, double probabilityChange, double basisMeasuredAngle)
         {
