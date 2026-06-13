@@ -168,7 +168,7 @@ await this.FeatureBackgroundAsync();
  await testRunner.AndAsync("Quantums \'X\' and \'Y\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 16
- await testRunner.WhenAsync(string.Format("Run Deutch circuit with quantum X as parmeter and {0} with {1}", functionType, outputType), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync(string.Format("Run Deutch circuit with quantum X as parameter and {0} with {1}", functionType, outputType), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 17
  await testRunner.ThenAsync(string.Format("Circuit output corresponds to {0}", functionType), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

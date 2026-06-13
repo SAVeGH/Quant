@@ -148,14 +148,14 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table5 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "A",
                             string.Format("{0}", qangle)});
 #line 6
- await testRunner.GivenAsync("System has quantums", ((string)(null)), table5, "Given ");
+ await testRunner.GivenAsync("System has quantums", ((string)(null)), table6, "Given ");
 #line hidden
 #line 9
  await testRunner.WhenAsync(string.Format("Quantum \'A\' is measured 10000 times in {0} basis", mangle), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -206,14 +206,14 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table6 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table6.AddRow(new string[] {
+                table7.AddRow(new string[] {
                             "A",
                             string.Format("{0}", qangle)});
 #line 34
- await testRunner.GivenAsync("System has quantums", ((string)(null)), table6, "Given ");
+ await testRunner.GivenAsync("System has quantums", ((string)(null)), table7, "Given ");
 #line hidden
 #line 37
  await testRunner.WhenAsync(string.Format("Quantum \'A\' is measured to \'{0}\' in {1} basis", measureResult, measureAngle), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");

@@ -128,14 +128,14 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table7 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table7.AddRow(new string[] {
+                table8.AddRow(new string[] {
                             "A",
                             "90"});
 #line 5
- await testRunner.GivenAsync("System has quantums", ((string)(null)), table7, "Given ");
+ await testRunner.GivenAsync("System has quantums", ((string)(null)), table8, "Given ");
 #line hidden
 #line 8
  await testRunner.WhenAsync("Define deviation from probability 1/2 after 100 measurments of quantum \'A\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -171,14 +171,14 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table8 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table8.AddRow(new string[] {
+                table9.AddRow(new string[] {
                             "A",
                             "90"});
 #line 16
- await testRunner.GivenAsync("System has quantums", ((string)(null)), table8, "Given ");
+ await testRunner.GivenAsync("System has quantums", ((string)(null)), table9, "Given ");
 #line hidden
 #line 19
  await testRunner.WhenAsync("Collect side results of 10000 measurment sets of qunat \'A\' size of 100 measurment" +

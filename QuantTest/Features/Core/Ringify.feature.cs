@@ -130,20 +130,20 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-                global::Reqnroll.Table table9 = new global::Reqnroll.Table(new string[] {
+                global::Reqnroll.Table table10 = new global::Reqnroll.Table(new string[] {
                             "Name",
                             "Angle"});
-                table9.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "A",
                             "0"});
-                table9.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "B",
                             "0"});
-                table9.AddRow(new string[] {
+                table10.AddRow(new string[] {
                             "C",
                             "0"});
 #line 10
- await testRunner.GivenAsync("System has quantums", ((string)(null)), table9, "Given ");
+ await testRunner.GivenAsync("System has quantums", ((string)(null)), table10, "Given ");
 #line hidden
 #line 15
  await testRunner.AndAsync("Quantums \'A\' and \'B\' are entangled", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
